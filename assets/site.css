@@ -109,7 +109,7 @@ html.fx .svc li p{display:none}
 .quote{display:flex;flex-wrap:wrap;gap:40px 56px;align-items:center}
 .quote .ph{flex:0 1 220px;aspect-ratio:4/5;max-width:100%}
 .quote .q{flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:22px}
-.quote blockquote{margin:0;font-family:var(--f-display);font-size:clamp(18px,2vw,26px);line-height:1.55}
+.quote blockquote{margin:0;font-family:var(--f-body);font-weight:500;font-size:clamp(18px,1.7vw,23px);line-height:1.65;max-width:62ch}
 .quote mark{background:none;color:var(--lime)}
 .quote figcaption{font-family:var(--f-ui);font-size:14px;color:var(--mist)}
 .quote figcaption strong{color:var(--white)}
@@ -120,7 +120,8 @@ html.fx .svc li p{display:none}
 .track span{font-family:var(--f-display);font-size:clamp(18px,2.2vw,28px);text-transform:uppercase;white-space:nowrap;padding:8px 0}
 .track span::after{content:"\2660";color:var(--lime);font-size:.6em;padding:0 .9em;vertical-align:.25em}
 @keyframes marquee{to{transform:translateX(-50%)}}
-.quote.small blockquote{font-size:clamp(16px,1.6vw,21px)}
+.quote.small blockquote{font-size:clamp(16px,1.4vw,19px)}
+.quote mark{font-weight:700}
 .label{font-family:var(--f-ui);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 
 .cmp{display:flex;flex-direction:column;gap:36px}
