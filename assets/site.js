@@ -184,12 +184,12 @@
     var total=orbit.offsetHeight-vh, start=orbit.offsetTop+total*.20;
     var k=clamp((y-start)/(vh*.35),0,1);
     // resting spot: top right, under the menu
-    var gut=Math.max(24,(vw-1240)/2+24), w=vw<760?104:132, pad=24;
-    var hx=vw-gut-w-pad, hy=vw<760?74:84;
+    var w=vw<760?104:132, pl=18, pr=vw<760?16:24, pad=pl+pr;
+    var hx=vw-w-pad, hy=0;
     // footer target
     var fr=foot.getBoundingClientRect(), fw=fr.width;
     var left=document.documentElement.scrollHeight-vh-y, t=clamp(1-left/(vh*.55),0,1), te=ease(t);
-    var x=hx+((fr.left-12)-hx)*te, yy=hy+((fr.top-9)-hy)*te, ww=w+(fw-w)*te;
+    var x=hx+((fr.left-pl)-hx)*te, yy=hy+((fr.top-16)-hy)*te, ww=w+(fw-w)*te;
     var docked=t>=1;
     root.classList.toggle('docked',docked);
     var vis=k>0&&!docked;
