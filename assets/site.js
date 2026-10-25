@@ -205,3 +205,17 @@
   }
   requestAnimationFrame(tick);
 })();
+
+// "See what we run" and Services links: land on the first service inside the scroll sequence
+(function(){
+  var orbit=document.getElementById('orbit'); if(!orbit) return;
+  function target(){
+    if(document.documentElement.classList.contains('still')) return document.getElementById('services').getBoundingClientRect().top+window.scrollY-24;
+    return orbit.offsetTop+(orbit.offsetHeight-window.innerHeight)*0.315;
+  }
+  function go(smooth){ window.scrollTo({top:target(),behavior:smooth?'smooth':'auto'}); }
+  document.querySelectorAll('a[href="#services"],a[href="/#services"]').forEach(function(a){
+    a.addEventListener('click',function(e){ e.preventDefault(); go(true); if(history.replaceState) history.replaceState(null,'','#services'); });
+  });
+  if(location.hash==='#services') window.addEventListener('load',function(){ setTimeout(function(){ go(false); },50); });
+})();
