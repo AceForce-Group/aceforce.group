@@ -1,18 +1,34 @@
 (function(){
+  // form submissions go to Web3Forms, which emails them to the AceForce inbox
+  var W3F_KEY='1d1154fd-1717-4f0b-ac02-65efcb247832';
+  function send(form, payload, statusEl, btn){
+    if(form.querySelector('[name=botcheck]') && form.querySelector('[name=botcheck]').checked) return;
+    var label=btn.textContent; btn.disabled=true; btn.textContent='Sending...';
+    statusEl.hidden=false; statusEl.textContent='Sending...';
+    payload.access_key=W3F_KEY;
+    fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.success){ statusEl.textContent=form.getAttribute('data-ok'); form.reset(); }
+        else { statusEl.textContent='That did not go through. Please email info@aceforce.group directly.'; }
+      })
+      .catch(function(){ statusEl.textContent='That did not go through. Please email info@aceforce.group directly.'; })
+      .then(function(){ btn.disabled=false; btn.textContent=label; });
+  }
+  function val(id){ var el=document.getElementById(id); return el?el.value.trim():''; }
   var cf=document.getElementById('cform');
   if(cf) cf.addEventListener('submit',function(e){
     e.preventDefault();
-    var v=function(id){var el=document.getElementById(id);return el?el.value.trim():'';};
-    var body='Name: '+v('f-name')+'\nEmail: '+v('f-email')+'\nBrand: '+v('f-brand')+'\n\n'+v('f-msg');
-    location.href='mailto:info@aceforce.group?subject='+encodeURIComponent('AceForce inquiry'+(v('f-brand')?' from '+v('f-brand'):''))+'&body='+encodeURIComponent(body);
-    var sent=document.getElementById('sent'); if(sent) sent.hidden=false;
+    var st=document.getElementById('sent');
+    if(!val('f-name')||!/^\S+@\S+\.\S+$/.test(val('f-email'))||!val('f-msg')){ st.hidden=false; st.textContent='Please add your name, a valid email and a short note.'; return; }
+    send(cf,{subject:'AceForce inquiry'+(val('f-brand')?' from '+val('f-brand'):''),from_name:'aceforce.group',name:val('f-name'),email:val('f-email'),brand:val('f-brand'),message:val('f-msg')},st,cf.querySelector('button[type=submit]'));
   });
   var lf=document.getElementById('lform');
   if(lf) lf.addEventListener('submit',function(e){
     e.preventDefault();
-    var em=document.getElementById('l-email').value.trim();
-    location.href='mailto:info@aceforce.group?subject='+encodeURIComponent('Notify me: Magic without Tricks')+'&body='+encodeURIComponent('Please add '+(em||'me')+' to the launch list.');
-    document.getElementById('lsent').hidden=false;
+    var st=document.getElementById('lsent');
+    if(!/^\S+@\S+\.\S+$/.test(val('l-email'))){ st.hidden=false; st.textContent='Please enter a valid email.'; return; }
+    send(lf,{subject:'Launch list: Magic without Tricks',from_name:'aceforce.group',email:val('l-email'),message:'Please add this email to the Magic without Tricks launch list.'},st,lf.querySelector('button[type=submit]'));
   });
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
   // contact video: plays only while on screen, on wide screens, with motion allowed

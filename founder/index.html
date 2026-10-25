@@ -58,10 +58,10 @@
       <p class="eyebrow">The book</p>
       <h2 id="book-h" class="sec-h">Magic without Tricks</h2>
       <p>Real life lessons from magic. More of Vlad's writing lives at <a href="https://vladdit.com">vladdit.com</a>.</p>
-      <form class="listform" id="lform" novalidate>
+      <form class="listform" id="lform" novalidate data-ok="You are on the list. We will email you when the book launches."><input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="field"><label for="l-email">Email</label><input id="l-email" type="email" autocomplete="email"></div>
         <button class="btn btn-lime" type="submit">Get notified</button>
-        <p class="sent" id="lsent" hidden>Your email app should open with the request ready to send.</p>
+        <p class="sent" id="lsent" role="status" hidden></p>
       </form>
     </div>
   </div>

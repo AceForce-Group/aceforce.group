@@ -229,13 +229,13 @@
       <p>A supply chain ready to scale, a Cin7 instance that needs connectors, a NetSuite tuned to run clean, or reporting that runs itself. We're here to help.</p>
       <p class="addr">161 Water Street, Suite 2026<br>New York, NY 10038<br>info@aceforce.group</p>
     </div>
-    <form id="cform" novalidate>
+    <form id="cform" novalidate data-ok="Thank you. Your note is on its way to the AceForce team, and we will reply by email."><input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="field"><label for="f-name">Name</label><input id="f-name" type="text" autocomplete="name"></div>
       <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" autocomplete="email"></div>
       <div class="field full"><label for="f-brand">Brand</label><input id="f-brand" type="text"></div>
       <div class="field full"><label for="f-msg">What you're working on</label><textarea id="f-msg" rows="5"></textarea></div>
       <button class="btn btn-lime" type="submit">Send</button>
-      <p class="sent" id="sent" hidden>Your email app should open with the message ready to send. If it doesn't, write to info@aceforce.group.</p>
+      <p class="sent" id="sent" role="status" hidden></p>
     </form>
   </div>
 </section>
