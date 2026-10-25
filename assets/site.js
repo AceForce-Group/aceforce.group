@@ -85,7 +85,8 @@
   function logoBox(){
     var heroTop=intro.getBoundingClientRect().top-stage.getBoundingClientRect().top;
     var Lw=Math.min(W*.86,1180), Lh=Lw*104/1160;
-    var cy=Math.min(H*.34, heroTop-48-Lh/2); cy=Math.max(cy, 110+Lh/2);
+    var gap=W<760?28:48, top=W<760?92:110;
+    var cy=Math.min(H*.34, heroTop-gap-Lh/2); cy=Math.max(cy, top+Lh/2);
     return {w:Lw,h:Lh,x:(W-Lw)/2,y:cy-Lh/2};
   }
 
