@@ -1,3 +1,4 @@
+@font-face{font-family:'Changeling Neo';src:url('/assets/fonts/ChangelingNeo-Bold.woff2') format('woff2');font-weight:400 700;font-style:normal;font-display:swap}
 /* base reset (the page skeleton) */
 html,body{margin:0}
 img,video{max-width:100%}
@@ -7,7 +8,7 @@ img,video{max-width:100%}
 :root{
   --lime:#C1FD5D; --navy:#091F34; --navy-deep:#06172a; --black:#000000; --stone:#E0DFDA; --white:#FFFFFF;
   --ink:#091F34; --ink-soft:#2b3946; --mist:#C9D2DB; --dim:#8E9BA8; --rule-dark:#22374b; --rule-light:#c4c3bd;
-  --f-display:'Michroma','Arial Black',sans-serif;
+  --f-display:'Changeling Neo','Michroma','Arial Black',sans-serif;
   --f-body:'IBM Plex Mono',Consolas,monospace;
   --f-ui:'IBM Plex Mono',Consolas,monospace;
   --wrap:1240px;
@@ -127,6 +128,7 @@ html.fx .svc li p{display:none}
 table{width:100%;min-width:700px;border-collapse:collapse;font-size:14px;line-height:1.55}
 th,td{text-align:left;vertical-align:top;padding:16px;border-bottom:1px solid var(--stone)}
 thead th{font-family:var(--f-ui);font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:2px solid var(--navy)}
+thead th{color:var(--ink)}
 thead th.us{background:var(--navy);color:var(--lime)}
 tbody th{font-family:var(--f-ui);font-weight:700;padding-left:0;width:22%}
 td.us{background:#f3f3f0;color:var(--ink)}
@@ -171,7 +173,7 @@ td.them{color:var(--ink-soft)}
 .ph{background:var(--navy-deep);border:1px dashed #3a5570;color:var(--mist);display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-family:var(--f-ui);font-size:12px;line-height:1.6;letter-spacing:.04em}
 .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px}
 .shots .ph{aspect-ratio:5/4}
-.shot{margin:0;display:flex;flex-direction:column;gap:8px}
+.shot{margin:0;display:flex;flex-direction:column;gap:8px;max-width:560px}
 .shot img{width:100%;aspect-ratio:5/4;object-fit:cover;object-position:50% 50%;display:block}
 .shot figcaption{font-family:var(--f-ui);font-size:11px;letter-spacing:.04em;color:var(--ink-soft)}
 .shot figcaption a{color:var(--ink-soft)}
