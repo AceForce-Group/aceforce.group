@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AceForce Connector Studio</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Mono:wght@400;500;700&display=swap">
+<style>
+@font-face{font-family:'Changeling Neo';src:url('/assets/fonts/ChangelingNeo-Bold.woff2') format('woff2');font-weight:400 700;font-style:normal;font-display:swap}
+/* Layout: aceforce.group bands (black, navy, stone) carrying one client form in order: code, keys, run settings, go live, then the log */
+:root{
+  --lime:#C1FD5D; --navy:#091F34; --navy-deep:#06172a; --black:#000; --stone:#E0DFDA; --white:#fff;
+  --ink:#091F34; --ink-soft:#2b3946; --mist:#C9D2DB; --dim:#8E9BA8; --rule-dark:#22374b; --rule-light:#c4c3bd; --field-line:#3a5570;
+  --red:#FF4D5E; --amber:#FFC24D;
+  --f-display:'Changeling Neo','Michroma','Arial Black',sans-serif;
+  --f-mono:'IBM Plex Mono',Consolas,monospace;
+  --wrap:1240px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+[hidden]{display:none!important}
+body{background:var(--black);color:var(--white);font-family:var(--f-mono);font-size:15px;line-height:1.65}
+a{color:var(--lime)}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:400;text-transform:uppercase;text-wrap:balance;margin:0}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lime)}
+.stone .eyebrow{color:var(--ink-soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid transparent;cursor:pointer;background:none;border-radius:0}
+.btn-lime{background:var(--lime);color:var(--navy)}
+.btn-lime:hover{background:var(--white)}
+.btn-ghost{border-color:var(--white);color:var(--white)}
+.btn-ghost:hover{background:var(--white);color:var(--navy)}
+.btn-navy{background:var(--navy);color:var(--lime);border-color:var(--navy)}
+.btn-navy:hover{background:var(--black)}
+.btn-red{background:var(--red);color:var(--black)}
+.btn-red:hover{background:var(--white)}
+.btn-text{min-height:auto;padding:4px 0;color:var(--lime);border-bottom:1px solid currentColor}
+.stone .btn-text{color:var(--ink)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn-sm{min-height:40px;padding:0 16px;font-size:12px}
+
+/* header */
+.top{background:var(--black);border-bottom:1px solid #16232f;padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-block:18px}
+.top img{width:172px;height:auto;display:block}
+.top nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 24px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.top nav a{color:var(--white);text-decoration:none;padding:10px 0;border-bottom:2px solid transparent}
+.top nav a:hover{color:var(--lime)}
+.top nav a.on{color:var(--lime);border-color:var(--lime)}
+.acct{display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist)}
+.acct b{color:var(--white)}
+
+/* hero */
+.hero{padding-block:72px 64px;background:radial-gradient(circle at 85% 20%,rgba(193,253,93,.08),transparent 40%),var(--black)}
+.hero .wrap{display:flex;flex-direction:column;gap:20px}
+.hero h1{font-size:clamp(30px,4.4vw,56px);line-height:1.12}
+.hero .lede{max-width:640px;color:var(--mist)}
+.readout{display:flex;flex-wrap:wrap;gap:10px 28px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);border-top:1px solid var(--rule-dark);padding-top:18px;font-variant-numeric:tabular-nums}
+.readout b{color:var(--lime);font-weight:700}
+.livedot{display:inline-block;width:8px;height:8px;background:var(--lime);margin-right:8px;box-shadow:0 0 8px rgba(193,253,93,.8);vertical-align:1px}
+@media (prefers-reduced-motion:no-preference){.livedot{animation:blink 2s ease-in-out infinite}}
+@keyframes blink{50%{opacity:.35}}
+
+/* bands */
+.band{padding-block:72px}
+.band.navy{background:var(--navy)}
+.band.black{background:var(--black)}
+.band.stone{background:var(--stone);color:var(--ink)}
+.sec{display:flex;flex-direction:column;gap:28px}
+.sec-head{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:8px 18px;align-items:start}
+.sec-head .n{font-size:12px;letter-spacing:.1em;color:var(--lime);width:44px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(193,253,93,.45);margin-top:2px}
+.stone .sec-head .n{color:var(--ink);border-color:var(--ink)}
+.sec-head h2{font-size:clamp(20px,2.4vw,30px);line-height:1.2}
+.sec-head p{grid-column:2;color:var(--mist);max-width:70ch;font-size:14.5px}
+.stone .sec-head p{color:var(--ink-soft)}
+.dest{font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px dashed var(--field-line);padding:6px 10px;color:var(--mist);white-space:nowrap;grid-column:3;grid-row:1}
+.stone .dest{border-color:var(--rule-light);color:var(--ink-soft)}
+.dest::before{content:"\2660";color:var(--lime);margin-right:8px}
+.stone .dest::before{color:var(--ink)}
+
+/* fields */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.field>label,.flabel{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist)}
+.stone .field>label,.stone .flabel{color:var(--ink-soft)}
+input[type=text],input[type=password],input[type=number],select,.ro{min-height:48px;padding:10px 14px;background:var(--navy-deep);border:1px solid var(--field-line);color:var(--white);border-radius:0;width:100%;min-width:0;font-size:14.5px}
+.stone input[type=text],.stone input[type=password]{background:var(--white);border-color:var(--rule-light);color:var(--ink)}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--lime) 50%),linear-gradient(135deg,var(--lime) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:36px}
+.ro{display:flex;align-items:center;color:var(--dim)}
+.help{font-size:12.5px;color:var(--dim);line-height:1.55}
+.stone .help{color:var(--ink-soft)}
+input[type=range]{width:100%;accent-color:var(--lime)}
+.val{color:var(--lime);font-weight:700;font-variant-numeric:tabular-nums}
+.guard{font-size:12px;color:var(--dim);letter-spacing:.02em}
+.guard::before{content:"Safe range: ";text-transform:uppercase;letter-spacing:.1em;font-size:10.5px}
+.guard.over{color:var(--amber);font-weight:700}
+.note{border-left:3px solid var(--lime);padding:12px 16px;background:rgba(193,253,93,.06);font-size:14px;color:var(--mist);max-width:860px}
+.note.warn{border-color:var(--amber);background:rgba(255,194,77,.08)}
+.note.danger{border-color:var(--red);background:rgba(255,77,94,.08)}
+
+/* segmented */
+.seg{display:flex;flex-wrap:wrap;border:1px solid var(--field-line);width:fit-content;max-width:100%}
+.seg button{border:0;background:none;padding:14px 20px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--lime);color:var(--navy)}
+
+/* editor */
+.ed-bar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;border:1px solid var(--rule-dark);border-bottom:0;padding:10px 14px;font-size:12px;background:var(--navy-deep)}
+.ed-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.ed-tabs span{padding:4px 12px;border:1px solid transparent;color:var(--dim)}
+.ed-tabs span.on{border-color:var(--lime);color:var(--lime)}
+.diff{color:var(--dim);letter-spacing:.04em}
+.diff .a{color:var(--lime)}.diff .r{color:var(--red)}
+.editor{display:grid;grid-template-columns:auto minmax(0,1fr);border:1px solid var(--rule-dark);background:#030b15;height:480px;overflow:hidden}
+.gutter{font-size:13px;line-height:1.65;color:#3d5268;text-align:right;padding:14px 12px 14px 16px;user-select:none;overflow:hidden;white-space:pre;border-right:1px solid var(--rule-dark)}
+#code{font-family:var(--f-mono);font-size:13px;line-height:1.65;color:#dfe7ee;background:transparent;border:0;resize:none;padding:14px 16px;white-space:pre;overflow:auto;tab-size:4;outline:none;width:100%;height:100%;caret-color:var(--lime)}
+#code:focus-visible{box-shadow:inset 0 0 0 1px var(--lime)}
+.row{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.row .field{flex:1 1 320px}
+
+/* secrets */
+.stored{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:0 14px;background:var(--navy);color:var(--white);border:1px solid var(--navy)}
+.stars{letter-spacing:.22em;color:var(--lime);overflow:hidden;white-space:nowrap}
+.stored .btn-text{color:var(--lime)}
+.secret-in{display:flex;gap:0}
+.secret-in input{flex:1}
+.secret-in .btn{min-height:48px}
+.lockline{font-size:12px;color:var(--ink-soft)}
+.lockline::before{content:"\2660";margin-right:8px;color:var(--ink)}
+
+/* go live */
+.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.opt{background:var(--white);padding:28px;display:flex;flex-direction:column;gap:16px;border-top:4px solid var(--navy)}
+.opt.danger{border-top-color:var(--red)}
+.opt h3{font-size:18px;line-height:1.3}
+.opt .price{color:var(--ink-soft);font-family:var(--f-mono);font-weight:700}
+.opt ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--ink-soft)}
+.opt li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px}
+.opt li::before{content:"\2660";color:var(--ink)}
+.opt.danger li::before{color:var(--red)}
+.opt .btn{width:100%;margin-top:auto}
+.summary{font-size:14px;color:var(--ink);border-top:2px solid var(--navy);padding-top:14px}
+.admin{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--rule-light);padding-top:20px;font-size:14px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--navy);color:var(--lime);padding:3px 8px;margin-right:10px}
+.switch{position:relative;width:52px;height:28px;flex:none}
+.switch input{position:absolute;opacity:0;width:0;height:0}
+.switch span{position:absolute;inset:0;background:var(--rule-light);cursor:pointer;transition:.15s}
+.switch span::after{content:"";position:absolute;width:20px;height:20px;left:4px;top:4px;background:var(--white);transition:.15s}
+.switch input:checked+span{background:var(--navy)}
+.switch input:checked+span::after{transform:translateX(24px);background:var(--lime)}
+.switch input:focus-visible+span{outline:2px solid var(--navy);outline-offset:3px}
+
+/* log */
+.filters{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--field-line);width:fit-content;max-width:100%}
+.filters button{background:none;border:0;padding:10px 16px;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--lime);color:var(--navy)}
+.sample{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);border:1px solid var(--rule-dark);padding:4px 10px;grid-column:3;grid-row:1}
+.tablebox{overflow-x:auto}
+table{width:100%;min-width:780px;border-collapse:collapse;font-size:13.5px;line-height:1.55}
+th,td{text-align:left;vertical-align:top;padding:14px 14px;border-bottom:1px solid var(--rule-dark)}
+thead th{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);border-bottom:2px solid var(--lime);font-weight:700}
+td:first-child,th:first-child{padding-left:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.when{white-space:nowrap;color:var(--mist)}
+.st{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.st::before{content:"";width:8px;height:8px;background:currentColor}
+.st.ok{color:var(--lime)}.st.err{color:var(--red)}.st.warn{color:var(--amber)}.st.dep{color:var(--mist)}
+
+footer{background:var(--black);border-top:1px solid #16232f;padding-block:28px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* modal + toast */
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;place-items:center;padding:16px;z-index:50}
+.modal{background:var(--navy);border-top:4px solid var(--lime);max-width:600px;width:100%;padding:32px;display:flex;flex-direction:column;gap:18px;max-height:calc(100vh - 32px);overflow:auto}
+.modal.danger{border-top-color:var(--red)}
+.modal h3{font-size:20px;line-height:1.3}
+.modal p{color:var(--mist);font-size:14px}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.checks li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:10px 0;border-top:1px solid var(--rule-dark);font-size:13.5px}
+.checks li:last-child{border-bottom:1px solid var(--rule-dark)}
+.checks .ico{width:24px;height:24px;display:grid;place-items:center;font-weight:700;font-size:12px;border:1px solid currentColor}
+.checks .pass .ico{color:var(--lime)}.checks .fail .ico{color:var(--red)}
+.checks .detail{display:block;color:var(--dim);font-size:12.5px}
+.confirm{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;color:var(--mist)}
+.confirm input{margin-top:4px;accent-color:var(--lime)}
+.actions{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap}
+.toast{position:fixed;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--lime);color:var(--navy);padding:14px 20px;font-weight:700;font-size:13px;letter-spacing:.04em;z-index:60;max-width:calc(100vw - 40px)}
+
+@media (max-width:860px){.grid2,.grid3,.options{grid-template-columns:minmax(0,1fr)}.sec-head{grid-template-columns:44px minmax(0,1fr)}.dest,.sample{grid-column:2;grid-row:auto;justify-self:start}.editor{height:400px}.acct span{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a href="/" aria-label="AceForce Group home"><img src="/assets/aceforce-logo-white-alpha.png" alt="AceForce"></a>
+    <nav aria-label="Client portal">
+      <a href="#">Orders</a>
+      <a href="#">Inventory</a>
+      <a href="#" class="on" aria-current="page">Connectors</a>
+      <a href="#">Reports</a>
+      <a href="#">Billing</a>
+    </nav>
+    <div class="acct"><span>Signed in to</span><b>WE EVOLVETOGETHER INC</b><button class="btn btn-ghost btn-sm" type="button">Log out</button></div>
+  </div>
+</header>
+
+<main>
+<form id="form" novalidate>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Client portal · Custom connector · Sample</p>
+      <h1>ET Mirakl Orders</h1>
+      <p class="lede">Nordstrom marketplace orders from Mirakl into Capacity and NetSuite. The code, keys and run settings are yours. Edit them here, by hand or with Claude or Codex, and choose how each change goes live.</p>
+      <div class="readout">
+        <span><span class="livedot"></span>Status <b id="liveVer">Live v14</b></span>
+        <span>Repo <b>AceForce-Group/ET_Mirakl_NS</b></span>
+        <span>Host <b id="hostRead">AceForce · GCP us-central1</b></span>
+        <span>Last run <b>Oct 26 6:00 PM · OK</b></span>
+        <span id="prRead" hidden>Review <b id="prReadB"></b></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band navy">
+    <div class="wrap sec">
+      <div class="sec-head"><span class="n">00</span><div><h2>Ownership and hosting</h2></div>
+        <p>The code is yours either way. Choose who runs it.</p></div>
+      <div class="seg" role="group" aria-label="Hosting">
+        <button type="button" id="hostAce" aria-pressed="true">Hosted by AceForce</button>
+        <button type="button" id="hostSelf" aria-pressed="false">Self-hosted</button>
+      </div>
+      <p class="note" id="hostNote"></p>
+    </div>
+  </section>
+
+  <section class="band black">
+    <div class="wrap sec">
+      <div class="sec-head"><span class="n">01</span><div><h2>Connector code</h2></div>
+        <span class="dest">GitHub · ET_Mirakl_NS</span>
+        <p>Edit the function directly or paste in a version from Claude or Codex. Nothing runs until you pick a go-live option in step 04.</p></div>
+      <div>
+        <div class="ed-bar">
+          <div class="ed-tabs"><span class="on">main.py</span><span>requirements.txt</span><span>mapping.json</span></div>
+          <span class="diff" id="diff"></span>
+        </div>
+        <div class="editor">
+          <div class="gutter" id="gutter" aria-hidden="true"></div>
+          <textarea id="code" spellcheck="false" wrap="off" aria-label="Connector code, main.py"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="commitMsg">Change note</label><input type="text" id="commitMsg" placeholder="What changed and why"></div>
+        <button class="btn btn-ghost" type="button" id="resetCode">Discard changes</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band stone">
+    <div class="wrap sec">
+      <div class="sec-head"><span class="n">02</span><div><h2>Secrets and API keys</h2></div>
+        <span class="dest">Google Cloud · Secret Manager</span>
+        <p>Keys are encrypted in Google Secret Manager, never stored in the code or the repo. After saving, they show only as masked values.</p></div>
+      <div class="grid2">
+        <div class="field" id="s-secret"></div>
+        <div class="field" id="s-key"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band navy">
+    <div class="wrap sec">
+      <div class="sec-head"><span class="n">03</span><div><h2>Run settings</h2></div>
+        <span class="dest">Google Cloud · Run + Scheduler</span>
+        <p>How often the connector runs and how much it can do at once. Changes inside the safe range can go live directly. Anything outside it needs an engineer review.</p></div>
+      <div class="grid3">
+        <div class="field">
+          <label for="sched">Schedule</label>
+          <select id="sched">
+            <option value="*/15 * * * *" data-review="1">Every 15 minutes</option>
+            <option value="0 * * * *">Every hour</option>
+            <option value="0 8-18/2 * * 1-5" selected>Every 2 hours, 8 AM to 6 PM ET, weekdays</option>
+            <option value="0 */4 * * *">Every 4 hours</option>
+            <option value="0 6 * * *">Daily at 6 AM ET</option>
+          </select>
+          <span class="help" id="cron"></span>
+          <span class="guard" id="g-sched">every hour or slower</span>
+        </div>
+        <div class="field">
+          <label for="conc">Concurrency · <span class="val" id="concVal">2</span> parallel runs</label>
+          <input type="range" id="conc" min="1" max="10" value="2">
+          <span class="guard" id="g-conc">1 to 4</span>
+        </div>
+        <div class="field">
+          <label for="timeout">Timeout per run</label>
+          <select id="timeout"><option value="60">60 seconds</option><option value="120" selected>120 seconds</option><option value="300">300 seconds</option><option value="540" data-review="1">540 seconds</option></select>
+          <span class="guard" id="g-timeout">up to 300 seconds</span>
+        </div>
+        <div class="field">
+          <label for="mem">Memory</label>
+          <select id="mem"><option>256 MB</option><option selected>512 MB</option><option data-review="1">1 GB</option></select>
+          <span class="guard" id="g-mem">up to 512 MB</span>
+        </div>
+        <div class="field">
+          <label for="retries">Retries on failure</label>
+          <input type="number" id="retries" min="0" max="5" value="3">
+          <span class="guard" id="g-retries">0 to 3</span>
+        </div>
+        <div class="field">
+          <span class="flabel">Runtime and region</span>
+          <div class="ro">Python 3.12 · us-central1</div>
+          <span class="help">Managed by AceForce</span>
+        </div>
+      </div>
+      <p class="note warn" id="rtWarn" hidden>These run settings are outside the safe range, so this change has to go through engineer review before it goes live.</p>
+    </div>
+  </section>
+
+  <section class="band stone">
+    <div class="wrap sec">
+      <div class="sec-head"><span class="n">04</span><div><h2>Go live</h2></div>
+        <p id="goSummary"></p></div>
+      <div class="options">
+        <div class="opt">
+          <h3>Review before go-live <span class="price">· $50</span></h3>
+          <ul>
+            <li>Opens a pull request on main with your change note</li>
+            <li>An AceForce engineer checks the code and run settings, tests it on your last 50 orders, then deploys it</li>
+            <li>Covered by your AceForce support agreement once live</li>
+            <li>Usually 1 business day, added to your next invoice</li>
+          </ul>
+          <button type="button" class="btn btn-navy" id="btnReview">Request review · $50</button>
+        </div>
+        <div class="opt danger">
+          <h3>Push live now</h3>
+          <ul>
+            <li>Automated checks first: syntax, keys, server load, run limits and a dry run</li>
+            <li>Deploys straight to production and records a pull request</li>
+            <li>Fixes for problems from unreviewed changes are billed at $150 an hour</li>
+            <li>AceForce can roll back to the last reviewed version at any time</li>
+          </ul>
+          <button type="button" class="btn btn-red" id="btnPush">Push live now</button>
+          <span class="help" id="pushBlocked" hidden></span>
+        </div>
+      </div>
+      <div class="admin">
+        <div><span class="tag">AceForce admin</span>Require engineer review for every change on this connector</div>
+        <label class="switch"><input type="checkbox" id="requireReview" aria-label="Require engineer review for every change"><span></span></label>
+      </div>
+    </div>
+  </section>
+
+  <section class="band black">
+    <div class="wrap sec">
+      <div class="sec-head"><span class="n" aria-hidden="true">&#9824;</span><div><h2>Run and deploy log</h2></div>
+        <span class="sample">Sample data</span>
+        <p>Every run, error, key change and deploy on this connector, newest first.</p></div>
+      <div class="filters" role="group" aria-label="Filter log">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="run" aria-pressed="false">Runs</button>
+        <button type="button" data-f="err" aria-pressed="false">Errors</button>
+        <button type="button" data-f="dep" aria-pressed="false">Changes</button>
+      </div>
+      <div class="tablebox">
+        <table>
+          <thead><tr><th>Time (ET)</th><th>Event</th><th>Status</th><th class="num">Orders</th><th class="num">Duration</th><th>Details</th></tr></thead>
+          <tbody id="logBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</form>
+</main>
+
+<footer><div class="wrap"><span>AceForce Group · Operations Evolved</span><span>Internal preview · not linked from the site</span></div></footer>
+
+<div class="backdrop" id="modalBg" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" id="modal"></div></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+const ORIGINAL = `import os
+import json
+import requests
+
+MIRAKL_URL = "https://nordstrom-prod.mirakl.net/api"
+CAPACITY_URL = "https://api.capacityllc.com/v2"
+
+def _headers_mirakl():
+    return {"Authorization": os.environ["MIRAKL_API_KEY"]}
+
+def _headers_capacity():
+    return {"X-Client-Secret": os.environ["CAPACITY_CLIENT_SECRET"]}
+
+def fetch_new_orders(since):
+    r = requests.get(
+        f"{MIRAKL_URL}/orders",
+        headers=_headers_mirakl(),
+        params={"order_state_codes": "SHIPPING", "start_update_date": since},
+        timeout=30,
+    )
+    r.raise_for_status()
+    return r.json().get("orders", [])
+
+def to_capacity(order):
+    mapping = json.load(open("mapping.json"))
+    return {
+        "reference": order["order_id"],
+        "channel": "NORDSTROM",
+        "ship_to": order["customer"]["shipping_address"],
+        "lines": [
+            {"sku": mapping.get(l["offer_sku"], l["offer_sku"]), "qty": l["quantity"]}
+            for l in order["order_lines"]
+        ],
+    }
+
+def handler(request):
+    since = request.args.get("since")
+    orders = fetch_new_orders(since)
+    sent, failed = 0, []
+    for o in orders:
+        resp = requests.post(f"{CAPACITY_URL}/orders", json=to_capacity(o),
+                             headers=_headers_capacity(), timeout=30)
+        if resp.ok:
+            sent += 1
+        else:
+            failed.append({"order": o["order_id"], "error": resp.text[:200]})
+    return {"sent": sent, "failed": failed}
+`;
+const $ = s => document.querySelector(s);
+const code = $("#code"), gutter = $("#gutter");
+let baseline = ORIGINAL, version = 14, prNum = 39, pendingPR = null, selfHosted = false;
+
+/* sample client edit: skip Nordstrom test orders, written with Claude, not yet live */
+code.value = ORIGINAL.replace("    for o in orders:\n",
+  "    # Skip Nordstrom marketplace test orders (added by Evolve ops with Claude)\n    orders = [o for o in orders if not o[\"order_id\"].startswith(\"TEST-\")]\n    for o in orders:\n");
+$("#commitMsg").value = "Skip Nordstrom test orders (IDs starting with TEST-)";
+
+const secrets = {
+  CAPACITY_CLIENT_SECRET:{label:"Capacity client secret", stored:true, ver:4, updated:"Oct 22, 2026", el:"#s-secret"},
+  MIRAKL_API_KEY:{label:"Mirakl API key", stored:false, ver:0, updated:"", el:"#s-key"}
+};
+function renderSecret(name){
+  const s = secrets[name], box = $(s.el), id = "in-" + name;
+  if (s.stored){
+    box.innerHTML = `<label for="${id}-r">${s.label}</label>
+      <div class="stored"><span class="stars" aria-label="Saved, value hidden">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span><button type="button" class="btn btn-text" id="${id}-r">Replace</button></div>
+      <span class="lockline">Encrypted · ${name.toLowerCase().replace(/_/g,"-")} · version ${s.ver} · ${s.updated}</span>`;
+    box.querySelector("button").onclick = () => { s.stored = false; s.replacing = true; renderSecret(name); box.querySelector("input").focus(); };
+  } else {
+    box.innerHTML = `<label for="${id}">${s.label}</label>
+      <div class="secret-in"><input type="password" id="${id}" autocomplete="off" placeholder="Paste ${s.label.toLowerCase()}"><button type="button" class="btn btn-navy">Save to Google Cloud</button></div>
+      <span class="help">${s.replacing ? "Saving replaces the current value." : "Not set yet. The code reads it as " + name + "."}</span>`;
+    const inp = box.querySelector("input"), b = box.querySelector("button");
+    const save = () => {
+      if (!inp.value.trim()){ inp.focus(); toast("Enter a value before saving."); return; }
+      inp.value = ""; Object.assign(s, {stored:true, replacing:false, ver:s.ver + 1, updated:"Oct 27, 2026"});
+      renderSecret(name); addLog("Key updated","dep","Saved",null,null,`${s.label} encrypted in Secret Manager as version ${s.ver}. Used from the next run.`);
+      toast(`${s.label} saved and encrypted.`); refresh();
+    };
+    b.onclick = save; inp.onkeydown = e => { if (e.key === "Enter"){ e.preventDefault(); save(); } };
+  }
+}
+Object.keys(secrets).forEach(renderSecret);
+
+function syncGutter(){ const n = code.value.split("\n").length; gutter.textContent = Array.from({length:n},(_,i)=>i+1).join("\n"); gutter.scrollTop = code.scrollTop; }
+code.addEventListener("scroll", () => gutter.scrollTop = code.scrollTop);
+code.addEventListener("keydown", e => { if (e.key === "Tab"){ e.preventDefault(); code.setRangeText("    ", code.selectionStart, code.selectionEnd, "end"); onCode(); } });
+code.addEventListener("input", onCode);
+function onCode(){ syncGutter(); refresh(); }
+function diffCount(){
+  const a = baseline.split("\n"), b = code.value.split("\n"), c = {};
+  a.forEach(l => c[l] = (c[l]||0) + 1); let add = 0;
+  b.forEach(l => { if (c[l] > 0) c[l]--; else add++; });
+  return {added:add, removed:Object.values(c).reduce((x,y)=>x+y,0)};
+}
+$("#resetCode").onclick = () => { code.value = baseline; onCode(); };
+
+const initial = {sched:"0 8-18/2 * * 1-5", conc:2, timeout:"120", mem:"512 MB", retries:3};
+function runtimeState(){
+  const o = {
+    sched:!!$("#sched").selectedOptions[0].dataset.review, conc:+$("#conc").value > 4,
+    timeout:!!$("#timeout").selectedOptions[0].dataset.review, mem:!!$("#mem").selectedOptions[0].dataset.review,
+    retries:+$("#retries").value > 3
+  };
+  const changed = $("#sched").value !== initial.sched || +$("#conc").value !== initial.conc || $("#timeout").value !== initial.timeout || $("#mem").value !== initial.mem || +$("#retries").value !== initial.retries;
+  return {over:o, changed, anyOver:Object.values(o).some(Boolean)};
+}
+["#sched","#conc","#timeout","#mem","#retries"].forEach(s => $(s).addEventListener("input", refresh));
+
+const hostText = {
+  ace:"AceForce runs, monitors and supports this connector for $400 a month. Every change lands as a pull request on main, so there is always a record of what changed and a one-click rollback.",
+  self:"We transfer the repo to your GitHub organization along with the Terraform files for Google Cloud: schedule, concurrency, memory and the secret references. You deploy and monitor it yourself. AceForce support is available at $150 an hour."
+};
+function setHost(v){
+  selfHosted = v;
+  $("#hostAce").setAttribute("aria-pressed", !v); $("#hostSelf").setAttribute("aria-pressed", v);
+  $("#hostNote").className = v ? "note warn" : "note"; $("#hostNote").textContent = v ? hostText.self : hostText.ace;
+  $("#hostRead").textContent = v ? "Client · repo transfer requested" : "AceForce · GCP us-central1";
+  refresh();
+}
+$("#hostAce").onclick = () => setHost(false); $("#hostSelf").onclick = () => setHost(true);
+$("#requireReview").addEventListener("change", refresh);
+
+function refresh(){
+  const d = diffCount(), rt = runtimeState(), codeChanged = d.added + d.removed > 0;
+  $("#diff").innerHTML = codeChanged ? `Changed vs v${version} · <span class="a">+${d.added}</span> <span class="r">&minus;${d.removed}</span>` : `No changes from v${version}`;
+  $("#cron").textContent = "cron " + $("#sched").value;
+  $("#concVal").textContent = $("#conc").value;
+  for (const k in rt.over) $("#g-" + k).classList.toggle("over", rt.over[k]);
+  $("#rtWarn").hidden = !rt.anyOver;
+  const parts = []; if (codeChanged) parts.push(`code (+${d.added} / −${d.removed} lines)`); if (rt.changed) parts.push("run settings");
+  const has = parts.length > 0;
+  $("#goSummary").textContent = has ? `Ready to deploy: ${parts.join(" and ")}, on top of live version v${version}.` : `Nothing to deploy. Live version is v${version}.`;
+  let block = "";
+  if (selfHosted) block = "Self-hosted connectors deploy from your own repo.";
+  else if ($("#requireReview").checked) block = "AceForce requires engineer review for every change on this connector.";
+  else if (rt.anyOver) block = "Run settings outside the safe range need engineer review.";
+  else if (pendingPR) block = `Pull request #${pendingPR} is waiting for review.`;
+  $("#btnPush").disabled = !has || !!block;
+  $("#btnReview").disabled = !has || selfHosted || !!pendingPR;
+  $("#pushBlocked").hidden = !block || !has; $("#pushBlocked").textContent = block;
+}
+
+function runChecks(){
+  const src = code.value, res = [], P = {"(":1,"[":1,"{":1,")":-1,"]":-1,"}":-1};
+  let bal = 0, ok = true;
+  src.replace(/"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|#.*$/gm, "").split("").forEach(c => { if (P[c]){ bal += P[c]; if (bal < 0) ok = false; } });
+  res.push({name:"Python syntax", pass:ok && !bal, detail:ok && !bal ? "main.py parsed" : "Unbalanced brackets in main.py"});
+  const used = [...new Set([...src.matchAll(/os\.environ\[["'](\w+)["']\]|os\.getenv\(["'](\w+)["']/g)].map(m => m[1]||m[2]))];
+  const missing = used.filter(n => !(secrets[n] && secrets[n].stored));
+  res.push({name:"Keys saved", pass:!missing.length, detail:missing.length ? `Not saved yet: ${missing.join(", ")}. Add it in step 02.` : `${used.length} referenced, all in Secret Manager`});
+  const hard = /(api[_-]?key|secret|token)\s*=\s*["'][A-Za-z0-9_\-]{12,}["']/i.test(src);
+  res.push({name:"No keys pasted into code", pass:!hard, detail:hard ? "A key-like value is written into main.py. Move it to step 02." : "Clean"});
+  const loop = /while\s+True\s*:/.test(src) && !/break/.test(src);
+  const noTo = (src.match(/requests\.(get|post|put|patch)\(/g)||[]).length > (src.match(/timeout\s*=/g)||[]).length;
+  res.push({name:"Server load guard", pass:!loop && !noTo, detail:loop ? "Endless while True loop would run until timeout on every run" : noTo ? "An outbound request has no timeout" : "No endless loops; every request has a timeout"});
+  const rt = runtimeState();
+  res.push({name:"Run settings in safe range", pass:!rt.anyOver, detail:rt.anyOver ? "Outside safe range" : `${$("#sched").selectedOptions[0].text.split(",")[0]} · ${$("#conc").value} parallel runs`});
+  const dry = res.every(r => r.pass);
+  res.push({name:"Dry run on last 50 orders (sandbox)", pass:dry, detail:dry ? "50 of 50 mapped, 0 errors, 3.8s average" : "Runs once the checks above pass"});
+  return res;
+}
+
+const bg = $("#modalBg"), modal = $("#modal"); let lastFocus = null;
+function openModal(html, cls, ready){
+  lastFocus = document.activeElement; modal.className = "modal " + (cls||""); modal.innerHTML = html; bg.hidden = false;
+  modal.querySelectorAll("[data-close]").forEach(b => b.onclick = closeModal);
+  ready && ready(); (modal.querySelector("input,button:not([disabled])")||modal).focus();
+}
+function closeModal(){ bg.hidden = true; modal.innerHTML = ""; lastFocus && lastFocus.focus(); }
+bg.addEventListener("click", e => { if (e.target === bg) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !bg.hidden) closeModal(); });
+
+$("#btnPush").onclick = () => {
+  const ch = runChecks(), all = ch.every(c => c.pass);
+  openModal(`<p class="eyebrow">Production deploy</p><h3 id="mTitle">Push v${version+1} live?</h3>
+    <p>This replaces live version v${version}. Nordstrom orders run through the new code at the next scheduled run.</p>
+    <ul class="checks">${ch.map(c => `<li class="${c.pass?"pass":"fail"}"><span class="ico">${c.pass?"&#10003;":"!"}</span><span>${c.name}<span class="detail">${c.detail}</span></span></li>`).join("")}</ul>
+    ${all ? `<p class="note danger">This change has not been reviewed by an AceForce engineer. Fixes for problems it causes are billed at $150 an hour. AceForce can roll back to v${version} at any time.</p>
+      <label class="confirm"><input type="checkbox" id="ack"> I understand and want to deploy without review.</label>
+      <div class="field"><label for="typed">Type DEPLOY to confirm</label><input type="text" id="typed" autocomplete="off"></div>`
+      : `<p class="note warn">Fix the items above, or send this change for engineer review instead.</p>`}
+    <div class="actions"><button type="button" class="btn btn-ghost" data-close>Cancel</button>
+    ${all ? `<button type="button" class="btn btn-red" id="doPush" disabled>Push live now</button>` : `<button type="button" class="btn btn-lime" id="toReview">Request review · $50</button>`}</div>`, "danger",
+  () => {
+    const go = $("#doPush");
+    if (go){ const u = () => go.disabled = !($("#ack").checked && $("#typed").value.trim() === "DEPLOY"); $("#ack").onchange = u; $("#typed").oninput = u; go.onclick = () => { closeModal(); deploy(false); }; }
+    const tr = $("#toReview"); if (tr) tr.onclick = () => { closeModal(); $("#btnReview").click(); };
+  });
+};
+
+$("#btnReview").onclick = () => {
+  const note = $("#commitMsg").value.trim().replace(/"/g,"&quot;");
+  openModal(`<p class="eyebrow">Engineer review</p><h3 id="mTitle">Send for review</h3>
+    <p>Opens pull request #${prNum} on ET_Mirakl_NS. An AceForce engineer reviews the code and run settings, tests it on your last 50 orders, then deploys it. You get an email when it's live.</p>
+    <div class="field"><label for="prNote">Note for the engineer</label><input type="text" id="prNote" value="${note}"></div>
+    <p class="note">$50 is added to your next AceForce invoice. Usually 1 business day.</p>
+    <div class="actions"><button type="button" class="btn btn-ghost" data-close>Cancel</button><button type="button" class="btn btn-lime" id="doReview">Request review · $50</button></div>`, "",
+  () => { $("#doReview").onclick = () => {
+    const n = $("#prNote").value.trim() || "Client change"; pendingPR = prNum++;
+    addLog("Review requested","dep","Awaiting review",null,null,`Pull request #${pendingPR}: ${n}. $50 added to next invoice.`);
+    $("#prRead").hidden = false; $("#prReadB").textContent = `PR #${pendingPR} pending`;
+    closeModal(); toast(`Pull request #${pendingPR} opened for review.`); refresh();
+    setTimeout(() => { if (pendingPR) approve(); }, 6000);
+  }; });
+};
+function approve(){ const n = pendingPR; pendingPR = null; addLog("Review approved","dep","Approved",null,null,`Pull request #${n} approved after a passing sandbox run.`); deploy(true, n); }
+function deploy(reviewed, pr){
+  version++; baseline = code.value;
+  Object.assign(initial, {sched:$("#sched").value, conc:+$("#conc").value, timeout:$("#timeout").value, mem:$("#mem").value, retries:+$("#retries").value});
+  const note = $("#commitMsg").value.trim() || "Client change";
+  addLog(`Deployed v${version}`,"dep",reviewed ? "Live · reviewed" : "Live · unreviewed",null,null,
+    reviewed ? `Pull request #${pr} merged to main and deployed by AceForce.` : `${note}. Auto-merged pull request #${prNum++}. Rollback target v${version-1}.`, true);
+  $("#liveVer").textContent = `Live v${version}`; $("#prRead").hidden = true; $("#commitMsg").value = "";
+  toast(`v${version} is live.`); syncGutter(); refresh();
+}
+
+const log = [
+  ["Oct 26, 6:00 PM","Scheduled run","run","ok","Success",14,"4.1s","14 Nordstrom orders sent to Capacity and posted to NetSuite"],
+  ["Oct 26, 4:00 PM","Scheduled run","err","warn","Warning",9,"11.7s","Mirakl rate limit (429). Retried twice, then succeeded"],
+  ["Oct 26, 2:00 PM","Scheduled run","err","err","Error",6,"3.9s","Capacity rejected NRD-88213: SKU ET-DEO-030 not set up in Capacity. 5 of 6 sent; retrying next run"],
+  ["Oct 26, 12:00 PM","Scheduled run","run","ok","Success",11,"3.6s","11 orders sent"],
+  ["Oct 26, 10:00 AM","Scheduled run","run","ok","Success",7,"3.2s","7 orders sent"],
+  ["Oct 22, 3:12 PM","Deployed v14","dep","dep","Live · reviewed",null,null,"Pull request #38 by ilya-aceforce: map new Nordstrom gift-set SKUs"],
+  ["Oct 22, 2:40 PM","Key updated","dep","dep","Saved",null,null,"Capacity client secret encrypted in Secret Manager as version 4"]
+].map(r => ({time:r[0], event:r[1], kind:r[2], st:r[3], label:r[4], orders:r[5], dur:r[6], detail:r[7], rollback:r[1].startsWith("Deployed")}));
+let filter = "all";
+function addLog(event, kind, label, orders, dur, detail, rollback){
+  log.unshift({time:"Oct 27, " + new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}), event, kind, st:"dep", label, orders, dur, detail, rollback:!!rollback});
+  renderLog();
+}
+function renderLog(){
+  const first = log.findIndex(x => x.rollback);
+  const rows = log.filter(r => filter === "all" || r.kind === filter || (filter === "run" && r.kind === "err"));
+  $("#logBody").innerHTML = rows.map(r => `<tr><td class="when">${r.time}</td><td>${r.event}</td><td><span class="st ${r.st}">${r.label}</span></td>
+    <td class="num">${r.orders ?? "&middot;"}</td><td class="num">${r.dur ?? "&middot;"}</td>
+    <td>${r.detail}${r.rollback && log.indexOf(r) !== first ? ` <button type="button" class="btn btn-text" data-rb="${r.event.replace("Deployed ","")}">Roll back</button>` : ""}</td></tr>`).join("");
+  document.querySelectorAll("[data-rb]").forEach(b => b.onclick = () => { addLog("Rolled back","dep","Live",null,null,`Restored ${b.dataset.rb} as the live version.`); toast(`Rolled back to ${b.dataset.rb}.`); });
+}
+document.querySelectorAll(".filters button").forEach(b => b.onclick = () => {
+  filter = b.dataset.f; document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x === b)); renderLog();
+});
+let tt; function toast(m){ const t = $("#toast"); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 3200); }
+$("#form").addEventListener("submit", e => e.preventDefault());
+setHost(false); syncGutter(); renderLog(); refresh();
+</script>
+</body>
+</html>
