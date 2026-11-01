@@ -21,7 +21,7 @@
     e.preventDefault();
     var st=document.getElementById('sent');
     if(!val('f-name')||!/^\S+@\S+\.\S+$/.test(val('f-email'))||!val('f-msg')){ st.hidden=false; st.textContent='Please add your name, a valid email and a short note.'; return; }
-    send(cf,{subject:'AceForce inquiry'+(val('f-brand')?' from '+val('f-brand'):''),from_name:'aceforce.group',name:val('f-name'),email:val('f-email'),brand:val('f-brand'),message:val('f-msg')},st,cf.querySelector('button[type=submit]'));
+    var tp=cf.getAttribute('data-topic'); send(cf,{subject:'AceForce inquiry'+(tp?' ('+tp+')':'')+(val('f-brand')?' from '+val('f-brand'):''),topic:tp||'Homepage',from_name:'aceforce.group',name:val('f-name'),email:val('f-email'),brand:val('f-brand'),message:val('f-msg')},st,cf.querySelector('button[type=submit]'));
   });
   var lf=document.getElementById('lform');
   if(lf) lf.addEventListener('submit',function(e){
