@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=dc37c0f-m">
+<link rel="stylesheet" href="/assets/site.css?v=11071045">
 </head>
 <body>
 <header class="top">
@@ -86,20 +86,79 @@
       <p style="color:var(--mist)">Systems we support and connect.</p>
     </div>
     <ul class="chips">
-      <li class="key"><b>Cin7 Core</b> · partner</li>
-      <li class="key"><b>NetSuite</b> · certified system admin</li>
-      <li>Shopify · GraphQL standard</li>
-      <li>Mirakl · implementation experts</li>
-      <li>Unleashed</li>
-      <li>Microsoft Business Central</li>
-      <li>Amazon API</li>
-      <li>TikTok Shop</li>
-      <li>Faire</li>
-      <li>ApparelMagic</li>
-      <li>ShipStation</li>
-      <li>Custom API scripts</li>
-      <li><a href="#connect">Something else? Ask.</a></li>
-    </ul>
+        <li class="key"><a href="/systems/cin7-core/"><b>Cin7 Core</b> · partner</a></li>
+        <li><a href="/systems/quickbooks/">QuickBooks · custom connector</a></li>
+        <li class="key"><a href="/systems/netsuite/"><b>NetSuite</b> · certified system admin</a></li>
+        <li><a href="/systems/shopify/">Shopify · GraphQL standard</a></li>
+        <li><a href="/systems/mirakl/">Mirakl · implementation experts</a></li>
+        <li><a href="/systems/amazon/">Amazon API</a></li>
+        <li><a href="/systems/tiktok-shop/">TikTok Shop</a></li>
+        <li><a href="/systems/faire/">Faire</a></li>
+        <li><a href="/systems/unleashed/">Unleashed</a></li>
+        <li><a href="/systems/microsoft/">Microsoft Business Central</a></li>
+        <li><a href="/systems/airtable-sheets/">Airtable · Google Sheets</a></li>
+        <li><a href="/systems/shipstation/">ShipStation</a></li>
+        <li class="key"><a href="/systems/wms/"><b>WMS</b> · 12 integrated</a></li>
+        <li><a href="/systems/custom-api/">Custom API scripts</a></li>
+        <li>SPS Commerce EDI</li>
+        <li>Bill.com</li>
+        <li>Stripe Connect</li>
+        <li>Celigo</li>
+        <li>ApparelMagic</li>
+        <li><a href="#connect">Something else? Ask.</a></li>
+      </ul>
+  </div>
+</section>
+
+<section id="connector" class="band black cx" aria-labelledby="cx-h">
+  <div class="wrap">
+    <div class="cx-head">
+      <p class="cx-tag"><i></i>New · Open source</p>
+      <h2 id="cx-h">Your connectors. <em>Your code.</em> Forever.</h2>
+      <p class="cx-lede">The AceForce Connector links your store, ERP and warehouse, and you own every line of it. Ask any brand what happens to their integrations if their vendor disappears in five years. Ours keep running.</p>
+    </div>
+    <div class="cx-map" id="cxMap">
+      <svg class="cx-wires" id="cxWires" aria-hidden="true"></svg>
+      <ul class="cx-col l"><p>Where orders start</p><li class=hot>Shopify</li><li>Amazon</li><li class=hot>TikTok Shop</li><li>Faire</li><li>Mirakl</li><li>Retail EDI</li><li>Airtable · Sheets</li></ul>
+      <div class="cx-core"><div><b>AceForce Connector</b><span>Open source</span></div></div>
+      <ul class="cx-col r"><p>Where they need to land</p><li class=hot>Cin7 Core</li><li>NetSuite</li><li>QuickBooks</li><li>Business Central</li><li>Unleashed</li><li class=hot>12 warehouse systems</li><li>ShipStation</li></ul>
+    </div>
+    <div class="cx-stats">
+      <div><b>40+</b><span>Connectors built</span></div>
+      <div><b>12</b><span>Warehouse systems mapped</span></div>
+      <div><b>1</b><span>Repository per connector, in your name</span></div>
+      <div><b>$0</b><span>License fees</span></div>
+    </div>
+    <ul class="cx-pillars"><li><small>01</small><h3>You own the code</h3><p>Every connector lives in its own repository that belongs to you, with your API keys and run settings. No black box, no hostage situation.</p></li><li><small>02</small><h3>Pay for hosting, not licenses</h3><p>We host it, monitor it and alert on every error. Or the repo moves to your own cloud. Your call, any time.</p></li><li><small>03</small><h3>Handover in under 24 hours</h3><p>Commented, organized code that any competent IT team or systems engineer can pick up in less than a day.</p></li><li><small>04</small><h3>Built by operators</h3><p>Written by people who ran operations at Chanel, Coty, Revlon and Casper, so it handles the edge cases your warehouse actually sees.</p></li></ul>
+    <div class="cx-apps">
+      <article class="cx-app"><small>Shopify app · live</small><h3>Warehouse Warden</h3><p>Watches your warehouse so you do not have to. Scheduled weekly or monthly reports with an executive snapshot and an order level workbook: fulfillment and delivery performance by state, split by channel tags such as TikTok Shop and marketplaces, and filtered by location.</p></article>
+      <article class="cx-app"><small>Shopify app · live</small><h3>AceForce Shipping App</h3><p>Picks the right carrier at fulfillment. Applies your carrier rules, hazmat routing and state by state shipping restrictions, and stops duplicate shipping charges across shipping profiles.</p></article>
+    </div>
+    <div class="cx-ctas"><a class="btn btn-lime" href="/connector/">See every connector</a><a class="btn btn-ghost" href="/systems/wms/">Warehouse systems we speak</a></div>
+  </div>
+</section>
+<script>
+(function(){var m=document.getElementById('cxMap'),s=document.getElementById('cxWires');if(!m||!s)return;
+function draw(){var r=m.getBoundingClientRect();if(r.width<860){s.innerHTML='';return;}var c=m.querySelector('.cx-core').getBoundingClientRect();
+var cx=c.left-r.left,cr=c.right-r.left,cy=c.top-r.top+c.height/2,h='';s.setAttribute('viewBox','0 0 '+r.width+' '+r.height);
+m.querySelectorAll('.cx-col.l li').forEach(function(li,i){var b=li.getBoundingClientRect(),x=b.right-r.left,y=b.top-r.top+b.height/2,mx=(x+cx)/2;
+var d='M'+x+' '+y+' C'+mx+' '+y+' '+mx+' '+cy+' '+cx+' '+(cy-30+i*10);h+='<path d="'+d+'"/>'+(li.className?'<path class="flow" d="'+d+'"/>':'');});
+m.querySelectorAll('.cx-col.r li').forEach(function(li,i){var b=li.getBoundingClientRect(),x=b.left-r.left,y=b.top-r.top+b.height/2,mx=(x+cr)/2;
+var d='M'+cr+' '+(cy-30+i*10)+' C'+mx+' '+cy+' '+mx+' '+y+' '+x+' '+y;h+='<path d="'+d+'"/>'+(li.className?'<path class="flow" d="'+d+'"/>':'');});
+s.innerHTML=h;}
+var lis=[].slice.call(m.querySelectorAll('.cx-col li'));setInterval(function(){lis.forEach(function(l){l.className='';});
+var a=lis[Math.floor(Math.random()*7)],b=lis[7+Math.floor(Math.random()*7)];a.className='hot';b.className='hot';draw();},2600);
+window.addEventListener('resize',draw);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);draw();})();
+</script>
+
+<section id="services-all" class="band navy sv" aria-labelledby="sv-h">
+  <div class="wrap">
+    <div class="cx-head" style="align-items:flex-start;text-align:left;margin:0">
+      <p class="eyebrow">Beyond the code</p>
+      <h2 id="sv-h" class="sec-h">Everything else we run.</h2>
+      <p class="cx-lede">The connector is the part people see. Most of our work is the operating layer around it: planning, warehouses, vendors, launches and the people who run them.</p>
+    </div>
+    <div class="cx-cat sv-grid"><section><h3>Planning and forecasting</h3><ul><li>Rolling 12 to 18 month demand forecasts by SKU, from finished goods to components</li><li>Integrated S&amp;OP design and a monthly cycle: demand review, supply review, executive decision</li><li>Retailer unit forecasts by SKU built on target weeks of supply</li><li>Weekly purchasing plans and SKU level buy plans</li><li>Safety stock, reorder points and supplier lead time trackers</li><li>Reorder rules and supply reviews ready for CFO approval</li></ul><p class="sv-more">+6 more</p></section><section><h3>Supply chain and logistics</h3><ul><li>3PL RFPs: shortlist, bid normalization, scoring and negotiation</li><li>Migration cost and payback analysis, including telling you to stay put</li><li>Incumbent 3PL renegotiation with SLAs and improvement plans</li><li>3PL site visits and audits: temperature control, FIFO, expiry</li><li>3PL migrations: cutover plan, SKU mapping, inventory transfer, 30 day stabilization</li><li>Warehouse decisions: renew, relocate, 3PL or hybrid, with cost to serve by channel</li></ul><p class="sv-more">+12 more</p></section><section><h3>Vendors and manufacturing</h3><ul><li>Manufacturer and supplier sourcing, vetting and quote comparison</li><li>Manufacturer management: schedules, MOQs, scorecards and single source risk</li><li>Manufacturer escalations to lock delivery dates</li><li>Formula ownership and IP verification</li><li>3PL contract compliance audits and rate increase reviews against the MSA</li><li>Vendor billing disputes documented to the timestamp</li></ul><p class="sv-more">+1 more</p></section><section><h3>Product and packaging</h3><ul><li>Packaging artwork to manufacturer specs and dieline fixes</li><li>Label compliance reviews</li><li>Product briefs and development</li><li>SKU, UPC, GS1 and item master setup for launch</li><li>Packaging inserts and gift with purchase planning</li><li>Bills of materials for domestic production</li></ul><p class="sv-more">+1 more</p></section><section><h3>Finance</h3><ul><li>Landed cost trackers and processes</li><li>Cash flow and margin forecasts, including 14 week cash models</li><li>Monthly cash models and month end reviews with outside accountants</li><li>Unit economics and SKU P&amp;Ls built from real invoices</li><li>A running P&amp;L when the books cannot be trusted yet</li><li>Capital raise support: deck input and investor introductions</li></ul><p class="sv-more">+5 more</p></section><section><h3>Retail and channel</h3><ul><li>Retail launch readiness: weeks of supply, ramp up and ship notice analysis</li><li>Retailer onboarding and compliance for Ulta, Nordstrom, Sephora and Target</li><li>Marketplace strategy across Target Plus, Amazon and TikTok Shop</li><li>Channel strategy for new brands</li><li>Influencer sampling and partnership introductions</li><li>Hospitality channel development</li></ul></section><section><h3>Organization and process</h3><ul><li>SOPs, runbooks and process maps</li><li>Change management and coaching for planning teams</li><li>Role design and job descriptions</li><li>New hire onboarding with tool handover and a tool register</li><li>Retiring legacy planning tools</li><li>Ops team capacity assessments and roadmaps</li></ul><p class="sv-more">+4 more</p></section><section><h3>Leadership</h3><ul><li>Fractional COO</li><li>Interim supply chain leadership with a 30 day handover</li><li>Steering committee support and executive reviews</li><li>Weekly advisory with founders, presidents and supply chain chiefs</li><li>Triage and restructuring for brands in distress</li><li>Lease and transition risk management</li></ul></section></div>
   </div>
 </section>
 
@@ -250,6 +309,6 @@
     <p>© 2026 AceForce Group · Otacon Group LLC DBA AceForce</p>
   </div>
 </footer>
-<script src="/assets/site.js?v=ec7e374-s"></script>
+<script src="/assets/site.js?v=11071045"></script>
 </body>
 </html>
