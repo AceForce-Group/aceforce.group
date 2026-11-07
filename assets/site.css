@@ -415,3 +415,10 @@ html.fx-dock.docked #footLogo{opacity:1}
 .sv-grid li{line-height:1.5}
 .sv-more{margin-top:14px;font-family:var(--f-ui);font-size:12px;color:var(--lime);letter-spacing:.1em}
 @media (max-width:760px){.cx-faq{grid-template-columns:1fr}}
+.sys-cx-link{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:22px;padding:20px;border:1px solid rgba(193,253,93,.45);background:linear-gradient(135deg,rgba(193,253,93,.10),rgba(0,0,0,.2));text-decoration:none;transition:border-color .25s,transform .25s,box-shadow .25s}
+.sys-cx-link:hover{border-color:var(--lime);transform:translateY(-2px);box-shadow:0 18px 50px -25px rgba(193,253,93,.6)}
+.sys-cx-link b{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:18px;line-height:1.2;color:var(--white)}
+.sys-cx-link em{font-style:normal;font-family:var(--f-ui);font-size:13px;color:var(--lime)}
+.cx-core{overflow:visible}
+.cx-rain{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.cx-core>div{position:relative;z-index:1}

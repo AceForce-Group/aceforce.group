@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=11071045">
+<link rel="stylesheet" href="/assets/site.css?v=11071531x">
 </head>
 <body class="sys-page">
 <header class="top">
@@ -38,14 +38,13 @@
   <div class="wrap">
     <div class="cx-head">
       <p class="cx-tag"><i></i>New · Open source</p>
-      <h1 id="cx-h" class="cx-h1">The connector <em>you own.</em></h1>
-      <p class="cx-lede">Most integration tools rent you a black box. The AceForce Connector hands you the code: one repository per connection, your keys, your settings, hosted by us or by you. Engineered, not out of the box.</p>
-      <div class="cx-ctas" style="margin-top:8px"><a class="btn btn-lime" href="#help">Map my stack</a><a class="btn btn-ghost" href="#catalog">See the catalog</a></div>
+      <h1 id="cx-h" class="cx-h1">Your connectors. <em>Your code.</em> Forever.</h1>
+      <p class="cx-lede">The AceForce Connector links your store, ERP and warehouse, and you own every line of it. Ask any brand what happens to their integrations if their vendor disappears in five years. Ours keep running.</p>
     </div>
     <div class="cx-map" id="cxMap">
       <svg class="cx-wires" id="cxWires" aria-hidden="true"></svg>
       <ul class="cx-col l"><p>Where orders start</p><li class=hot>Shopify</li><li>Amazon</li><li class=hot>TikTok Shop</li><li>Faire</li><li>Mirakl</li><li>Retail EDI</li><li>Airtable · Sheets</li></ul>
-      <div class="cx-core"><div><b>AceForce Connector</b><span>Open source</span></div></div>
+      <div class="cx-core"><canvas class="cx-rain" id="cxRain" aria-hidden="true"></canvas><div><b>AceForce Connector</b><span>Open source</span></div></div>
       <ul class="cx-col r"><p>Where they need to land</p><li class=hot>Cin7 Core</li><li>NetSuite</li><li>QuickBooks</li><li>Business Central</li><li>Unleashed</li><li class=hot>12 warehouse systems</li><li>ShipStation</li></ul>
     </div>
     <div class="cx-stats">
@@ -54,6 +53,12 @@
       <div><b>1</b><span>Repository per connector, in your name</span></div>
       <div><b>$0</b><span>License fees</span></div>
     </div>
+    <ul class="cx-pillars"><li><small>01</small><h3>You own the code</h3><p>Every connector lives in its own repository that belongs to you, with your API keys and run settings. No black box, no hostage situation.</p></li><li><small>02</small><h3>Pay for hosting, not licenses</h3><p>We host it, monitor it and alert on every error. Or the repo moves to your own cloud. Your call, any time.</p></li><li><small>03</small><h3>Handover in under 24 hours</h3><p>Commented, organized code that any competent IT team or systems engineer can pick up in less than a day.</p></li><li><small>04</small><h3>Built by operators</h3><p>Written by people who ran operations at Chanel, Coty, Revlon and Casper, so it handles the edge cases your warehouse actually sees.</p></li></ul>
+    <div class="cx-apps">
+      <article class="cx-app"><small>Shopify app · live</small><h3>Warehouse Warden</h3><p>Watches your warehouse so you do not have to. Scheduled weekly or monthly reports with an executive snapshot and an order level workbook: fulfillment and delivery performance by state, split by channel tags such as TikTok Shop and marketplaces, and filtered by location.</p></article>
+      <article class="cx-app"><small>Shopify app · live</small><h3>AceForce Shipping App</h3><p>Picks the right carrier at fulfillment. Applies your carrier rules, hazmat routing and state by state shipping restrictions, and stops duplicate shipping charges across shipping profiles.</p></article>
+    </div>
+    <div class="cx-ctas"><a class="btn btn-lime" href="#help">Map my stack</a><a class="btn btn-ghost" href="#catalog">See the catalog</a><a class="btn btn-ghost" href="/systems/wms/">Warehouse systems we speak</a></div>
   </div>
 </section>
 <section class="band navy" aria-labelledby="how-h">
@@ -68,12 +73,6 @@
     </ol>
   </div>
 </section>
-<section class="band black" aria-labelledby="why-h">
-  <div class="wrap">
-    <p class="eyebrow" id="why-h">Why open source</p>
-    <ul class="cx-pillars"><li><small>01</small><h3>You own the code</h3><p>Every connector lives in its own repository that belongs to you, with your API keys and run settings. No black box, no hostage situation.</p></li><li><small>02</small><h3>Pay for hosting, not licenses</h3><p>We host it, monitor it and alert on every error. Or the repo moves to your own cloud. Your call, any time.</p></li><li><small>03</small><h3>Handover in under 24 hours</h3><p>Commented, organized code that any competent IT team or systems engineer can pick up in less than a day.</p></li><li><small>04</small><h3>Built by operators</h3><p>Written by people who ran operations at Chanel, Coty, Revlon and Casper, so it handles the edge cases your warehouse actually sees.</p></li></ul>
-  </div>
-</section>
 <section class="band black" id="catalog" aria-labelledby="cat-h" style="padding-top:0">
   <div class="wrap">
     <p class="eyebrow">The catalog</p>
@@ -81,15 +80,6 @@
     <div class="cx-cat"><section><h3>Stores and channels</h3><ul><li>Shopify to 3PL, DTC and B2B</li><li>Shopify to Cin7 Core, NetSuite and Business Central</li><li>Amazon SP-API to planning and NetSuite</li><li>TikTok Shop tracking and channel mapping</li><li>Faire to Cin7 Core and 3PLs</li><li>Mirakl marketplaces to Shopify and NetSuite</li><li>Influencer and gratis order injection</li></ul></section><section><h3>ERP and accounting</h3><ul><li>Cin7 Core to QuickBooks custom connector</li><li>Cin7 reclass and corrector scripts</li><li>NetSuite transfer order and refund automation</li><li>Business Central to Shopify fulfillment sync</li><li>Cin7 to Bill.com and daily P&amp;L</li><li>Unleashed to 3PL</li></ul></section><section><h3>Warehouses and shipping</h3><ul><li>Capacity Partner API</li><li>Datex FootPrint</li><li>DCL eFactory</li><li>Mintsoft</li><li>PFC WMS</li><li>MasonHub</li><li>ShipStation, including per carton labels</li><li>AceForce WMS with Stripe Connect billing</li></ul></section><section><h3>EDI</h3><ul><li>SPS Commerce to Cin7 Core</li><li>3PL EDI orders into NetSuite</li><li>Retail EDI auto ship and invoice</li><li>EDI purchase orders with a Dynamics run 3PL</li></ul></section><section><h3>Planning and alerts</h3><ul><li>Multi source supply plan to SharePoint and Sheets</li><li>Daily demand planning feeds</li><li>Wholesale order forms on live stock</li><li>Airtable automations to partners and 3PLs</li><li>Shipment, transfer and EDI summary emails</li></ul></section></div>
     <p class="eyebrow" style="margin-top:56px">Case studies by system</p>
     <ul class="chips" style="margin-top:16px"><li><a href="/systems/cin7-core/">Cin7 Core</a></li><li><a href="/systems/quickbooks/">QuickBooks</a></li><li><a href="/systems/netsuite/">NetSuite</a></li><li><a href="/systems/shopify/">Shopify</a></li><li><a href="/systems/mirakl/">Mirakl</a></li><li><a href="/systems/amazon/">Amazon API</a></li><li><a href="/systems/tiktok-shop/">TikTok Shop</a></li><li><a href="/systems/faire/">Faire</a></li><li><a href="/systems/unleashed/">Unleashed</a></li><li><a href="/systems/microsoft/">Microsoft Business Central and SharePoint</a></li><li><a href="/systems/airtable-sheets/">Airtable and Google Sheets</a></li><li><a href="/systems/shipstation/">ShipStation</a></li><li><a href="/connector/">Warehouse systems</a></li><li><a href="/systems/custom-api/">Custom API scripts</a></li></ul>
-  </div>
-</section>
-<section class="band black cx" aria-labelledby="apps-h">
-  <div class="wrap">
-    <p class="eyebrow" id="apps-h">Apps we built and run</p>
-    <div class="cx-apps">
-      <article class="cx-app"><small>Shopify app · live</small><h3>Warehouse Warden</h3><p>Watches your warehouse so you do not have to. Scheduled weekly or monthly reports with an executive snapshot and an order level workbook: fulfillment and delivery performance by state, split by channel tags such as TikTok Shop and marketplaces, and filtered by location.</p></article>
-      <article class="cx-app"><small>Shopify app · live</small><h3>AceForce Shipping App</h3><p>Picks the right carrier at fulfillment. Applies your carrier rules, hazmat routing and state by state shipping restrictions, and stops duplicate shipping charges across shipping profiles.</p></article>
-    </div>
   </div>
 </section>
 <section class="band stone" aria-labelledby="faq-h">
@@ -129,6 +119,16 @@ window.addEventListener('resize',draw);if(document.fonts&&document.fonts.ready)d
   </div>
 </section>
 </main>
+<script>
+(function(){var cv=document.getElementById('cxRain');if(!cv)return;var x=cv.getContext('2d'),fs=11,cols=[],w,h,d=Math.min(window.devicePixelRatio||1,2);
+function size(){w=cv.clientWidth;h=cv.clientHeight;cv.width=w*d;cv.height=h*d;x.setTransform(d,0,0,d,0,0);cols=[];for(var i=0;i<Math.ceil(w/fs);i++)cols.push(Math.random()*h/fs);}
+function step(){x.fillStyle='rgba(193,253,93,.18)';x.fillRect(0,0,w,h);x.font='600 '+fs+'px "IBM Plex Mono",monospace';
+for(var i=0;i<cols.length;i++){var y=cols[i]*fs;x.fillStyle='rgba(9,31,52,'+(0.10+Math.random()*0.12)+')';x.fillText(Math.random()<.5?'0':'1',i*fs,y);
+if(y>h&&Math.random()>.97)cols[i]=0;else cols[i]+=0.5+Math.random()*0.25;}}
+size();window.addEventListener('resize',size);
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){for(var k=0;k<60;k++)step();return;}
+var last=0;(function loop(t){if(t-last>60){step();last=t;}requestAnimationFrame(loop);})(0);})();
+</script>
 <footer>
   <div class="wrap">
     <img src="/assets/aceforce-logo-lime-alpha.png" alt="AceForce">

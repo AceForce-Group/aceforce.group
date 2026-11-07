@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=11071045">
+<link rel="stylesheet" href="/assets/site.css?v=11071531x">
 </head>
 <body>
 <header class="top">
@@ -83,7 +83,8 @@
     <div class="intro">
       <p class="eyebrow">Systems</p>
       <h2 class="sec-h">We speak API, MCP and EDI.</h2>
-      <p style="color:var(--mist)">Systems we support and connect.</p>
+      <p style="color:var(--mist)">Systems we support and connect. Every chip opens its case studies.</p>
+      <a class="sys-cx-link" href="/connector/"><span class="cx-tag"><i></i>New · Open source</span><b>Meet the AceForce Connector</b><em>Your connectors, your code. See how it works →</em></a>
     </div>
     <ul class="chips">
         <li class="key"><a href="/systems/cin7-core/"><b>Cin7 Core</b> · partner</a></li>
@@ -109,47 +110,6 @@
       </ul>
   </div>
 </section>
-
-<section id="connector" class="band black cx" aria-labelledby="cx-h">
-  <div class="wrap">
-    <div class="cx-head">
-      <p class="cx-tag"><i></i>New · Open source</p>
-      <h2 id="cx-h">Your connectors. <em>Your code.</em> Forever.</h2>
-      <p class="cx-lede">The AceForce Connector links your store, ERP and warehouse, and you own every line of it. Ask any brand what happens to their integrations if their vendor disappears in five years. Ours keep running.</p>
-    </div>
-    <div class="cx-map" id="cxMap">
-      <svg class="cx-wires" id="cxWires" aria-hidden="true"></svg>
-      <ul class="cx-col l"><p>Where orders start</p><li class=hot>Shopify</li><li>Amazon</li><li class=hot>TikTok Shop</li><li>Faire</li><li>Mirakl</li><li>Retail EDI</li><li>Airtable · Sheets</li></ul>
-      <div class="cx-core"><div><b>AceForce Connector</b><span>Open source</span></div></div>
-      <ul class="cx-col r"><p>Where they need to land</p><li class=hot>Cin7 Core</li><li>NetSuite</li><li>QuickBooks</li><li>Business Central</li><li>Unleashed</li><li class=hot>12 warehouse systems</li><li>ShipStation</li></ul>
-    </div>
-    <div class="cx-stats">
-      <div><b>40+</b><span>Connectors built</span></div>
-      <div><b>12</b><span>Warehouse systems mapped</span></div>
-      <div><b>1</b><span>Repository per connector, in your name</span></div>
-      <div><b>$0</b><span>License fees</span></div>
-    </div>
-    <ul class="cx-pillars"><li><small>01</small><h3>You own the code</h3><p>Every connector lives in its own repository that belongs to you, with your API keys and run settings. No black box, no hostage situation.</p></li><li><small>02</small><h3>Pay for hosting, not licenses</h3><p>We host it, monitor it and alert on every error. Or the repo moves to your own cloud. Your call, any time.</p></li><li><small>03</small><h3>Handover in under 24 hours</h3><p>Commented, organized code that any competent IT team or systems engineer can pick up in less than a day.</p></li><li><small>04</small><h3>Built by operators</h3><p>Written by people who ran operations at Chanel, Coty, Revlon and Casper, so it handles the edge cases your warehouse actually sees.</p></li></ul>
-    <div class="cx-apps">
-      <article class="cx-app"><small>Shopify app · live</small><h3>Warehouse Warden</h3><p>Watches your warehouse so you do not have to. Scheduled weekly or monthly reports with an executive snapshot and an order level workbook: fulfillment and delivery performance by state, split by channel tags such as TikTok Shop and marketplaces, and filtered by location.</p></article>
-      <article class="cx-app"><small>Shopify app · live</small><h3>AceForce Shipping App</h3><p>Picks the right carrier at fulfillment. Applies your carrier rules, hazmat routing and state by state shipping restrictions, and stops duplicate shipping charges across shipping profiles.</p></article>
-    </div>
-    <div class="cx-ctas"><a class="btn btn-lime" href="/connector/">See every connector</a><a class="btn btn-ghost" href="/systems/wms/">Warehouse systems we speak</a></div>
-  </div>
-</section>
-<script>
-(function(){var m=document.getElementById('cxMap'),s=document.getElementById('cxWires');if(!m||!s)return;
-function draw(){var r=m.getBoundingClientRect();if(r.width<860){s.innerHTML='';return;}var c=m.querySelector('.cx-core').getBoundingClientRect();
-var cx=c.left-r.left,cr=c.right-r.left,cy=c.top-r.top+c.height/2,h='';s.setAttribute('viewBox','0 0 '+r.width+' '+r.height);
-m.querySelectorAll('.cx-col.l li').forEach(function(li,i){var b=li.getBoundingClientRect(),x=b.right-r.left,y=b.top-r.top+b.height/2,mx=(x+cx)/2;
-var d='M'+x+' '+y+' C'+mx+' '+y+' '+mx+' '+cy+' '+cx+' '+(cy-30+i*10);h+='<path d="'+d+'"/>'+(li.className?'<path class="flow" d="'+d+'"/>':'');});
-m.querySelectorAll('.cx-col.r li').forEach(function(li,i){var b=li.getBoundingClientRect(),x=b.left-r.left,y=b.top-r.top+b.height/2,mx=(x+cr)/2;
-var d='M'+cr+' '+(cy-30+i*10)+' C'+mx+' '+cy+' '+mx+' '+y+' '+x+' '+y;h+='<path d="'+d+'"/>'+(li.className?'<path class="flow" d="'+d+'"/>':'');});
-s.innerHTML=h;}
-var lis=[].slice.call(m.querySelectorAll('.cx-col li'));setInterval(function(){lis.forEach(function(l){l.className='';});
-var a=lis[Math.floor(Math.random()*7)],b=lis[7+Math.floor(Math.random()*7)];a.className='hot';b.className='hot';draw();},2600);
-window.addEventListener('resize',draw);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);draw();})();
-</script>
 
 <section id="services-all" class="band navy sv" aria-labelledby="sv-h">
   <div class="wrap">
