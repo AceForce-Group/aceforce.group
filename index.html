@@ -14,6 +14,8 @@
 <meta property="og:image" content="https://aceforce.group/assets/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#000000">
+<script>/* 80s mode: a visitor who switched to the arcade goes back to it, until they press Exit to 2026 */
+(function(){try{var q=location.search,k='aceforce-mode';if(/[?&]mode=26\b/.test(q)){localStorage.setItem(k,'26');}else if(/[?&]mode=80s\b/.test(q)||localStorage.getItem(k)==='80s'){location.replace('/arcade/');}}catch(e){}})();</script>
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,6 +31,7 @@
       <a href="#services">Services</a>
       <a href="#systems">Systems</a>
       <a href="#story">Our story</a>
+      <a class="mode-toggle" id="modeToggle" href="/arcade/" role="switch" aria-checked="false" aria-label="80s mode" title="Switch to the 80s arcade version"><span class="mt-y">26</span><span class="mt-track" aria-hidden="true"><span class="mt-knob"></span></span><span class="mt-y mt-80">80s</span></a>
       <a class="btn btn-lime" href="#connect">Connect</a>
     </nav>
   </div>

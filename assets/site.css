@@ -422,3 +422,12 @@ html.fx-dock.docked #footLogo{opacity:1}
 .cx-core{overflow:visible}
 .cx-rain{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
 .cx-core>div{position:relative;z-index:1}
+/* 80s mode toggle (header): links to the arcade easter egg at /arcade/ */
+.top nav a.mode-toggle{display:inline-flex;align-items:center;gap:8px;padding:10px 0;color:var(--mist);font-size:11px;letter-spacing:.1em}
+.mode-toggle .mt-track{position:relative;width:34px;height:18px;background:var(--navy-deep);box-shadow:0 0 0 2px var(--rule-dark);transition:box-shadow .2s ease}
+.mode-toggle .mt-knob{position:absolute;left:3px;top:3px;width:12px;height:12px;background:var(--mist);transition:transform .25s steps(4),background .2s ease}
+.mode-toggle .mt-80{font-family:'Courier New',monospace;font-weight:700}
+.top nav a.mode-toggle:hover,.top nav a.mode-toggle:focus-visible{color:var(--lime)}
+.mode-toggle:hover .mt-track,.mode-toggle:focus-visible .mt-track{box-shadow:0 0 0 2px var(--lime)}
+.mode-toggle:hover .mt-knob,.mode-toggle:focus-visible .mt-knob,.mode-toggle.on .mt-knob{transform:translateX(16px);background:var(--lime)}
+@media (max-width:760px){.top nav a.mode-toggle{display:inline-flex;margin-right:6px}.mode-toggle .mt-y:first-child{display:none}}

@@ -219,3 +219,14 @@
   });
   if(location.hash==='#services') window.addEventListener('load',function(){ setTimeout(function(){ go(false); },50); });
 })();
+
+// 80s mode toggle: flips the switch, remembers the choice, then loads the arcade
+(function(){
+  var t=document.getElementById('modeToggle'); if(!t) return;
+  t.addEventListener('click',function(e){
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.button) return;
+    e.preventDefault(); t.classList.add('on'); t.setAttribute('aria-checked','true');
+    try{ localStorage.setItem('aceforce-mode','80s'); }catch(err){}
+    setTimeout(function(){ location.href=t.getAttribute('href'); },280);
+  });
+})();
