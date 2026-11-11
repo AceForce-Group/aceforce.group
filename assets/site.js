@@ -220,13 +220,61 @@
   if(location.hash==='#services') window.addEventListener('load',function(){ setTimeout(function(){ go(false); },50); });
 })();
 
-// 80s mode toggle: flips the switch, remembers the choice, then loads the arcade
+// 80s mode toggle: the page pixelates, blocks fill the screen, then the arcade loads
 (function(){
-  var t=document.getElementById('modeToggle'); if(!t) return;
+  var t=document.getElementById('modeToggle');
+  var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function blip(){ // short 8-bit power-down; the click is the user gesture that allows sound
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
+      var c=new AC(), g=c.createGain(); g.gain.value=0.08; g.connect(c.destination);
+      [[880,0],[660,.07],[440,.14],[220,.21]].forEach(function(n){
+        var o=c.createOscillator(); o.type='square'; o.frequency.value=n[0];
+        o.connect(g); o.start(c.currentTime+n[1]); o.stop(c.currentTime+n[1]+.065);
+      });
+    }catch(e){}
+  }
+  function blocks(fill,done){ // random 40px blocks: fill=true covers the screen, false reveals it
+    var cv=document.createElement('canvas'), cell=40, cols=Math.ceil(innerWidth/cell), rows=Math.ceil(innerHeight/cell), x=cv.getContext('2d'), order=[], i;
+    cv.width=cols; cv.height=rows;
+    cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:9999;pointer-events:none;image-rendering:pixelated';
+    document.body.appendChild(cv); x.fillStyle='#05070f'; if(!fill) x.fillRect(0,0,cols,rows);
+    for(i=0;i<cols*rows;i++) order.push(i);
+    for(i=order.length-1;i>0;i--){ var j=(Math.random()*(i+1))|0, k=order[i]; order[i]=order[j]; order[j]=k; }
+    var per=Math.ceil(order.length/18), at=0;
+    var tm=setInterval(function(){
+      for(var n=0;n<per&&at<order.length;n++,at++){ var cx=order[at]%cols, cy=(order[at]/cols)|0; if(fill) x.fillRect(cx,cy,1,1); else x.clearRect(cx,cy,1,1); }
+      if(at>=order.length){ clearInterval(tm); if(!fill) cv.remove(); if(done) done(); }
+    },24);
+  }
+  function pixelate(done){ // SVG filter that turns the live page into growing square pixels
+    var ns='http://www.w3.org/2000/svg', svg=document.createElementNS(ns,'svg');
+    svg.setAttribute('width','0'); svg.setAttribute('height','0'); svg.style.position='absolute';
+    svg.innerHTML='<filter id="afpx" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">'+
+      '<feFlood x="0" y="0" width="2" height="2" flood-color="#000"/><feComposite id="afpxC" width="4" height="4"/><feTile result="a"/>'+
+      '<feComposite in="SourceGraphic" in2="a" operator="in"/><feMorphology id="afpxM" operator="dilate" radius="2"/></filter>';
+    document.body.appendChild(svg);
+    var C=svg.querySelector('#afpxC'), M=svg.querySelector('#afpxM'), steps=[6,10,16,24,34,48], i=0;
+    var root=document.documentElement; root.style.filter='url(#afpx)';
+    (function step(){
+      if(i>=steps.length){ done(); return; }
+      var s=steps[i++]; C.setAttribute('width',s); C.setAttribute('height',s); M.setAttribute('radius',s/2);
+      setTimeout(step,70);
+    })();
+  }
+
+  // Arriving back from the arcade (Exit to 2026): blocks clear away
+  try{ if(sessionStorage.getItem('aceforce-px')==='in'){ sessionStorage.removeItem('aceforce-px'); if(!reduced) blocks(false); } }catch(e){}
+
+  if(!t) return;
   t.addEventListener('click',function(e){
     if(e.metaKey||e.ctrlKey||e.shiftKey||e.button) return;
     e.preventDefault(); t.classList.add('on'); t.setAttribute('aria-checked','true');
-    try{ localStorage.setItem('aceforce-mode','80s'); }catch(err){}
-    setTimeout(function(){ location.href=t.getAttribute('href'); },280);
+    try{ localStorage.setItem('aceforce-mode','80s'); sessionStorage.setItem('aceforce-px','out'); }catch(err){}
+    var go=function(){ location.href=t.getAttribute('href'); };
+    if(reduced){ go(); return; }
+    blip();
+    setTimeout(function(){ pixelate(function(){ blocks(true,go); }); },180);
   });
 })();

@@ -143,6 +143,7 @@
 
   ACE.sfx = {
     isOn: function () { return on; },
+    running: function () { return !!(ctx && ctx.state === 'running'); },
     enable: function (v) {
       if (v) {
         if (!ensure()) return false;

@@ -176,7 +176,7 @@
         dosMeta.appendChild(sp);
       });
       if (p.link) {
-        var la = document.createElement('a'); la.className = 'dos-link'; la.href = p.link[1];
+        var la = document.createElement('a'); la.className = 'dos-link'; la.href = p.link[1]; la.target = '_blank'; la.rel = 'noopener';
         la.textContent = '▶ ' + p.link[0]; dosMeta.appendChild(la);
       }
     }
@@ -351,7 +351,10 @@
     if (heroSound) { heroSound.textContent = on ? '♪ 8-bit audio: On' : '♪ Enable 8-bit audio'; heroSound.setAttribute('aria-pressed', on ? 'true' : 'false'); }
   }
   function toggleSound() {
-    if (ACE.sfx) { ACE.sfx.enable(!ACE.sfx.isOn()); sfx('select'); }
+    if (ACE.sfx) {
+      ACE.sfx.enable(!ACE.sfx.isOn()); sfx('select');
+      try { localStorage.setItem('aceforce-sound', ACE.sfx.isOn() ? 'on' : 'off'); } catch (e) { /* ignore */ }
+    }
     paintSound();
   }
   if (btnSound) btnSound.addEventListener('click', toggleSound);
@@ -443,7 +446,32 @@
   /* ------------------------------------------------- exit to the 2026 site -- */
   var exitBtn = $('#btn-exit');
   function clearMode() { try { localStorage.setItem('aceforce-mode', '26'); } catch (e) { /* ignore */ } }
-  if (exitBtn) exitBtn.addEventListener('click', clearMode);
+  // Pixel wipe to black, then leave. Used by Exit to 2026.
+  function pixelOut(done) {
+    var c = $('#curtain'); if (!c || reduced) { done(); return; }
+    var cell = 40, cols = Math.ceil(window.innerWidth / cell), rows = Math.ceil(window.innerHeight / cell), x = c.getContext('2d'), order = [], i;
+    c.width = cols; c.height = rows; x.clearRect(0, 0, cols, rows); c.style.display = 'block'; x.fillStyle = '#05070f';
+    for (i = 0; i < cols * rows; i++) order.push(i);
+    for (i = order.length - 1; i > 0; i--) { var j = (Math.random() * (i + 1)) | 0, t = order[i]; order[i] = order[j]; order[j] = t; }
+    var per = Math.ceil(order.length / 18), at = 0;
+    var timer = setInterval(function () {
+      for (var k = 0; k < per && at < order.length; k++, at++) x.fillRect(order[at] % cols, (order[at] / cols) | 0, 1, 1);
+      if (at >= order.length) { clearInterval(timer); done(); }
+    }, 24);
+  }
+  if (exitBtn) exitBtn.addEventListener('click', function (e) {
+    clearMode();
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    e.preventDefault(); sfx('ko');
+    try { sessionStorage.setItem('aceforce-px', 'in'); } catch (err) { /* ignore */ }
+    pixelOut(function () { location.href = exitBtn.href; });
+  });
+
+  // Links that leave the arcade open in a new tab (Exit to 2026 stays in this one).
+  $$('a[href^="http"]').forEach(function (a) {
+    if (/mode=26/.test(a.href)) return;
+    a.target = '_blank'; a.rel = 'noopener';
+  });
   $$('a[href*="mode=26"]').forEach(function (a) { a.addEventListener('click', clearMode); });
   try { localStorage.setItem('aceforce-mode', '80s'); } catch (e) { /* ignore */ }
 
@@ -528,7 +556,30 @@
       else if (e.key === 'Escape' || e.key === 'm' || e.key === 'M') begin(false, false);
     });
   } else {
-    begin(false, true);
+    var fromToggle = false;
+    try { fromToggle = sessionStorage.getItem('aceforce-px') === 'out'; sessionStorage.removeItem('aceforce-px'); } catch (e) { /* ignore */ }
+    begin(false, !fromToggle);
+    autoSound();
+  }
+
+  /* Sound is on by default. Browsers only let a page make sound after the
+     visitor clicks, taps or presses a key on it, so if the browser holds the
+     audio back, it starts on the first click, tap or key press anywhere. */
+  function autoSound() {
+    var pref = 'on';
+    try { pref = localStorage.getItem('aceforce-sound') || 'on'; } catch (e) { /* ignore */ }
+    if (pref === 'off' || !ACE.sfx) return;
+    ACE.sfx.enable(true); paintSound();
+    if (ACE.sfx.running()) return;
+    var evs = ['pointerdown', 'keydown', 'touchstart'];
+    function wake(e) {
+      evs.forEach(function (n) { window.removeEventListener(n, wake, true); });
+      if (!ACE.sfx.isOn()) return; // they switched it off in the meantime
+      var onSoundBtn = e && e.target && e.target.closest && e.target.closest('#btn-sound, #hero-sound');
+      if (!onSoundBtn) ACE.sfx.enable(true);
+      paintSound();
+    }
+    evs.forEach(function (n) { window.addEventListener(n, wake, true); });
   }
 
   window.addEventListener('load', function () { layoutRoute(); track(); });
