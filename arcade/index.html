@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AceForce: Tomorrow's Supply Chains, Built Today.</title>
+<meta name="description" content="AceForce embeds into the operating layer of a business with senior brand-side operators, execution leads, and engineers who build scalable supply chains and automations.">
+<meta name="theme-color" content="#05070f">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/site.css">
+<script>document.documentElement.className = 'js';</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<canvas id="world" aria-hidden="true"></canvas>
+<div class="crt" aria-hidden="true"></div>
+<canvas id="curtain" aria-hidden="true"></canvas>
+
+<!-- ===================== OPTIONAL RETRO GATE (?gate=1) ===================== -->
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" hidden>
+  <div class="gate-in">
+    <pre class="boot" id="boot" aria-hidden="true"></pre>
+    <div class="gate-main" id="gate-main">
+      <div class="spade-big" aria-hidden="true"></div>
+      <h1 id="gate-title" class="wordmark-xl"><span class="vh">AceForce</span></h1>
+      <p class="gate-sub">An intergalactic supply chain adventure</p>
+      <p class="gate-note">The 8-bit soundtrack is optional.</p>
+      <div class="gate-btns">
+        <button class="btn" id="start-sound" type="button"><span class="cur" aria-hidden="true">▶</span> Start with sound</button>
+        <button class="btn btn-ghost" id="start-mute" type="button">Start muted</button>
+      </div>
+      <p class="gate-coin blink" aria-hidden="true">Insert coin · Press Enter</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ HUD ============================= -->
+<header class="hud" id="hud">
+  <a class="hud-brand" href="#title" aria-label="AceForce, back to the title screen">
+    <span class="spade" aria-hidden="true"></span><span class="wordmark" aria-hidden="true"></span>
+  </a>
+  <div class="hud-level" aria-live="polite"><span id="hud-world">WORLD 1-0</span><span id="hud-name">TITLE</span></div>
+  <div class="hud-gap"></div>
+  <div class="hud-score" aria-label="Score">SCORE <b id="score">000000</b></div>
+  <div class="hud-aces" aria-label="Aces found"><span class="mini-card" aria-hidden="true"></span>× <b id="aces">0</b>/5</div>
+  <button class="hud-btn" id="btn-view" type="button" aria-pressed="false" title="Hide the text and watch the world">View</button>
+  <button class="hud-btn" id="btn-sound" type="button" aria-pressed="false">Sound off</button>
+  <button class="hud-btn hud-secret" id="btn-palette" type="button" hidden>Palette</button>
+  <a class="hud-btn hud-exit" id="btn-exit" href="https://aceforce.group/?mode=26" title="Back to the regular AceForce site">Exit to 2026</a>
+</header>
+
+<nav class="levels" id="levels" aria-label="Levels"></nav>
+
+<div class="route" id="route" aria-hidden="true"><div class="route-ship" id="route-ship"></div></div>
+<div id="toasts" aria-live="polite"></div>
+
+<main id="main">
+
+<!-- ============================ TITLE =========================== -->
+<section id="title" class="title" data-scene="title" data-world="1-0" data-name="Title">
+  <p class="hero-boot" id="hero-boot" aria-live="polite">ACEFORCE OS // CARGO &amp; TELEMETRY ONLINE</p>
+  <img class="title-mark" src="img/aceforce-wordmark-white-wide.png" alt="AceForce" width="420" height="60">
+  <p class="eyebrow"><span class="suit">♠</span> Technical Operators. Embedded Execution.</p>
+  <h1 class="title-h" aria-label="Tomorrow's Supply Chains, Built Today.">
+    <span class="tl">Tomorrow's</span>
+    <span class="tl">Supply Chains,</span>
+    <span class="tl hot">Built Today.</span>
+  </h1>
+  <p class="hero-sub">AceForce embeds into the operating layer of a business. We bring senior operators who can redesign the way the company runs, execution leads who actually run it, and engineers who can build the infrastructure behind it.</p>
+  <div class="hero-actions">
+    <a class="btn" href="#drift"><span class="cur" aria-hidden="true">▶</span> Start the story</a>
+    <button class="sound-pill" id="hero-sound" type="button" aria-pressed="false">♪ Enable 8-bit audio</button>
+  </div>
+  <ul class="menu" id="menu" aria-label="Quick jump chapters">
+    <li><a href="#drift" data-menu><span class="cur" aria-hidden="true">▶</span>World 1 · The story</a></li>
+    <li><a href="#cards" data-menu><span class="cur" aria-hidden="true">▶</span>Pick a card · Services</a></li>
+    <li><a href="#systems" data-menu><span class="cur" aria-hidden="true">▶</span>Level select · Systems</a></li>
+    <li><a href="#powerups" data-menu><span class="cur" aria-hidden="true">▶</span>Power-ups · Connector</a></li>
+    <li><a href="#versus" data-menu><span class="cur" aria-hidden="true">▶</span>Versus mode · Why us</a></li>
+    <li><a href="#proof" data-menu><span class="cur" aria-hidden="true">▶</span>Select player · Our team</a></li>
+    <li><a href="#bonus" data-menu><span class="cur" aria-hidden="true">▶</span>Bonus stage · Mini-game</a></li>
+    <li><a href="#mission" data-menu><span class="cur" aria-hidden="true">▶</span>Start the mission · Contact</a></li>
+  </ul>
+  <p class="scrollhint blink" aria-hidden="true">▼ Scroll to play ▼</p>
+  <button class="ace" type="button" data-ace="1" style="right:9%;top:62%" aria-label="Collect a hidden ace"></button>
+</section>
+
+<!-- ======================== WORLD 1-1 DRIFT ===================== -->
+<section id="drift" class="chapter" data-scene="journey" data-world="1-1" data-name="The Drift">
+  <div class="levelcard">
+    <p class="lc-world">World 1-1</p>
+    <h2 class="lc-name" data-decode>The Drift</h2>
+    <p class="lc-sub">Growth breaks the backend.</p>
+    <p class="lc-lives"><span class="mini-card" aria-hidden="true"></span> × 3</p>
+  </div>
+  <article class="panel reveal">
+    <p class="tag">Log 01</p>
+    <h3 data-type>Every launch adds SKUs.</h3>
+    <p>Shades. Bundles. Limited editions. And every system holds its own version of the count.</p>
+  </article>
+  <article class="panel reveal">
+    <p class="tag">Log 02</p>
+    <h3 data-type>So your team closes the gap by hand.</h3>
+    <p>Reconciling the store against the ERP. Chasing warehouse counts. Rebuilding the same forecast every week.</p>
+    <p>The spreadsheets become load-bearing.</p>
+  </article>
+  <article class="panel reveal panel-boss">
+    <p class="tag tag-red">Boss · The Manual Layer</p>
+    <h3 data-type>It is invisible. Until it bills you.</h3>
+    <p>An oversell on a hero shade. An order you can't fulfill. Inventory numbers in a tab nobody owns.</p>
+    <p>No one on your team caused it. The systems did.</p>
+    <p class="fine">One SKU. Three systems. Three different counts.</p>
+  </article>
+</section>
+
+<!-- ====================== WORLD 1-2 INTEGRATE =================== -->
+<section id="integrate" class="chapter" data-scene="journey" data-world="1-2" data-name="Integrate">
+  <div class="levelcard">
+    <p class="lc-world">World 1-2</p>
+    <h2 class="lc-name" data-decode>Integrate</h2>
+    <p class="lc-sub">Trick one: the linking rings.</p>
+    <p class="lc-lives"><span class="mini-card" aria-hidden="true"></span> × 3</p>
+  </div>
+  <article class="panel reveal">
+    <p class="tag">Enter · The Ace</p>
+    <h3 data-type>Operators, execution leads and engineers. Embedded.</h3>
+    <p>We embed directly into your business with a dual-layered team: a strategic operator who aligns with leadership, and an embedded execution lead who works alongside your team in the day-to-day.</p>
+  </article>
+  <article class="panel reveal">
+    <p class="tag">Trick 01</p>
+    <h3 data-type>Three systems. One count.</h3>
+    <p>We migrate warehouses and connect Shopify, your ERP and your WMS. Inventory, orders and forecasts move on their own.</p>
+    <p>No re-keying.</p>
+    <button class="ace ace-inline" type="button" data-ace="2" aria-label="Collect a hidden ace"></button>
+  </article>
+</section>
+
+<!-- ======================= WORLD 1-3 REBUILD ==================== -->
+<section id="rebuild" class="chapter" data-scene="journey" data-world="1-3" data-name="Rebuild">
+  <div class="levelcard">
+    <p class="lc-world">World 1-3</p>
+    <h2 class="lc-name" data-decode>Rebuild</h2>
+    <p class="lc-sub">Trick two: the restoration.</p>
+    <p class="lc-lives"><span class="mini-card" aria-hidden="true"></span> × 3</p>
+  </div>
+  <article class="panel reveal">
+    <p class="tag">Field note</p>
+    <h3 data-type>We're not afraid of messy backends.</h3>
+    <p>Disconnected data. Fragile workflows. In fact, that's where we thrive.</p>
+  </article>
+  <article class="panel reveal">
+    <p class="tag">Trick 02</p>
+    <h3 data-type>Tear out the workarounds.</h3>
+    <p>We rebuild what's underneath: demand planning logic, warehouse integrations, inventory management.</p>
+    <p>Clean. Documented. Owned by you.</p>
+  </article>
+</section>
+
+<!-- ====================== WORLD 1-4 AUTOMATE ==================== -->
+<section id="automate" class="chapter" data-scene="journey" data-world="1-4" data-name="Automate">
+  <div class="levelcard">
+    <p class="lc-world">World 1-4</p>
+    <h2 class="lc-name" data-decode>Automate</h2>
+    <p class="lc-sub">Trick three: the levitation.</p>
+    <p class="lc-lives"><span class="mini-card" aria-hidden="true"></span> × 3</p>
+  </div>
+  <article class="panel reveal">
+    <p class="tag">Power-up · Engineers on staff</p>
+    <h3 data-type>They don't just recommend automations. They build them.</h3>
+    <p>What sets us apart is our engineering core: developers and project managers on staff, with real technical horsepower.</p>
+  </article>
+  <article class="panel reveal">
+    <p class="tag">Trick 03</p>
+    <h3 data-type>Manual work: gone.</h3>
+    <p>Hours of manual reporting, eliminated through custom tooling. Execution starts Day 1. First automations live within weeks.</p>
+    <button class="ace ace-inline" type="button" data-ace="3" aria-label="Collect a hidden ace"></button>
+  </article>
+</section>
+
+<!-- ==================== WORLD 1-5 VANISHING ACT ================= -->
+<section id="vanish" class="chapter" data-scene="journey" data-world="1-5" data-name="The Vanishing Act">
+  <div class="levelcard">
+    <p class="lc-world">World 1-5</p>
+    <h2 class="lc-name" data-decode>The Vanishing Act</h2>
+    <p class="lc-sub">The final trick.</p>
+    <p class="lc-lives"><span class="mini-card" aria-hidden="true"></span> × 3</p>
+  </div>
+  <article class="panel reveal">
+    <p class="tag">The prestige</p>
+    <h3 data-type>The hardest trick is to leave the stage.</h3>
+    <p>Other consultants park on a retainer, while we work to automate ourselves out of the business.</p>
+  </article>
+  <article class="panel reveal">
+    <p class="tag">Now you see us</p>
+    <h3 data-type>We build it. We prove it. We hand you the controls.</h3>
+    <p>Live dashboards, clean data pipelines, scalable workflows. Running in your stack.</p>
+  </article>
+  <article class="panel reveal">
+    <p class="tag">Now you don't</p>
+    <h3 data-type>You keep command.</h3>
+    <p>We are not lifelong consultants. We come from the brand side, and we build for growth that lasts after we leave.</p>
+  </article>
+</section>
+
+<!-- ========================= PICK A CARD ======================== -->
+<section id="cards" class="block" data-scene="deep" data-world="2-1" data-name="Pick a Card">
+  <div class="wrap">
+    <p class="eyebrow reveal"><span class="suit">♠</span> Services index</p>
+    <div class="sec-head">
+      <div>
+        <h2 class="h-big reveal" data-decode>Pick a card. Any card.</h2>
+        <p class="lede reveal">Four suits. One deck. Turn a card, or deal the whole hand.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm reveal" id="btn-deal-all" type="button">Deal all four</button>
+    </div>
+    <div class="cards" id="cardrow">
+      <button class="card reveal" type="button" aria-pressed="false">
+        <span class="card-inner">
+          <span class="card-face card-back" aria-hidden="true">
+            <span class="back-frame">
+              <span class="back-top"><b>01</b><i>♠</i></span>
+              <span class="back-center">
+                <span class="back-suit">♠</span>
+                <span class="back-title">Operations</span>
+                <span class="back-teaser">Planning, S&amp;OP and 3PL management</span>
+              </span>
+              <span class="back-cue">Flip the card ↻</span>
+            </span>
+          </span>
+          <span class="card-face card-front" data-suit="♠">
+            <span class="card-top"><b>01</b><i>♠</i></span>
+            <strong>Operations</strong>
+            <span class="card-txt">We optimize workflows and build infrastructure that scales with you.</span>
+            <span class="card-list">
+              <span>Supply chain architecture</span>
+              <span>Demand and supply planning</span>
+              <span>S&amp;OP design</span>
+              <span>Commercialization and product development</span>
+              <span>Forecasting and budgeting</span>
+              <span>3PL management, migrations and RFPs</span>
+            </span>
+            <span class="card-note">And the bridge between finance, accounting, operations, commercial and leadership teams.</span>
+            <span class="card-bot"><i>♠</i><b>01</b></span>
+          </span>
+        </span>
+      </button>
+      <button class="card reveal" type="button" aria-pressed="false">
+        <span class="card-inner">
+          <span class="card-face card-back red" aria-hidden="true">
+            <span class="back-frame">
+              <span class="back-top"><b>02</b><i>♦</i></span>
+              <span class="back-center">
+                <span class="back-suit">♦</span>
+                <span class="back-title">Technology</span>
+                <span class="back-teaser">ERP, WMS, API and EDI integrations</span>
+              </span>
+              <span class="back-cue">Flip the card ↻</span>
+            </span>
+          </span>
+          <span class="card-face card-front red" data-suit="♦">
+            <span class="card-top"><b>02</b><i>♦</i></span>
+            <strong>Technology</strong>
+            <span class="card-txt">We integrate, automate, connect and implement the systems you run on.</span>
+            <span class="card-label">Systems</span>
+            <span class="card-chips"><span>API</span><span>MCP</span><span>EDI</span><span>NetSuite</span><span>Cin7 Core</span><span>Shopify</span><span>12 WMS</span></span>
+            <span class="card-note">New platform or existing one, we make the data move. All 14 systems are in Level Select.</span>
+            <span class="card-bot"><i>♦</i><b>02</b></span>
+          </span>
+        </span>
+      </button>
+      <button class="card reveal" type="button" aria-pressed="false">
+        <span class="card-inner">
+          <span class="card-face card-back" aria-hidden="true">
+            <span class="back-frame">
+              <span class="back-top"><b>03</b><i>♣</i></span>
+              <span class="back-center">
+                <span class="back-suit">♣</span>
+                <span class="back-title">Supply Chain</span>
+                <span class="back-teaser">Sourcing to fulfillment</span>
+              </span>
+              <span class="back-cue">Flip the card ↻</span>
+            </span>
+          </span>
+          <span class="card-face card-front" data-suit="♣">
+            <span class="card-top"><b>03</b><i>♣</i></span>
+            <strong>Supply Chain</strong>
+            <span class="card-txt">From sourcing to fulfillment, we build resilient, cost-effective supply chains that support growth.</span>
+            <span class="card-label">Across</span>
+            <span class="card-chips"><span>Procurement</span><span>Logistics</span><span>Inventory management</span></span>
+            <span class="card-label">We specialize in</span>
+            <span class="card-chips"><span>CPG</span><span>Food and beverage</span><span>Apparel</span><span>Toys</span></span>
+            <span class="card-bot"><i>♣</i><b>03</b></span>
+          </span>
+        </span>
+      </button>
+      <button class="card reveal" type="button" aria-pressed="false">
+        <span class="card-inner">
+          <span class="card-face card-back red" aria-hidden="true">
+            <span class="back-frame">
+              <span class="back-top"><b>04</b><i>♥</i></span>
+              <span class="back-center">
+                <span class="back-suit">♥</span>
+                <span class="back-title">Strategy</span>
+                <span class="back-teaser">Fractional executives, embedded</span>
+              </span>
+              <span class="back-cue">Flip the card ↻</span>
+            </span>
+          </span>
+          <span class="card-face card-front red" data-suit="♥">
+            <span class="card-top"><b>04</b><i>♥</i></span>
+            <strong>Strategy</strong>
+            <span class="card-txt">Our fractional executives act as embedded partners. They guide teams through complex decisions, market shifts and growth opportunities.</span>
+            <span class="card-label">Executive experience from</span>
+            <span class="card-chips"><span>Chanel</span><span>Coty</span><span>Revlon</span><span>Elemis</span><span>Funko</span><span>Baccarat</span></span>
+            <span class="card-bot"><i>♥</i><b>04</b></span>
+          </span>
+        </span>
+      </button>
+    </div>
+    <div class="inventory reveal" id="inventory">
+      <div class="inv-head">
+        <p class="tag">Inventory · Everything else we run</p>
+        <p class="inv-lede">The connector is the part people see. Most of our work is the operating layer around it: planning, warehouses, vendors, launches and the people who run them.</p>
+      </div>
+      <div class="inv-grid">
+        <details class="inv-slot">
+          <summary><span class="inv-n">01</span><span class="inv-suit" aria-hidden="true">♠</span><span class="inv-name">Planning and forecasting</span><span class="inv-cue" aria-hidden="true">+</span></summary>
+          <ul><li>Rolling 12 to 18 month demand forecasts by SKU, from finished goods to components</li><li>Integrated S&amp;OP design and a monthly cycle: demand review, supply review, executive decision</li><li>Retailer unit forecasts by SKU built on target weeks of supply</li><li>Weekly purchasing plans and SKU level buy plans</li><li>Safety stock, reorder points and supplier lead time trackers</li><li>Reorder rules and supply reviews ready for CFO approval</li></ul><p class="inv-more">+6 more</p>
+        </details>
+        <details class="inv-slot">
+          <summary><span class="inv-n">02</span><span class="inv-suit" aria-hidden="true">♦</span><span class="inv-name">Supply chain and logistics</span><span class="inv-cue" aria-hidden="true">+</span></summary>
+          <ul><li>3PL RFPs: shortlist, bid normalization, scoring and negotiation</li><li>Migration cost and payback analysis, including telling you to stay put</li><li>Incumbent 3PL renegotiation with SLAs and improvement plans</li><li>3PL site visits and audits: temperature control, FIFO, expiry</li><li>3PL migrations: cutover plan, SKU mapping, inventory transfer, 30 day stabilization</li><li>Warehouse decisions: renew, relocate, 3PL or hybrid, with cost to serve by channel</li></ul><p class="inv-more">+12 more</p>
+        </details>
+        <details class="inv-slot">
+          <summary><span class="inv-n">03</span><span class="inv-suit" aria-hidden="true">♣</span><span class="inv-name">Vendors and manufacturing</span><span class="inv-cue" aria-hidden="true">+</span></summary>
+          <ul><li>Manufacturer and supplier sourcing, vetting and quote comparison</li><li>Manufacturer management: schedules, MOQs, scorecards and single source risk</li><li>Manufacturer escalations to lock delivery dates</li><li>Formula ownership and IP verification</li><li>3PL contract compliance audits and rate increase reviews against the MSA</li><li>Vendor billing disputes documented to the timestamp</li></ul><p class="inv-more">+1 more</p>
+        </details>
+        <details class="inv-slot">
+          <summary><span class="inv-n">04</span><span class="inv-suit" aria-hidden="true">♥</span><span class="inv-name">Product and packaging</span><span class="inv-cue" aria-hidden="true">+</span></summary>
+          <ul><li>Packaging artwork to manufacturer specs and dieline fixes</li><li>Label compliance reviews</li><li>Product briefs and development</li><li>SKU, UPC, GS1 and item master setup for launch</li><li>Packaging inserts and gift with purchase planning</li><li>Bills of materials for domestic production</li></ul><p class="inv-more">+1 more</p>
+        </details>
+        <details class="inv-slot">
+          <summary><span class="inv-n">05</span><span class="inv-suit" aria-hidden="true">♠</span><span class="inv-name">Finance</span><span class="inv-cue" aria-hidden="true">+</span></summary>
+          <ul><li>Landed cost trackers and processes</li><li>Cash flow and margin forecasts, including 14 week cash models</li><li>Monthly cash models and month end reviews with outside accountants</li><li>Unit economics and SKU P&amp;Ls built from real invoices</li><li>A running P&amp;L when the books cannot be trusted yet</li><li>Capital raise support: deck input and investor introductions</li></ul><p class="inv-more">+5 more</p>
+        </details>
+        <details class="inv-slot">
+          <summary><span class="inv-n">06</span><span class="inv-suit" aria-hidden="true">♦</span><span class="inv-name">Retail and channel</span><span class="inv-cue" aria-hidden="true">+</span></summary>
+          <ul><li>Retail launch readiness: weeks of supply, ramp up and ship notice analysis</li><li>Retailer onboarding and compliance for Ulta, Nordstrom, Sephora and Target</li><li>Marketplace strategy across Target Plus, Amazon and TikTok Shop</li><li>Channel strategy for new brands</li><li>Influencer sampling and partnership introductions</li><li>Hospitality channel development</li></ul>
+        </details>
+        <details class="inv-slot">
+          <summary><span class="inv-n">07</span><span class="inv-suit" aria-hidden="true">♣</span><span class="inv-name">Organization and process</span><span class="inv-cue" aria-hidden="true">+</span></summary>
+          <ul><li>SOPs, runbooks and process maps</li><li>Change management and coaching for planning teams</li><li>Role design and job descriptions</li><li>New hire onboarding with tool handover and a tool register</li><li>Retiring legacy planning tools</li><li>Ops team capacity assessments and roadmaps</li></ul><p class="inv-more">+4 more</p>
+        </details>
+        <details class="inv-slot">
+          <summary><span class="inv-n">08</span><span class="inv-suit" aria-hidden="true">♥</span><span class="inv-name">Leadership</span><span class="inv-cue" aria-hidden="true">+</span></summary>
+          <ul><li>Fractional COO</li><li>Interim supply chain leadership with a 30 day handover</li><li>Steering committee support and executive reviews</li><li>Weekly advisory with founders, presidents and supply chain chiefs</li><li>Triage and restructuring for brands in distress</li><li>Lease and transition risk management</li></ul>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= LEVEL SELECT ======================= -->
+<section id="systems" class="block" data-scene="deep" data-world="2-2" data-name="Level Select">
+  <div class="wrap">
+    <p class="eyebrow reveal"><span class="suit">♦</span> Systems</p>
+    <h2 class="h-big reveal" data-decode>We speak API, MCP and EDI.</h2>
+    <p class="lede reveal">Choose a level. Every cartridge opens that system's case studies on the main site.</p>
+    <ul class="carts reveal" aria-label="Systems we support and connect">
+      <li class="cart cart-key"><a href="https://aceforce.group/systems/cin7-core/"><b>Cin7 Core</b><span>Partner</span></a></li>
+      <li class="cart cart-key"><a href="https://aceforce.group/systems/netsuite/"><b>NetSuite</b><span>Certified system admin</span></a></li>
+      <li class="cart cart-key"><a href="https://aceforce.group/systems/wms/"><b>WMS</b><span>12 integrated</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/quickbooks/"><b>QuickBooks</b><span>Custom connector</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/shopify/"><b>Shopify</b><span>GraphQL standard</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/mirakl/"><b>Mirakl</b><span>Implementation experts</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/amazon/"><b>Amazon</b><span>API</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/tiktok-shop/"><b>TikTok Shop</b><span>Channel</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/faire/"><b>Faire</b><span>Wholesale</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/unleashed/"><b>Unleashed</b><span>Inventory</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/microsoft/"><b>Business Central</b><span>Microsoft</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/airtable-sheets/"><b>Airtable</b><span>Google Sheets</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/shipstation/"><b>ShipStation</b><span>Shipping</span></a></li>
+      <li class="cart"><a href="https://aceforce.group/systems/custom-api/"><b>Custom API</b><span>Scripts</span></a></li>
+      <li class="cart cart-plain"><span class="cart-in"><b>SPS Commerce</b><span>EDI</span></span></li>
+      <li class="cart cart-plain"><span class="cart-in"><b>Bill.com</b><span>Payables</span></span></li>
+      <li class="cart cart-plain"><span class="cart-in"><b>Stripe Connect</b><span>Billing</span></span></li>
+      <li class="cart cart-plain"><span class="cart-in"><b>Celigo</b><span>iPaaS</span></span></li>
+      <li class="cart cart-plain"><span class="cart-in"><b>ApparelMagic</b><span>ERP</span></span></li>
+      <li class="cart cart-ask"><a href="#mission"><b>Something else?</b><span>Ask</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========================== POWER-UPS ======================== -->
+<section id="powerups" class="block" data-scene="deep" data-world="2-3" data-name="Power-ups">
+  <div class="wrap">
+    <p class="eyebrow reveal"><span class="suit">♣</span> New · Open source</p>
+    <h2 class="h-big reveal" data-decode>Power-ups. Yours to keep.</h2>
+    <p class="lede reveal">The AceForce Connector links your store, ERP and warehouse, and you own every line of it. Ask any brand what happens to their integrations if their vendor disappears in five years. Ours keep running.</p>
+    <div class="pu-grid">
+      <article class="panel pu pu-main reveal">
+        <p class="tag">Power-up 01 · AceForce Connector</p>
+        <h3 data-type>Your connectors. Your code. Forever.</h3>
+        <ul class="pu-stats">
+          <li><b>40+</b><span>Connectors built</span></li>
+          <li><b>12</b><span>Warehouse systems mapped</span></li>
+          <li><b>1</b><span>Repository per connector, in your name</span></li>
+          <li><b>$0</b><span>License fees</span></li>
+        </ul>
+        <p>Map. Build. Run. Own. We map every system and edge case, build one commented repository per connector, host and monitor it, and the code, keys and settings stay yours.</p>
+        <a class="btn btn-sm" href="https://aceforce.group/connector/"><span class="cur" aria-hidden="true">▶</span> Meet the Connector</a>
+      </article>
+      <article class="panel pu reveal">
+        <p class="tag">Power-up 02 · Shopify app · live</p>
+        <h3 data-type>Warehouse Warden</h3>
+        <p>Watches your warehouse so you do not have to. Scheduled weekly or monthly reports with an executive snapshot and an order level workbook: fulfillment and delivery performance by state, split by channel tags such as TikTok Shop and marketplaces, and filtered by location.</p>
+      </article>
+      <article class="panel pu reveal">
+        <p class="tag">Power-up 03 · Shopify app · live</p>
+        <h3 data-type>AceForce Shipping App</h3>
+        <p>Picks the right carrier at fulfillment. Applies your carrier rules, hazmat routing and state by state shipping restrictions, and stops duplicate shipping charges across shipping profiles.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ VERSUS ========================== -->
+<section id="versus" class="block" data-scene="deep" data-world="2-4" data-name="Versus Mode">
+  <div class="wrap">
+    <p class="eyebrow reveal"><span class="suit">♦</span> How we're different</p>
+    <h2 class="h-big reveal" data-decode>Embedded operators, not a deck.</h2>
+    <button class="ace ace-versus" type="button" data-ace="4" aria-label="Collect a hidden ace"></button>
+    <div class="vs-head" id="vs-head">
+      <div class="fighter fighter-a">
+        <canvas class="portrait" data-portrait="ace" width="32" height="32" aria-hidden="true"></canvas>
+        <div class="f-meta"><b>AceForce</b><div class="hp"><i id="hp-a"></i></div></div>
+      </div>
+      <div class="vs-mark" aria-hidden="true">VS</div>
+      <div class="fighter fighter-b">
+        <div class="f-meta"><b>Traditional ops consultants</b><div class="hp hp-b"><i id="hp-b"></i></div></div>
+        <canvas class="portrait" data-portrait="suit" width="32" height="32" aria-hidden="true"></canvas>
+      </div>
+    </div>
+    <div class="rounds" id="rounds" role="table" aria-label="AceForce compared with traditional ops consultants">
+      <div class="round" role="row"><div class="a" role="cell">Embedded strategic operator plus hands-on coordinator</div><div class="f" role="rowheader">Team Structure</div><div class="b" role="cell">Part-time advisor or deck-only consultant</div></div>
+      <div class="round" role="row"><div class="a" role="cell">In-the-weeds daily operations support</div><div class="f" role="rowheader">Execution</div><div class="b" role="cell">Strategy only, implementation left to you</div></div>
+      <div class="round" role="row"><div class="a" role="cell">Engineers on staff for custom automation design and build</div><div class="f" role="rowheader">Technical Depth</div><div class="b" role="cell">Outsource development or avoid it entirely</div></div>
+      <div class="round" role="row"><div class="a" role="cell">We migrate warehouses and connect Shopify, ERP and WMS</div><div class="f" role="rowheader">Systems Integration</div><div class="b" role="cell">Refer out or avoid system back ends</div></div>
+      <div class="round" role="row"><div class="a" role="cell">Manual workflows and repetitive tasks automated away</div><div class="f" role="rowheader">Automation</div><div class="b" role="cell">Process templates and slides</div></div>
+      <div class="round" role="row"><div class="a" role="cell">From historical models to hybrid inputs, operationalized and automated</div><div class="f" role="rowheader">Demand Planning</div><div class="b" role="cell">Strategic frameworks, not functional files</div></div>
+      <div class="round" role="row"><div class="a" role="cell">Built through daily embedded collaboration</div><div class="f" role="rowheader">Internal Buy-In</div><div class="b" role="cell">Top-down directives with little team involvement</div></div>
+      <div class="round" role="row"><div class="a" role="cell">Execution starts day one, first automations live within weeks</div><div class="f" role="rowheader">Speed to Value</div><div class="b" role="cell">Multi-week discovery phase before anything changes</div></div>
+      <div class="round" role="row"><div class="a" role="cell">Former COOs, heads of ops and supply chain leaders</div><div class="f" role="rowheader">Background</div><div class="b" role="cell">Career consultants with little brand representation</div></div>
+      <div class="round" role="row"><div class="a" role="cell">Live dashboards, clean data pipelines, scalable workflows</div><div class="f" role="rowheader">Deliverables</div><div class="b" role="cell">Slide decks, SOPs and meetings</div></div>
+    </div>
+    <div class="ko" id="ko" aria-hidden="true"><span>K.O.</span><small>Built beats briefed.</small></div>
+  </div>
+</section>
+
+<!-- ============================= PROOF ========================== -->
+<section id="proof" class="block" data-scene="deep" data-world="2-5" data-name="Cutscene">
+  <div class="wrap">
+    <p class="eyebrow reveal"><span class="suit">♣</span> Client results &amp; leadership</p>
+    <h2 class="h-big reveal" data-decode>Word from other worlds.</h2>
+
+    <figure class="dialog reveal">
+      <canvas class="portrait" data-avatar="Eva Goicochea" width="32" height="32" aria-hidden="true"></canvas>
+      <div class="dialog-body">
+        <figcaption class="who">Eva Goicochea <span>· Maude</span></figcaption>
+        <blockquote class="quote">“Ace Force is the operations partner every founder needs. They embed seamlessly into the business, bringing deep expertise in supply chain, operations, and strategy while keeping an eye on both the big picture and the details that matter. Their ability to optimize workflows and build scalable systems makes them an invaluable asset to any growing brand.”</blockquote>
+        <span class="next blink" aria-hidden="true">▼</span>
+      </div>
+    </figure>
+
+    <figure class="dialog dialog-r reveal">
+      <canvas class="portrait" data-avatar="Dr. Chris Perez" width="32" height="32" aria-hidden="true"></canvas>
+      <div class="dialog-body">
+        <figcaption class="who">Dr. Chris Perez <span>· Founder and CEO, OLAS Wellness</span></figcaption>
+        <blockquote class="quote">“I was looking for a partner that would help manage all supply chain questions so that I could focus on building the brand. Vlad and his team delivered that and more, all while helping cut operating expenses.”</blockquote>
+        <span class="next blink" aria-hidden="true">▼</span>
+      </div>
+    </figure>
+
+    <div class="origin reveal">
+      <h3 class="h-mid">We come from the client side.</h3>
+      <p>AceForce is a team of seasoned operators with decades of collective experience across beauty, wellness and consumer industries.</p>
+      <p>We bring that love of brand, combined with technical expertise, to help evolve your operation.</p>
+    </div>
+
+    <div class="rosters">
+      <div class="roster reveal">
+        <p class="tag">Our team comes from</p>
+        <ul class="chips">
+          <li>Chanel</li><li>Elemis</li><li>Revlon</li><li>Coty</li><li>Funko</li><li>Baccarat</li><li>Michael Kors</li><li>Gucci</li><li>Casper</li>
+        </ul>
+      </div>
+      <div class="roster reveal">
+        <p class="tag">Brands we've supported</p>
+        <ul class="chips chips-lime">
+          <li>Maude</li><li>Rare Beauty</li><li>Sofie Pavitt Face</li><li>Crown Affair</li><li>OLAS Wellness</li><li>ONDO</li><li>Nonfiction</li><li>Hampton Sun</li><li>Parachute Home</li><li>Soshe Beauty</li><li>Evolvetogether</li><li>LORE</li><li>Alchemai</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="party reveal" id="party">
+      <div class="party-head">
+        <p class="tag" style="margin-bottom:0">Leadership · Select your player</p>
+        <p class="party-hint">Select a player to read the file</p>
+      </div>
+      <div class="players" id="players" role="tablist" aria-label="AceForce Leadership Team">
+        <button class="player-card" type="button" role="tab" aria-selected="true" aria-controls="player-dossier" data-player="0">
+          <span class="player-slot">P1 · Selected</span>
+          <canvas class="portrait" data-avatar="Vlad Shenderovich" width="32" height="32" aria-hidden="true"></canvas>
+          <span class="player-name">Vlad Shenderovich, MSA</span>
+          <span class="player-role">Founder</span>
+        </button>
+        <button class="player-card" type="button" role="tab" aria-selected="false" aria-controls="player-dossier" data-player="1">
+          <span class="player-slot">P2</span>
+          <canvas class="portrait" data-avatar="Susan Lee" width="32" height="32" aria-hidden="true"></canvas>
+          <span class="player-name">Susan Lee</span>
+          <span class="player-role">Managing Principal, Commercial Strategy &amp; Ops</span>
+        </button>
+        <button class="player-card" type="button" role="tab" aria-selected="false" aria-controls="player-dossier" data-player="2">
+          <span class="player-slot">P3</span>
+          <canvas class="portrait" data-avatar="Josh Levine" width="32" height="32" aria-hidden="true"></canvas>
+          <span class="player-name">Josh Levine</span>
+          <span class="player-role">Head of Operations &amp; Process Innovation</span>
+        </button>
+        <button class="player-card" type="button" role="tab" aria-selected="false" aria-controls="player-dossier" data-player="3">
+          <span class="player-slot">P4</span>
+          <canvas class="portrait" data-avatar="Ilya Smolensky" width="32" height="32" aria-hidden="true"></canvas>
+          <span class="player-name">Ilya Smolensky</span>
+          <span class="player-role">Head of Technology &amp; Implementations</span>
+        </button>
+        <button class="player-card" type="button" role="tab" aria-selected="false" aria-controls="player-dossier" data-player="4">
+          <span class="player-slot">P5</span>
+          <canvas class="portrait" data-avatar="Stephanie Taxel" width="32" height="32" aria-hidden="true"></canvas>
+          <span class="player-name">Stephanie Taxel</span>
+          <span class="player-role">Senior Director, Marketing &amp; Business Dev</span>
+        </button>
+      </div>
+
+      <div class="dossier" id="player-dossier" role="tabpanel" aria-live="polite">
+        <canvas class="portrait" id="dos-portrait" data-avatar="Vlad Shenderovich" width="32" height="32" aria-hidden="true"></canvas>
+        <div class="dos-body">
+          <div class="dos-top">
+            <h4 class="dos-name" id="dos-name">Vlad Shenderovich, MSA</h4>
+            <span class="dos-badge" id="dos-badge">Player 01 / 05</span>
+          </div>
+          <p class="dos-role" id="dos-role">Founder</p>
+          <p class="dos-bio" id="dos-bio">Vlad started in the Chanel mailroom and worked his way into retail operations, then built his career in operations and supply chain on the brand side. AceForce brings that client-side experience into every brand it supports, and half of the team comes from his Chanel years.</p>
+          <div class="dos-meta" id="dos-meta">
+            <span><b>Formerly</b> Chanel · Elemis · Versed Skincare</span>
+            <a class="dos-link" href="https://aceforce.group/founder/">▶ Read the founder file</a>
+          </div>
+        </div>
+        <div class="dos-nav">
+          <button class="hud-btn" id="dos-prev" type="button" aria-label="Previous team member">◀ Prev</button>
+          <button class="hud-btn" id="dos-next" type="button" aria-label="Next team member">Next ▶</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================== BONUS STAGE ======================= -->
+<section id="bonus" class="block" data-scene="deep" data-world="2-6" data-name="Bonus Stage">
+  <div class="wrap">
+    <p class="eyebrow reveal"><span class="suit">♥</span> Bonus stage</p>
+    <h2 class="h-big reveal" data-decode>Spreadsheet Storm</h2>
+    <p class="lede reveal">Rogue spreadsheets fall on the warehouse. Automate as many as you can in 30 seconds.</p>
+    <button class="ace ace-bonus" type="button" data-ace="5" aria-label="Collect a hidden ace"></button>
+    <div class="cabinet reveal">
+      <div class="cab-top" aria-hidden="true"><span>1UP</span><span>AceForce Hi-Bit Arcade</span><span>HI <b id="g-hi">0</b></span></div>
+      <div class="screen">
+        <canvas id="game" width="320" height="240" tabindex="0" aria-label="Spreadsheet Storm mini game. Click or press Enter to start. Use Arrow keys or A and D to move, Space to fire."></canvas>
+      </div>
+      <div class="cab-ctl">
+        <button class="pad" id="pad-l" type="button" aria-label="Move left">◀</button>
+        <button class="pad pad-fire" id="pad-f" type="button" aria-label="Start or fire">Fire</button>
+        <button class="pad" id="pad-r" type="button" aria-label="Move right">▶</button>
+      </div>
+      <p class="cab-help">◀ ▶ or A / D to move · Space to fire · Catch the Ace card for a 7-second triple shot</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MISSION ========================= -->
+<section id="mission" class="block mission" data-scene="finale" data-world="2-7" data-name="Start the Mission">
+  <div class="wrap center">
+    <p class="continue reveal">Continue? <b id="countdown">9</b></p>
+    <h2 class="h-huge reveal" data-decode>Tell us what you're building.</h2>
+    <p class="lede reveal">A supply chain ready to scale, a Cin7 or NetSuite instance tuned to run clean, a 3PL migration, or reporting that runs itself. Tag a focus area, then send us a note.</p>
+
+    <div class="wf-picker reveal" role="group" aria-label="Optional workflow focus">
+      <p class="wf-label">Optional · Tag your worst workflow</p>
+      <div class="wf-chips" id="wf-chips">
+        <button class="wf-chip" type="button" aria-pressed="false" data-wf="Shopify / ERP / WMS Integration">Shopify ↔ ERP / WMS Sync</button>
+        <button class="wf-chip" type="button" aria-pressed="false" data-wf="Demand Planning & S&OP">Demand Planning &amp; S&amp;OP</button>
+        <button class="wf-chip" type="button" aria-pressed="false" data-wf="3PL & Warehouse Migration">3PL &amp; Warehouse Migration</button>
+        <button class="wf-chip" type="button" aria-pressed="false" data-wf="Custom Automation & Reporting">Custom Automation &amp; EDI</button>
+      </div>
+    </div>
+
+    <form class="mform panel reveal" id="mform" novalidate data-ok="Mission received. Your note is on its way to the AceForce team, and we will reply by email.">
+      <input type="checkbox" name="botcheck" class="hpot" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="tag">Player 1 · Enter your details</p>
+      <div class="mf-row">
+        <div class="mf-field"><label for="m-name">Name</label><input id="m-name" type="text" autocomplete="name"></div>
+        <div class="mf-field"><label for="m-email">Email</label><input id="m-email" type="email" autocomplete="email"></div>
+      </div>
+      <div class="mf-field"><label for="m-brand">Brand</label><input id="m-brand" type="text"></div>
+      <div class="mf-field"><label for="m-msg">What you're working on</label><textarea id="m-msg" rows="4"></textarea></div>
+      <div class="cta-row">
+        <button class="btn btn-xl" id="cta" type="submit"><span class="cur" aria-hidden="true">▶</span> Start the mission</button>
+        <button class="btn btn-ghost" id="copy-email" type="button" data-email="info@aceforce.group">Copy info@aceforce.group</button>
+      </div>
+      <p class="mf-status" id="m-status" role="status" hidden></p>
+    </form>
+    <p class="reveal mail">161 Water Street, Suite 2026, New York, NY 10038 · info@aceforce.group</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================= FOOTER ========================= -->
+<footer class="foot" data-scene="finale">
+  <div class="wrap foot-grid">
+    <div>
+      <p class="tag">Practice areas</p>
+      <ul class="plain"><li>♠ Operations</li><li>♦ Technology</li><li>♣ Supply Chain</li><li>♥ Strategy</li></ul>
+      <p class="tag tag-gap">The regular site</p>
+      <ul class="plain foot-links"><li><a href="https://aceforce.group/?mode=26">aceforce.group</a></li><li><a href="https://aceforce.group/connector/">AceForce Connector</a></li><li><a href="https://aceforce.group/founder/">Founder</a></li></ul>
+    </div>
+    <div>
+      <p class="tag">Connect</p>
+      <address>161 Water Street, Suite 2026<br>New York, NY 10038<br>info@aceforce.group</address>
+    </div>
+    <div>
+      <p class="tag">Secrets</p>
+      <ul class="plain"><li>Find the five hidden aces.</li><li>↑ ↑ ↓ ↓ ← → ← → B A</li><li>Never trust a top hat.</li></ul>
+    </div>
+  </div>
+  <div class="foot-mark" aria-hidden="true"></div>
+  <p class="motto">Ad astra per operationes</p>
+  <p class="legal">© 2026 AceForce Group · Otacon Group LLC DBA AceForce</p>
+  <p class="thanks">Thank you for playing.
+    <button class="hat" id="hat" type="button" aria-label="A suspicious top hat"></button>
+  </p>
+  <p class="credits">Pixel art, music and sound made in code for AceForce. Fonts: Press Start 2P, IBM Plex Mono, and VT323 (SIL Open Font License).</p>
+</footer>
+
+<script src="js/sfx.js" defer></script>
+<script src="js/gfx.js" defer></script>
+<script src="js/world.js" defer></script>
+<script src="js/game.js" defer></script>
+<script src="js/ui.js" defer></script>
+</body>
+</html>

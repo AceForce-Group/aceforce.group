@@ -5,6 +5,7 @@ Static site for aceforce.group, served by GitHub Pages from `main`.
 - `index.html` homepage, `founder/` founder page
 - `assets/site.css`, `assets/site.js` shared styles and scroll sequence
 - Headings use Changeling Neo (licensed web font, Mark Simonson Studio) from `assets/fonts/`, falling back to Michroma
-- Contact and launch-list forms open an email to info@aceforce.group until a form backend is connected
+- Contact and launch-list forms post to Web3Forms, which emails info@aceforce.group
+- `arcade/` is the 8-bit easter egg (source: j0shuazen/aceforce-website-arcade). The 80s toggle in the homepage header opens it and remembers the choice in that browser; `/?mode=26` (the arcade's Exit to 2026 button) clears it. The arcade page is noindex.
 - Photo credit required: 175 Water Street 001.jpg by Kidfly182, CC BY 4.0 (shown in the caption)
 
