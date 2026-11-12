@@ -271,7 +271,7 @@
   t.addEventListener('click',function(e){
     if(e.metaKey||e.ctrlKey||e.shiftKey||e.button) return;
     e.preventDefault(); t.classList.add('on'); t.setAttribute('aria-checked','true');
-    try{ localStorage.setItem('aceforce-mode','80s'); sessionStorage.setItem('aceforce-px','out'); }catch(err){}
+    try{ sessionStorage.setItem('aceforce-px','out'); }catch(err){}
     var go=function(){ location.href=t.getAttribute('href'); };
     if(reduced){ go(); return; }
     blip();

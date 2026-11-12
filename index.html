@@ -14,8 +14,8 @@
 <meta property="og:image" content="https://aceforce.group/assets/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#000000">
-<script>/* 80s mode: a visitor who switched to the arcade goes back to it, until they press Exit to 2026 */
-(function(){try{var q=location.search,k='aceforce-mode';if(/[?&]mode=26\b/.test(q)){localStorage.setItem(k,'26');}else if(/[?&]mode=80s\b/.test(q)||localStorage.getItem(k)==='80s'){location.replace('/arcade/');}}catch(e){}})();</script>
+<script>/* Old visits may have saved 80s mode; clear it so the homepage always loads normally */
+(function(){try{localStorage.removeItem('aceforce-mode');}catch(e){}})();</script>
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">

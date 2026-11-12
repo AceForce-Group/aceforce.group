@@ -473,7 +473,6 @@
     a.target = '_blank'; a.rel = 'noopener';
   });
   $$('a[href*="mode=26"]').forEach(function (a) { a.addEventListener('click', clearMode); });
-  try { localStorage.setItem('aceforce-mode', '80s'); } catch (e) { /* ignore */ }
 
   var copyBtn = $('#copy-email');
   if (copyBtn) {
