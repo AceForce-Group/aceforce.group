@@ -340,32 +340,46 @@
   });
   /* All five aces: dial up and warp to the 90s version of the site */
   var NINETIES = /^\/arcade\//.test(location.pathname) ? '/90s/' : 'https://aceforce.group/90s/';
-  function modem() { // a short, quiet dial-up handshake
+  function modem() { // dial tone, touch tones, answer tone, then the handshake screech (about 5 seconds)
     try {
-      var AC = window.AudioContext || window.webkitAudioContext; if (!AC || (ACE.sfx && !ACE.sfx.isOn())) return;
-      var c = new AC(), g = c.createGain(), t = c.currentTime + 0.05; g.gain.value = 0.05; g.connect(c.destination);
-      [941, 1336, 852, 1209, 770, 1477, 697, 1633].forEach(function (f, i) { // touch tones
-        var o = c.createOscillator(); o.frequency.value = f; o.connect(g); o.start(t + (i >> 1) * 0.16); o.stop(t + (i >> 1) * 0.16 + 0.11);
-      });
-      t += 0.8;
-      for (var k = 0; k < 14; k++) { // handshake warble
-        var o2 = c.createOscillator(); o2.type = 'square'; o2.frequency.value = k % 2 ? 2100 : 1200 + (k * 37) % 400;
-        o2.connect(g); o2.start(t + k * 0.07); o2.stop(t + k * 0.07 + 0.065);
-      }
-      var len = c.sampleRate * 0.9, b = c.createBuffer(1, len, c.sampleRate), d = b.getChannelData(0);
-      for (var n = 0; n < len; n++) d[n] = (Math.random() * 2 - 1) * 0.6;
-      var src = c.createBufferSource(), bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800;
-      src.buffer = b; src.connect(bp); bp.connect(g); src.start(t + 1.0);
-    } catch (e) { /* no audio */ }
+      var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      var c = new AC(), out = c.createGain(), t0 = c.currentTime + 0.05; out.gain.value = 0.18; out.connect(c.destination);
+      if (c.state === 'suspended' && c.resume) c.resume();
+      function tone(f, t, d, type, vol) { var o = c.createOscillator(), g = c.createGain(); o.type = type || 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol || 0.5, t + 0.01); g.gain.setValueAtTime(vol || 0.5, t + d - 0.01); g.gain.linearRampToValueAtTime(0, t + d);
+        o.connect(g); g.connect(out); o.start(t); o.stop(t + d + 0.02); return o; }
+      function noise(t, d, f, q, vol) { var len = Math.ceil(c.sampleRate * d), b = c.createBuffer(1, len, c.sampleRate), x = b.getChannelData(0);
+        for (var i = 0; i < len; i++) x[i] = Math.random() * 2 - 1;
+        var s = c.createBufferSource(), bp = c.createBiquadFilter(), g = c.createGain(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q;
+        g.gain.setValueAtTime(vol, t); g.gain.setValueAtTime(vol, t + d - 0.05); g.gain.linearRampToValueAtTime(0, t + d);
+        s.buffer = b; s.connect(bp); bp.connect(g); g.connect(out); s.start(t); return bp; }
+      var t = t0;
+      tone(350, t, 0.7, 'sine', 0.35); tone(440, t, 0.7, 'sine', 0.35); t += 0.8;                       // dial tone
+      var DT = { '1': [697, 1209], '8': [852, 1336], '0': [941, 1336], '2': [697, 1336], '3': [697, 1477], '6': [770, 1477], '7': [852, 1209] };
+      '18002233672'.split('').forEach(function (k) { tone(DT[k][0], t, 0.08, 'sine', 0.4); tone(DT[k][1], t, 0.08, 'sine', 0.4); t += 0.13; });
+      t += 0.35;
+      tone(440, t, 0.6, 'sine', 0.25); tone(480, t, 0.6, 'sine', 0.25); t += 0.75;                       // ringback
+      tone(2100, t, 0.9, 'sine', 0.4); t += 0.95;                                                         // answer tone
+      for (var k = 0; k < 8; k++) { tone(k % 2 ? 1300 : 2100, t, 0.06, 'square', 0.18); t += 0.065; }  // V.8 chirps
+      tone(1800, t, 0.25, 'sine', 0.35); tone(600, t + 0.08, 0.2, 'sine', 0.3); t += 0.32;               // the bong
+      var sweep = noise(t, 1.5, 900, 3, 0.9);                                                             // the screech
+      sweep.frequency.setValueAtTime(900, t); sweep.frequency.linearRampToValueAtTime(2600, t + 0.7); sweep.frequency.linearRampToValueAtTime(1500, t + 1.5);
+      for (var j = 0; j < 22; j++) tone(1000 + ((j * 397) % 1400), t + j * 0.065, 0.05, 'square', 0.1);
+      noise(t + 1.5, 0.6, 1800, 0.7, 0.35);
+      setTimeout(function () { try { c.close(); } catch (e) {} }, (t - t0 + 2.6) * 1000);
+      return t - t0 + 2.1;
+    } catch (e) { return 0; }
   }
   function warp90s() {
-    if (ACE.sfx && ACE.sfx.isOn()) ACE.sfx.enable(false);
+    var soundWanted = !ACE.sfx || ACE.sfx.isOn();
+    if (ACE.sfx && ACE.sfx.isOn()) ACE.sfx.enable(false); // stop the arcade music so the modem is heard
     var ov = document.createElement('div'), pre = document.createElement('pre');
     ov.className = 'dialup'; ov.appendChild(pre); document.body.appendChild(ov);
-    var lines = ['ATDT 1-800-ACE-FORCE', 'DIALING...', 'CONNECT 28800', 'LOADING ACEFORCE.ANGELFIRE.COM...'], i = 0;
-    modem();
+    var lines = ['ATDT 1-800-ACE-FORCE', 'DIALING...', 'RINGING...', 'CARRIER DETECTED', 'CONNECT 28800', 'LOADING ACEFORCE.ANGELFIRE.COM...'], i = 0;
+    var total = (soundWanted && !reduced) ? (modem() || 4) : 2.4, gap = Math.max(120, (total * 1000) / lines.length);
+    if (reduced) gap = 120;
     (function next() {
-      if (i < lines.length) { pre.innerHTML = lines.slice(0, ++i).join('\n') + '<span class="cur">_</span>'; setTimeout(next, reduced ? 120 : 600); return; }
+      if (i < lines.length) { pre.innerHTML = lines.slice(0, ++i).join('\n') + '<span class="cur">_</span>'; setTimeout(next, gap); return; }
       pixelOut(function () { location.href = NINETIES; });
     })();
   }
