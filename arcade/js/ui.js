@@ -110,7 +110,7 @@
   /* ------------------------------------- interactive leadership roster ----- */
   var TEAM = [
     {
-      name: 'Vlad Shenderovich, MSA',
+      name: 'Vlad Shenderovich, MS',
       avatar: 'Vlad Shenderovich',
       role: 'Founder',
       bio: 'Vlad started in the Chanel mailroom and worked his way into retail operations, then built his career in operations and supply chain on the brand side. AceForce brings that client-side experience into every brand it supports, and half of the team comes from his Chanel years.',
