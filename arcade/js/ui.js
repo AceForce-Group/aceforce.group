@@ -339,7 +339,7 @@
     });
   });
   /* All five aces: dial up and warp to the 90s version of the site */
-  var NINETIES = /^\/arcade\//.test(location.pathname) ? '/90s/' : 'https://aceforce.group/90s/';
+  var NINETIES = /^\/arcade\//.test(location.pathname) ? '/angelfire/' : 'https://aceforce.group/angelfire/';
   function modem() { // dial tone, touch tones, answer tone, then the handshake screech (about 5 seconds)
     try {
       var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;

@@ -33,7 +33,7 @@ Then open http://127.0.0.1:8794/. Add `?gate=1` to see the optional start screen
   There are no mailto links on the page.
 - The page is set to noindex. On aceforce.group it lives at /arcade/, reached from the 80s toggle
   in the homepage header and footer. "Back to the future" in the HUD goes back to the regular site.
-- Find all five aces and the arcade dials up the 90s version of the site at /90s/ on aceforce.group.
+- Find all five aces and the arcade dials up the 90s version of the site at aceforce.group/angelfire.
 
 ## Where things are
 
