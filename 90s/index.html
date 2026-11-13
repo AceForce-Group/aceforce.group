@@ -87,13 +87,33 @@
   .tiny { font-size: 12px; color: #aaa; }
   .trail { position: fixed; pointer-events: none; z-index: 99; font-size: 14px; color: var(--ylw); animation: fade .8s linear forwards; }
   @keyframes fade { to { opacity: 0; transform: translateY(16px) scale(.4); } }
+  .titlerow { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: nowrap; }
+  .baby { width: 96px; height: auto; image-rendering: pixelated; flex: none; }
+  .flip { transform: scaleX(-1); }
+  img { image-rendering: pixelated; }
+  .pup { position: fixed; left: 0; bottom: 58px; z-index: 60; cursor: pointer; will-change: transform; }
+  .heart { position: fixed; z-index: 61; pointer-events: none; color: #ff4d8d; font-size: 20px; animation: up 1s ease-out forwards; }
+  @keyframes up { to { opacity: 0; transform: translateY(-46px); } }
+  .box { position: fixed; bottom: 60px; z-index: 59; font-size: 26px; pointer-events: none; }
+  .pupwin { position: fixed; left: 10px; bottom: 10px; z-index: 50; background: var(--gray); color: #000; border: 3px outset #fff; font: 12px Arial, sans-serif; width: 300px; max-width: calc(100vw - 20px); }
+  .pupwin .bar { background: linear-gradient(90deg, #000080, #1084d0); color: #fff; font-weight: bold; padding: 2px 4px 2px 8px; display: flex; justify-content: space-between; align-items: center; }
+  .pupwin .in { padding: 6px 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: space-between; }
+  .pupwin button { font: bold 12px Arial, sans-serif; border: 2px outset #fff; background: var(--gray); cursor: pointer; padding: 1px 7px; }
+  .pupwin button:active { border-style: inset; }
+  .pupwin.min .in { display: none; }
   @media (max-width: 680px) {
     .layout { grid-template-columns: 1fr; }
     .nav { position: static; }
     h1 { font-size: 34px; }
     table.bevel.stack, table.bevel.stack tbody, table.bevel.stack tr, table.bevel.stack td, table.bevel.stack th { display: block; width: 100%; }
     .midi { left: 10px; right: 10px; bottom: 8px; justify-content: space-between; }
-    body { padding-bottom: 54px; }
+    .pupwin { bottom: 54px; left: 10px; right: 10px; width: auto; }
+    .pupwin.min { right: auto; }
+    .pup { bottom: 100px; }
+    .box { bottom: 102px; }
+    body { padding-bottom: 140px; }
+    .baby { width: 56px; }
+    h1.titlerow { font-size: 28px; }
   }
   @media (prefers-reduced-motion: reduce) { .blink, .new, .spin, .rainbow, .tp { animation: none !important; } }
 </style>
@@ -107,7 +127,7 @@
   <center>
     <p class="tiny">You have reached a secret level. <a href="/arcade/">Back to 1985</a> &middot; <a href="/">Back to the future</a></p>
     <img class="logo3d spin" src="/assets/aceforce-logo-lime-alpha.png" alt="AceForce">
-    <h1><span class="rainbow">AceForce Online</span></h1>
+    <h1 class="titlerow"><img class="baby" src="img/dancing-baby.gif" width="128" height="168" alt="Dancing baby"><span class="rainbow">AceForce Online</span><img class="baby flip" src="img/dancing-baby.gif" width="128" height="168" alt=""></h1>
     <p class="comic lime" style="font-size:20px">~*~ Tomorrow's supply chains, built today ~*~</p>
     <p>You are visitor number <span class="counter" id="counter" aria-label="visitor counter"></span></p>
     <div class="construction"><span><span class="blink">&#9888;</span> THIS SITE IS ALWAYS UNDER CONSTRUCTION <span class="blink">&#9888;</span></span></div>
@@ -195,7 +215,12 @@
           <tr><td><b>Speed</b></td><td>Execution starts day one, first automations live within weeks</td><td>Multi-week discovery phase before anything changes</td></tr>
           <tr><td><b>You get</b></td><td>Live dashboards, clean data pipelines, scalable workflows</td><td>Slide decks, SOPs and meetings</td></tr>
         </table>
-        <center><p class="impact ylw" style="font-size:22px">BUILT BEATS BRIEFED!!!</p></center>
+        <center>
+          <img src="img/super-operator.gif" width="160" height="208" alt="Super Operator powering up">
+          <p class="impact lime" style="font-size:20px;margin:4px 0">SUPER OPERATOR MODE ACTIVATED</p>
+          <p class="comic" style="margin:0">Power level: 12 warehouse systems!!! Our team when the first automation goes live.</p>
+          <p class="impact ylw" style="font-size:22px">BUILT BEATS BRIEFED!!!</p>
+        </center>
 
         <h2>What people are saying</h2>
         <blockquote>&ldquo;I was looking for a partner that would help manage all supply chain questions so that I could focus on building the brand. Vlad and his team delivered that and more, all while helping cut operating expenses.&rdquo;<br><span class="tiny" style="color:#ffccff">Dr. Chris Perez, Founder and CEO, OLAS Wellness</span></blockquote>
@@ -257,6 +282,14 @@
   </div>
 </div>
 
+<div class="pupwin" id="pupwin" role="region" aria-label="Forklift the warehouse pup">
+  <div class="bar"><span>Forklift.exe</span><button type="button" id="pupMin" aria-label="Hide Forklift">_</button></div>
+  <div class="in"><span id="pupSay">Forklift is on patrol.</span>
+    <span class="btns"><button type="button" data-pup="pet">Pet</button><button type="button" data-pup="treat">Treat</button><button type="button" data-pup="fetch">Fetch</button></span></div>
+</div>
+<img class="pup" id="pup" src="img/pup-walk.gif" width="102" height="78" alt="Forklift the warehouse pup">
+<span class="box" id="box" hidden>&#128230;</span>
+
 <div class="midi" role="region" aria-label="Background music">
   <span>&#9835; <span id="midiName" class="mono">aceforce_theme.mid</span></span>
   <button type="button" id="midiPlay">Play</button><button type="button" id="midiStop">Stop</button>
@@ -290,6 +323,52 @@
     };
     evs.forEach(function (n) { window.addEventListener(n, wake, true); });
   }
+
+  // Forklift the warehouse pup: a little virtual pet that patrols the bottom of the screen
+  var pup = document.getElementById('pup'), say = document.getElementById('pupSay'), box = document.getElementById('box'), win = document.getElementById('pupwin');
+  var x = 40, dir = 1, mode = 'walk', until = 0, target = null, speed = 1.4;
+  function face() { pup.style.transform = 'translateX(' + x + 'px)' + (dir < 0 ? ' scaleX(-1)' : ''); }
+  function sit(ms, msg) { mode = 'sit'; until = Date.now() + ms; pup.src = 'img/pup-sit.gif'; if (msg) say.textContent = msg; }
+  function hearts(n) {
+    var r = pup.getBoundingClientRect();
+    for (var i = 0; i < n; i++) (function (i) { setTimeout(function () {
+      var h = document.createElement('span'); h.className = 'heart'; h.textContent = '\u2665';
+      h.style.left = (r.left + 20 + Math.random() * 50) + 'px'; h.style.top = (r.top - 4) + 'px';
+      document.body.appendChild(h); setTimeout(function () { h.remove(); }, 1000);
+    }, i * 140); })(i);
+  }
+  function bark() {
+    try { var C = window.AudioContext || window.webkitAudioContext, c = new C(), o = c.createOscillator(), g = c.createGain();
+      o.type = 'square'; o.frequency.setValueAtTime(520, c.currentTime); o.frequency.exponentialRampToValueAtTime(260, c.currentTime + 0.12);
+      g.gain.setValueAtTime(0.06, c.currentTime); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 0.14);
+      o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + 0.15); } catch (e) {}
+  }
+  function act(what) {
+    if (what === 'pet') { sit(2500, 'Forklift loves you!!!'); hearts(5); }
+    if (what === 'treat') { sit(3000, 'Nom nom. Forklift is 100% in stock on treats.'); hearts(3); bark(); }
+    if (what === 'fetch') {
+      var max = window.innerWidth - 110; target = Math.random() * max;
+      box.hidden = false; box.style.left = (target + 40) + 'px';
+      mode = 'fetch'; pup.src = 'img/pup-walk.gif'; speed = 4.5; say.textContent = 'Go get the box!!!'; bark();
+    }
+  }
+  pup.addEventListener('click', function () { act('pet'); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-pup]'), function (b) { b.addEventListener('click', function (e) { e.stopPropagation(); act(b.getAttribute('data-pup')); }); });
+  document.getElementById('pupMin').addEventListener('click', function (e) { e.stopPropagation(); win.classList.toggle('min'); });
+  function stepPup() {
+    var max = window.innerWidth - 110, now = Date.now();
+    if (mode === 'sit') { if (now > until) { mode = 'walk'; speed = 1.4; pup.src = 'img/pup-walk.gif'; say.textContent = 'Forklift is on patrol.'; } }
+    else if (mode === 'fetch') {
+      dir = target > x ? 1 : -1; x += dir * speed;
+      if (Math.abs(target - x) < speed + 1) { box.hidden = true; sit(2500, 'Package delivered. On time and in full!!!'); hearts(3); }
+    } else {
+      x += dir * speed;
+      if (x > max) { x = max; dir = -1; } if (x < 0) { x = 0; dir = 1; }
+      if (Math.random() < 0.002) sit(2200, 'Forklift is counting inventory.');
+    }
+    face(); requestAnimationFrame(stepPup);
+  }
+  if (reduced) { pup.src = 'img/pup-sit.gif'; mode = 'sit'; until = Infinity; face(); } else requestAnimationFrame(stepPup);
 
   // Random system, webring style
   var sys = Array.prototype.map.call(document.querySelectorAll('#systems a'), function (x) { return x.getAttribute('href'); });
