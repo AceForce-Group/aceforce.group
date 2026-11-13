@@ -98,6 +98,12 @@
   .pupwin button { font: bold 12px Arial, sans-serif; border: 2px outset #fff; background: var(--gray); cursor: pointer; padding: 1px 7px; }
   .pupwin button:active { border-style: inset; }
   .pupwin.min .in { display: none; }
+  .cowdoor { display: inline-block; vertical-align: middle; opacity: .55; }
+  .cowdoor:hover { opacity: 1; background: none; }
+  .portal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; background: radial-gradient(circle, #ff5a1f 0 8%, #b0100f 25%, #300 55%, #000 75%);
+    animation: portal 1.3s ease-in forwards; }
+  .portal span { font: 64px Impact, "Arial Black", sans-serif; color: #fff; text-shadow: 0 0 18px #ff0; animation: spin 1.3s linear infinite; }
+  @keyframes portal { from { clip-path: circle(0% at 50% 50%); } to { clip-path: circle(80% at 50% 50%); } }
   @media (max-width: 680px) {
     .layout { grid-template-columns: 1fr; }
     .nav { position: static; }
@@ -272,7 +278,7 @@
       <hr class="rain">
       <center>
         <p><a class="btn95" href="/">Back to the future</a></p>
-        <p class="tiny">&copy; 1997 to 2026 AceForce Group &middot; Otacon Group LLC DBA AceForce &middot; This page is not affiliated with any actual 1997.</p>
+        <p class="tiny">&copy; 1997 to 2026 AceForce Group &middot; Otacon Group LLC DBA AceForce &middot; This page is not affiliated with any actual 1997. <a href="/cow/" id="cowDoor" class="cowdoor" aria-label="Moo"><img src="/cow/img/cow-tiny.gif" width="40" height="28" alt=""></a></p>
       </center>
     </main>
   </div>
@@ -375,6 +381,24 @@
   document.getElementById('pupOff').addEventListener('click', function (e) { e.stopPropagation(); setPup(false); });
   document.getElementById('pupBack').addEventListener('click', function (e) { e.preventDefault(); setPup(true); });
   setPup(pupOn);
+
+  // There is no cow level. (Click the tiny cow in the footer, or type "moo".)
+  function cowPortal(e) {
+    if (e) e.preventDefault();
+    var ov = document.createElement('div'); ov.className = 'portal'; ov.innerHTML = '<span>MOO</span>'; document.body.appendChild(ov);
+    try { a.pause(); } catch (err) {}
+    try { var C = window.AudioContext || window.webkitAudioContext, cx = new C(), o = cx.createOscillator(), g = cx.createGain(), t = cx.currentTime;
+      o.type = 'sawtooth'; o.frequency.setValueAtTime(150, t); o.frequency.linearRampToValueAtTime(180, t + .3); o.frequency.linearRampToValueAtTime(100, t + .9);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.1, t + .1); g.gain.exponentialRampToValueAtTime(.0001, t + .95);
+      o.connect(g); g.connect(cx.destination); o.start(t); o.stop(t + 1); } catch (err) {}
+    setTimeout(function () { location.href = '/cow/'; }, reduced ? 100 : 1300);
+  }
+  document.getElementById('cowDoor').addEventListener('click', cowPortal);
+  var typed = '';
+  window.addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('input, textarea')) return;
+    typed = (typed + (e.key || '')).toLowerCase().slice(-3); if (typed === 'moo') cowPortal();
+  });
 
   // Random system, webring style
   var sys = Array.prototype.map.call(document.querySelectorAll('#systems a'), function (x) { return x.getAttribute('href'); });

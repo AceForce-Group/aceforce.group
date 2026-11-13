@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<title>AceForce's Profile | The Secret Cow Level</title>
+<link rel="icon" href="/assets/favicon.png">
+<style>
+  :root { --blue: #1d4f91; --blue2: #3b7bd1; --lime: #8cc63f; --lime2: #c1fd5d; --ink: #222; --mute: #666; --line: #b9cde5; --orange: #f60; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 13px/1.5 Verdana, "Lucida Grande", Tahoma, sans-serif; color: var(--ink);
+    background: #7fb04a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M0 70h80M10 0v80' stroke='%2393c25c' stroke-width='1'/%3E%3C/svg%3E"); overflow-x: hidden; }
+  a { color: #0645ad; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 12px 70px; }
+  /* glossy Web 2.0 header with reflection */
+  .top { background: linear-gradient(#5b9be6, #2a64b5 50%, #1d4f91 51%, #2b6bc4); color: #fff; border-bottom: 3px solid var(--lime); box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+  .top .wrap { display: flex; align-items: center; gap: 14px; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap; }
+  .brand { font: bold 28px/1 "Trebuchet MS", Verdana, sans-serif; letter-spacing: -1px; text-shadow: 0 1px 0 rgba(0,0,0,.4); position: relative; }
+  .brand small { font-size: 12px; letter-spacing: 0; opacity: .85; display: block; margin-top: 2px; }
+  .beta { display: inline-grid; place-items: center; width: 54px; height: 54px; background: var(--orange); color: #fff; font: bold 13px Verdana, sans-serif;
+    clip-path: polygon(50% 0,61% 15%,79% 9%,79% 27%,97% 32%,87% 48%,97% 64%,79% 70%,79% 88%,61% 82%,50% 97%,39% 82%,21% 88%,21% 70%,3% 64%,13% 48%,3% 32%,21% 27%,21% 9%,39% 15%); transform: rotate(-12deg); }
+  .search { margin-left: auto; display: flex; gap: 4px; }
+  .search input { border: 1px solid #0d2f5c; border-radius: 3px; padding: 4px 6px; font: 12px Verdana, sans-serif; width: 160px; }
+  .gloss { background: linear-gradient(#fff, #e7eef8 50%, #d3e0f1 51%, #e9f0fa); border: 1px solid #7f9db9; border-radius: 4px; padding: 4px 10px; font: bold 11px Verdana, sans-serif; color: #1d4f91; cursor: pointer; }
+  .gloss:hover { background: linear-gradient(#fff, #fff4d6 50%, #ffe39a 51%, #fff1c4); }
+  .gloss.green { background: linear-gradient(#e9ffc9, #b5e86d 50%, #8cc63f 51%, #a8dc5c); color: #183b00; border-color: #5f8c22; }
+  .nav { background: linear-gradient(#e9f0fa, #cddcf0); border-bottom: 1px solid #8fa9cc; font: bold 12px Verdana, sans-serif; }
+  .nav .wrap { display: flex; flex-wrap: wrap; gap: 0 16px; padding-top: 6px; padding-bottom: 6px; }
+  .note { background: #fffbe0; border: 1px solid #f0d36e; padding: 8px 12px; margin: 12px 0; border-radius: 4px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .note b { color: #9c5b00; }
+  .herd { position: relative; height: 90px; overflow: hidden; margin-top: 8px; }
+  .herd img { position: absolute; bottom: 0; image-rendering: pixelated; cursor: pointer; }
+  .grid { display: grid; grid-template-columns: 300px 1fr; gap: 14px; align-items: start; }
+  .box { background: #fff; border: 1px solid var(--line); margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  .box h3 { margin: 0; padding: 4px 8px; font: bold 12px Verdana, sans-serif; color: #fff; background: linear-gradient(#ffa64d, #f60); border-bottom: 1px solid #c40; }
+  .box.blue h3 { background: linear-gradient(#6aa5ea, #2b6bc4); border-color: #1d4f91; }
+  .box .in { padding: 8px 10px; }
+  .profile { display: grid; grid-template-columns: 120px 1fr; gap: 10px; }
+  .pic { width: 120px; height: 120px; background: #111 url('/assets/aceforce-logo-lime-alpha.png') center/88% no-repeat; border: 1px solid #999; }
+  .online { display: inline-flex; align-items: center; gap: 4px; color: #090; font-weight: bold; font-size: 11px; }
+  .online::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #bfff8a, #2a9d00); box-shadow: 0 0 4px #4c0; }
+  .sparkle { font: bold 26px/1.1 "Trebuchet MS", Verdana, sans-serif; background: linear-gradient(90deg,#ff3ea5,#ffd23e,#3ef0ff,#b03eff,#ff3ea5); background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent; animation: sp 4s linear infinite; }
+  @keyframes sp { to { background-position: 300% 0; } }
+  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; font-size: 11px; }
+  .contact button { width: 100%; text-align: left; }
+  .kv { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .kv td { padding: 4px 6px; border-bottom: 1px solid #e3ebf5; vertical-align: top; }
+  .kv td:first-child { background: #e9f0fa; color: #1d4f91; font-weight: bold; width: 34%; }
+  .top8 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .friend { text-align: center; font-size: 11px; }
+  .friend a { display: block; }
+  .ava { display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 3px; font: bold 22px "Trebuchet MS", sans-serif; color: #fff; border: 1px solid #999; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+  .comment { display: grid; grid-template-columns: 72px 1fr; gap: 10px; padding: 10px 0; border-bottom: 1px dashed #c8d6ea; }
+  .comment .ava { font-size: 16px; }
+  .comment .when { color: var(--mute); font-size: 11px; }
+  .tags { line-height: 2; text-align: center; }
+  .tags a { margin: 0 4px; white-space: nowrap; }
+  .t1 { font-size: 11px; } .t2 { font-size: 14px; } .t3 { font-size: 18px; font-weight: bold; } .t4 { font-size: 23px; font-weight: bold; }
+  .rss { display: inline-block; background: linear-gradient(#ffb04d, #f60); color: #fff !important; font: bold 10px Verdana, sans-serif; padding: 1px 5px; border-radius: 3px; }
+  .player { position: fixed; right: 10px; bottom: 10px; z-index: 50; width: 300px; max-width: calc(100vw - 20px); background: linear-gradient(#3a3a3a, #111); color: #ddd;
+    border: 1px solid #000; border-radius: 6px; padding: 8px 10px; font: 11px Verdana, sans-serif; box-shadow: 0 3px 10px rgba(0,0,0,.5); }
+  .player .row { display: flex; align-items: center; gap: 8px; }
+  .player button { background: linear-gradient(#666, #222); color: #fff; border: 1px solid #000; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 11px; flex: none; }
+  .player .title { flex: 1; overflow: hidden; white-space: nowrap; }
+  .player .title span { display: inline-block; padding-left: 100%; animation: tick 12s linear infinite; }
+  @keyframes tick { to { transform: translateX(-100%); } }
+  .player .bar { height: 4px; background: #444; border-radius: 2px; margin-top: 6px; overflow: hidden; }
+  .player .bar i { display: block; height: 100%; width: 0; background: var(--lime2); }
+  .form label { display: block; font-weight: bold; font-size: 11px; margin: 8px 0 2px; color: #1d4f91; }
+  .form input, .form textarea { width: 100%; border: 1px solid #7f9db9; padding: 5px; font: 12px Verdana, sans-serif; border-radius: 2px; }
+  .form .hp { position: absolute; left: -9999px; }
+  .status { margin-top: 8px; font-weight: bold; color: #2a7000; }
+  .intro { position: fixed; inset: 0; z-index: 100; background: #000; color: #fff; display: grid; place-items: center; text-align: center; font: 13px Verdana, sans-serif; }
+  .intro .load { width: 260px; height: 14px; border: 1px solid #666; margin: 14px auto 8px; padding: 2px; }
+  .intro .load i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--lime), var(--lime2)); transition: width .15s linear; }
+  .intro .skip { color: #9cf; text-decoration: underline; cursor: pointer; font-size: 11px; background: none; border: 0; }
+  .moo { position: absolute; font: bold 14px "Comic Sans MS", cursive; color: #fff; background: #000; border-radius: 10px; padding: 1px 8px; pointer-events: none; animation: moo 1.1s ease-out forwards; white-space: nowrap; }
+  @keyframes moo { to { opacity: 0; transform: translateY(-26px); } }
+  .foot { text-align: center; color: #234; font-size: 11px; margin-top: 10px; }
+  .foot a { margin: 0 5px; }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    .search { margin-left: 0; width: 100%; }
+    .search input { flex: 1; width: auto; }
+    .top8 { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .player { left: 10px; right: 10px; width: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) { .sparkle, .player .title span { animation: none; } }
+</style>
+</head>
+<body>
+<div class="intro" id="intro" role="dialog" aria-label="Loading">
+  <div>
+    <div class="sparkle" style="font-size:22px">cow_level.swf</div>
+    <div class="load"><i id="loadBar"></i></div>
+    <div id="loadTxt">Loading... 0%</div>
+    <p><button class="skip" id="skipIntro" type="button">Skip intro &raquo;</button></p>
+  </div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <span class="beta">BETA</span>
+    <div class="brand">AceForce<span style="color:var(--lime2)">Space</span><small>a place for supply chains</small></div>
+    <form class="search" onsubmit="return false"><input type="text" placeholder="Search the herd" aria-label="Search"><button class="gloss" type="submit">Search</button></form>
+  </div>
+</header>
+<nav class="nav"><div class="wrap">
+  <a href="#profile">Home</a><a href="#friends">Friends</a><a href="#blog">Blog</a><a href="#comments">Comments</a><a href="#message">Send Message</a>
+  <a href="/90s/">Back to 1997</a><a href="/arcade/">Back to 1985</a><a href="/">Back to the future</a>
+</div></nav>
+
+<div class="wrap">
+  <div class="note"><b>Welcome to the secret cow level.</b> There is no cow level. You are standing in it. <span class="rss">RSS</span> <button class="gloss green" id="mooAll" type="button">Moo!</button></div>
+  <div class="herd" id="herd" aria-label="A herd of cows"></div>
+
+  <div class="grid">
+    <aside>
+      <section class="box" id="profile">
+        <div class="in">
+          <div class="sparkle">AceForce</div>
+          <div class="profile">
+            <div class="pic" role="img" aria-label="AceForce logo"></div>
+            <div>
+              <p style="margin:0 0 6px">"Tomorrow's supply chains, built today."</p>
+              <p style="margin:0">New York, NY<br>161 Water Street, Suite 2026</p>
+              <p style="margin:6px 0"><span class="online">Online Now!</span></p>
+              <p style="margin:0;font-size:11px">Mood: <b>moo</b> &#128004;</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="box blue">
+        <h3>Contacting AceForce</h3>
+        <div class="in contact">
+          <button class="gloss" type="button" data-jump="message">&#9993; Send Message</button>
+          <button class="gloss" type="button" data-jump="message">&#43; Add to Friends</button>
+          <button class="gloss" type="button" data-jump="message">&#9733; Add to Favorites</button>
+          <button class="gloss" type="button" id="mooBtn">&#128004; Moo at Us</button>
+        </div>
+      </section>
+
+      <section class="box">
+        <h3>AceForce's Details</h3>
+        <div class="in">
+          <table class="kv">
+            <tr><td>Status:</td><td>Embedded</td></tr>
+            <tr><td>Here for:</td><td>Operations, Technology, Supply Chain, Strategy</td></tr>
+            <tr><td>Hometown:</td><td>New York, NY</td></tr>
+            <tr><td>Speaks:</td><td>API, MCP and EDI</td></tr>
+            <tr><td>Specialty:</td><td>CPG, food and beverage, apparel and toys</td></tr>
+            <tr><td>Team from:</td><td>Chanel, Elemis, Revlon, Coty, Funko, Baccarat, Michael Kors, Gucci and Casper</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section class="box blue">
+        <h3>AceForce's Interests</h3>
+        <div class="in tags"><a class="t4" href="#blog">Demand planning</a> <a class="t3" href="#blog">S&amp;OP</a> <a class="t3" href="#blog">NetSuite</a> <a class="t2" href="#blog">3PL migrations</a> <a class="t4" href="#blog">EDI</a> <a class="t3" href="#blog">Cin7 Core</a> <a class="t2" href="#blog">Shopify</a> <a class="t2" href="#blog">Forecasting</a> <a class="t3" href="#blog">Inventory</a> <a class="t1" href="#blog">Procurement</a> <a class="t2" href="#blog">Logistics</a> <a class="t4" href="#blog">Automation</a> <a class="t3" href="#blog">MCP</a> <a class="t2" href="#blog">Fractional COO</a> <a class="t1" href="#blog">Vendors</a> <a class="t1" href="#blog">Launches</a> <a class="t1" href="#blog">Cows</a></div>
+      </section>
+
+      <section class="box">
+        <h3>AceForce's Crew</h3>
+        <div class="in">
+          <table class="kv">
+            <tr><td>Founder</td><td>Vlad Shenderovich, MS<br><a href="/founder/" target="_blank" rel="noopener">View profile</a></td></tr>
+            <tr><td>Managing Principal</td><td>Susan Lee</td></tr>
+            <tr><td>Operations</td><td>Josh Levine</td></tr>
+            <tr><td>Technology</td><td>Ilya Smolensky</td></tr>
+            <tr><td>Marketing</td><td>Stephanie Taxel</td></tr>
+          </table>
+        </div>
+      </section>
+    </aside>
+
+    <main>
+      <section class="box" id="blog">
+        <h3>AceForce's Blurbs</h3>
+        <div class="in">
+          <p><b>About me:</b><br>AceForce embeds into the operating layer of a business. We bring senior operators who can redesign the way the company runs, execution leads who actually run it, and engineers who can build the infrastructure behind it.</p>
+          <p>We are not lifelong consultants. We come from the brand side, and we build for growth that lasts after we leave.</p>
+          <p><b>Who I'd like to meet:</b><br>Founders whose store, ERP and warehouse each report a different number for the same SKU. Brands drowning in spreadsheets at 3 a.m. Anyone whose 3PL contract needs a second look.</p>
+        </div>
+      </section>
+
+      <section class="box blue">
+        <h3>Latest Blog Entry &nbsp;<span class="rss">RSS</span></h3>
+        <div class="in">
+          <p style="margin-top:0"><b>The AceForce Connector is open source!!</b> <span style="color:var(--mute);font-size:11px">[Posted in: Tech]</span></p>
+          <p>It links your store, ERP and warehouse, and you own every line of it. 40+ connectors built, 12 warehouse systems mapped, one repository per connector in your name, $0 license fees. <a href="/connector/" target="_blank" rel="noopener">Read more &raquo;</a></p>
+          <p><b>Also new:</b> Warehouse Warden (scheduled fulfillment and delivery reports by state and channel) and the AceForce Shipping App (carrier rules, hazmat routing, state by state restrictions, no more duplicate shipping charges). Both live on Shopify.</p>
+          <p style="font-size:11px;color:var(--mute);margin-bottom:0">Currently listening: the AceForce theme &middot; Kudos (19) &middot; <a href="#comments">Comments (2)</a></p>
+        </div>
+      </section>
+
+      <section class="box" id="friends">
+        <h3>AceForce's Friend Space</h3>
+        <div class="in">
+          <p style="margin-top:0"><b>AceForce has <span style="color:var(--orange)">19</span> friends.</b> These are the systems we connect.</p>
+          <div class="top8"><div class="friend"><a href="/systems/cin7-core/" target="_blank" rel="noopener"><span class="ava" style="background:#2b6bc4">CC</span>Cin7 Core</a></div><div class="friend"><a href="/systems/netsuite/" target="_blank" rel="noopener"><span class="ava" style="background:#e8742a">NE</span>NetSuite</a></div><div class="friend"><a href="/systems/wms/" target="_blank" rel="noopener"><span class="ava" style="background:#3a9a5b">WM</span>WMS</a></div><div class="friend"><a href="/systems/quickbooks/" target="_blank" rel="noopener"><span class="ava" style="background:#8a4fc2">QU</span>QuickBooks</a></div><div class="friend"><a href="/systems/shopify/" target="_blank" rel="noopener"><span class="ava" style="background:#c23b5a">SH</span>Shopify</a></div><div class="friend"><a href="/systems/mirakl/" target="_blank" rel="noopener"><span class="ava" style="background:#1f8f9a">MI</span>Mirakl</a></div><div class="friend"><a href="/systems/amazon/" target="_blank" rel="noopener"><span class="ava" style="background:#b8860b">AM</span>Amazon</a></div><div class="friend"><a href="/systems/tiktok-shop/" target="_blank" rel="noopener"><span class="ava" style="background:#555">TS</span>TikTok Shop</a></div></div>
+          <p style="text-align:right;margin-bottom:0"><a href="#" id="allFriends">View all of AceForce's friends</a></p>
+          <ul id="friendList" hidden style="columns:2;font-size:12px"><li><a href="/systems/cin7-core/" target="_blank" rel="noopener">Cin7 Core</a> (Partner)</li><li><a href="/systems/netsuite/" target="_blank" rel="noopener">NetSuite</a> (Certified system admin)</li><li><a href="/systems/wms/" target="_blank" rel="noopener">WMS</a> (12 integrated)</li><li><a href="/systems/quickbooks/" target="_blank" rel="noopener">QuickBooks</a> (Custom connector)</li><li><a href="/systems/shopify/" target="_blank" rel="noopener">Shopify</a> (GraphQL standard)</li><li><a href="/systems/mirakl/" target="_blank" rel="noopener">Mirakl</a> (Implementation experts)</li><li><a href="/systems/amazon/" target="_blank" rel="noopener">Amazon</a> (API)</li><li><a href="/systems/tiktok-shop/" target="_blank" rel="noopener">TikTok Shop</a> (Channel)</li><li><a href="/systems/faire/" target="_blank" rel="noopener">Faire</a> (Wholesale)</li><li><a href="/systems/unleashed/" target="_blank" rel="noopener">Unleashed</a> (Inventory)</li><li><a href="/systems/microsoft/" target="_blank" rel="noopener">Business Central</a> (Microsoft)</li><li><a href="/systems/airtable-sheets/" target="_blank" rel="noopener">Airtable</a> (Google Sheets)</li><li><a href="/systems/shipstation/" target="_blank" rel="noopener">ShipStation</a> (Shipping)</li><li><a href="/systems/custom-api/" target="_blank" rel="noopener">Custom API</a> (Scripts)</li><li>SPS Commerce (EDI)</li><li>Bill.com (Payables)</li><li>Stripe Connect (Billing)</li><li>Celigo (iPaaS)</li><li>ApparelMagic (ERP)</li></ul>
+        </div>
+      </section>
+
+      <section class="box blue" id="comments">
+        <h3>AceForce's Friends Comments</h3>
+        <div class="in">
+          <p style="margin-top:0">Displaying <b>2</b> of <b>2</b> comments</p>
+          <div class="comment"><div class="ava" style="background:#3a9;">CP</div><div><b>Dr. Chris Perez</b> <span class="when">Founder and CEO, OLAS Wellness</span><br>&ldquo;I was looking for a partner that would help manage all supply chain questions so that I could focus on building the brand. Vlad and his team delivered that and more, all while helping cut operating expenses.&rdquo;</div></div>
+          <div class="comment"><div class="ava" style="background:#c58;">EG</div><div><b>Eva Goicochea</b> <span class="when">Maude</span><br>&ldquo;Ace Force is the operations partner every founder needs. They embed seamlessly into the business, bringing deep expertise in supply chain, operations, and strategy while keeping an eye on both the big picture and the details that matter.&rdquo;</div></div>
+        </div>
+      </section>
+
+      <section class="box" id="message">
+        <h3>Send AceForce a Message</h3>
+        <div class="in">
+          <form class="form" id="msg" novalidate>
+            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <label for="m-name">Name</label><input id="m-name" type="text" autocomplete="name">
+            <label for="m-email">Email</label><input id="m-email" type="email" autocomplete="email">
+            <label for="m-brand">Brand</label><input id="m-brand" type="text">
+            <label for="m-msg">Message</label><textarea id="m-msg" rows="4"></textarea>
+            <p style="margin:10px 0 0"><button class="gloss green" id="m-send" type="submit">Send</button></p>
+            <p class="status" id="m-status" role="status" hidden></p>
+          </form>
+          <p style="font-size:11px;color:var(--mute);margin-bottom:0">info@aceforce.group</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="foot">
+    <a href="/90s/">Back to 1997</a>|<a href="/arcade/">Back to 1985</a>|<a href="/">Back to the future</a><br>
+    &copy; 2003 to 2026 AceForce Group &middot; Otacon Group LLC DBA AceForce &middot; There is no cow level.
+  </div>
+</div>
+
+<div class="player" role="region" aria-label="Music player">
+  <div class="row">
+    <button type="button" id="pp" aria-label="Play">&#9654;</button>
+    <div class="title"><span>Now playing: AceForce theme (remix) &middot; profile song &middot;&nbsp;</span></div>
+  </div>
+  <div class="bar"><i id="pbar"></i></div>
+</div>
+<audio id="song" src="/assets/audio/aceforce-arcade-theme-remix.mp3" loop preload="auto"></audio>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Flash-style intro, skippable, short
+  var intro = document.getElementById('intro'), bar = document.getElementById('loadBar'), txt = document.getElementById('loadTxt'), pct = 0;
+  function done() { intro.remove(); }
+  document.getElementById('skipIntro').addEventListener('click', done);
+  if (reduced) done(); else (function load() {
+    if (!document.body.contains(intro)) return;
+    pct = Math.min(100, pct + 7 + Math.random() * 12); bar.style.width = pct + '%'; txt.textContent = 'Loading... ' + Math.floor(pct) + '%';
+    if (pct >= 100) { txt.textContent = 'Moo.'; setTimeout(done, 350); } else setTimeout(load, 110);
+  })();
+
+  // Moo: a short synthesized moo
+  function moo() {
+    try {
+      var C = window.AudioContext || window.webkitAudioContext, c = new C(), o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain(), f = c.createBiquadFilter(), t = c.currentTime;
+      o.type = 'sawtooth'; o2.type = 'sawtooth'; f.type = 'lowpass'; f.frequency.setValueAtTime(500, t); f.frequency.linearRampToValueAtTime(1100, t + 0.35); f.frequency.linearRampToValueAtTime(400, t + 1.0);
+      o.frequency.setValueAtTime(140, t); o.frequency.linearRampToValueAtTime(175, t + 0.3); o.frequency.linearRampToValueAtTime(110, t + 1.0);
+      o2.frequency.setValueAtTime(141, t); o2.frequency.linearRampToValueAtTime(177, t + 0.3); o2.frequency.linearRampToValueAtTime(111, t + 1.0);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12, t + 0.12); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.05);
+      o.connect(f); o2.connect(f); f.connect(g); g.connect(c.destination); o.start(t); o2.start(t); o.stop(t + 1.1); o2.stop(t + 1.1);
+    } catch (e) {}
+  }
+  function bubble(el) {
+    var b = document.createElement('span'); b.className = 'moo'; b.textContent = 'Moo!';
+    b.style.left = (el.offsetLeft + 30) + 'px'; b.style.top = (el.offsetTop - 18) + 'px'; el.parentNode.appendChild(b); setTimeout(function () { b.remove(); }, 1100);
+  }
+
+  // The herd: cows wander across the top of the page
+  var herd = document.getElementById('herd'), cows = [];
+  for (var i = 0; i < 5; i++) {
+    var img = document.createElement('img'); img.src = 'img/cow-walk.gif'; img.width = 120; img.height = 84; img.alt = '';
+    var c = { el: img, x: Math.random() * 600, dir: Math.random() < .5 ? -1 : 1, v: .3 + Math.random() * .5, pause: 0 };
+    img.style.bottom = (i % 2) * 4 + 'px'; herd.appendChild(img); cows.push(c);
+    (function (c) { img.addEventListener('click', function () { moo(); bubble(c.el); c.pause = Date.now() + 1500; }); })(c);
+  }
+  function stepHerd() {
+    var max = herd.clientWidth - 120, now = Date.now();
+    cows.forEach(function (c) {
+      if (c.pause < now && !reduced) { c.x += c.dir * c.v; if (c.x > max) { c.x = max; c.dir = -1; } if (c.x < 0) { c.x = 0; c.dir = 1; } if (Math.random() < .003) c.pause = now + 1500 + Math.random() * 2500; }
+      c.el.style.transform = 'translateX(' + c.x + 'px)' + (c.dir < 0 ? ' scaleX(-1)' : '');
+    });
+    requestAnimationFrame(stepHerd);
+  }
+  requestAnimationFrame(stepHerd);
+  document.getElementById('mooAll').addEventListener('click', function () { moo(); cows.forEach(function (c) { bubble(c.el); }); });
+  document.getElementById('mooBtn').addEventListener('click', function () { moo(); bubble(cows[0].el); });
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-jump]'), function (b) {
+    b.addEventListener('click', function () { document.getElementById(b.getAttribute('data-jump')).scrollIntoView({ behavior: 'smooth' }); setTimeout(function () { document.getElementById('m-name').focus(); }, 500); });
+  });
+  document.getElementById('allFriends').addEventListener('click', function (e) { e.preventDefault(); var l = document.getElementById('friendList'); l.hidden = !l.hidden; });
+
+  // Profile music player: on by default, starts on the first click or tap
+  var a = document.getElementById('song'), pp = document.getElementById('pp'), pb = document.getElementById('pbar'), wanted = true;
+  a.volume = 0.6;
+  try { if (localStorage.getItem('aceforce-sound') === 'off') wanted = false; } catch (e) {}
+  function paint() { pp.innerHTML = a.paused ? '&#9654;' : '&#10073;&#10073;'; pp.setAttribute('aria-label', a.paused ? 'Play' : 'Pause'); }
+  function start() { var p = a.play(); if (p && p.catch) p.catch(function () {}); }
+  pp.addEventListener('click', function (e) { e.stopPropagation(); if (a.paused) { wanted = true; start(); } else { wanted = false; a.pause(); } });
+  a.addEventListener('play', paint); a.addEventListener('pause', paint);
+  a.addEventListener('timeupdate', function () { if (a.duration) pb.style.width = (a.currentTime / a.duration * 100) + '%'; });
+  if (wanted) {
+    start();
+    var evs = ['pointerdown', 'keydown', 'touchstart'];
+    var wake = function (e) { evs.forEach(function (n) { window.removeEventListener(n, wake, true); }); if (wanted && a.paused && !(e.target.closest && e.target.closest('.player'))) start(); };
+    evs.forEach(function (n) { window.addEventListener(n, wake, true); });
+  }
+
+  // Message form: same Web3Forms inbox as the live contact form, tagged Cow level. No mailto links.
+  var f = document.getElementById('msg'), st = document.getElementById('m-status'), send = document.getElementById('m-send');
+  function v(id) { return document.getElementById(id).value.trim(); }
+  function say(t) { st.hidden = false; st.textContent = t; }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (f.querySelector('[name=botcheck]').checked) return;
+    if (!v('m-name') || !/^\S+@\S+\.\S+$/.test(v('m-email')) || !v('m-msg')) { say('Please add your name, a valid email and a message.'); return; }
+    send.disabled = true; say('Sending...');
+    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ access_key: '1d1154fd-1717-4f0b-ac02-65efcb247832', from_name: 'aceforce.group cow level', topic: 'Cow level',
+        subject: 'AceForce inquiry (Cow level)' + (v('m-brand') ? ' from ' + v('m-brand') : ''), name: v('m-name'), email: v('m-email'), brand: v('m-brand'), message: v('m-msg') }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { if (d.success) { say('Message sent! We will reply by email. Moo.'); f.reset(); } else say('That did not go through. Please email info@aceforce.group.'); })
+      .catch(function () { say('That did not go through. Please email info@aceforce.group.'); })
+      .then(function () { send.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>
