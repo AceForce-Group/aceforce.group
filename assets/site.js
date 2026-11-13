@@ -267,14 +267,30 @@
   // Arriving back from the arcade (Exit to 2026): blocks clear away
   try{ if(sessionStorage.getItem('aceforce-px')==='in'){ sessionStorage.removeItem('aceforce-px'); if(!reduced) blocks(false); } }catch(e){}
 
-  if(!t) return;
+  Array.prototype.forEach.call(document.querySelectorAll('.mode-toggle'),function(t){
   t.addEventListener('click',function(e){
     if(e.metaKey||e.ctrlKey||e.shiftKey||e.button) return;
     e.preventDefault(); t.classList.add('on'); t.setAttribute('aria-checked','true');
+    var au=document.getElementById('themeAudio'); if(au) au.pause();
     try{ sessionStorage.setItem('aceforce-px','out'); }catch(err){}
     var go=function(){ location.href=t.getAttribute('href'); };
     if(reduced){ go(); return; }
     blip();
     setTimeout(function(){ pixelate(function(){ blocks(true,go); }); },180);
   });
+  });
+})();
+
+// Footer theme player: a quiet play / pause link for the arcade theme remix
+(function(){
+  var b=document.getElementById('themePlay'), a=document.getElementById('themeAudio'); if(!b||!a) return;
+  var label=b.querySelector('.tp-label'), icon=b.querySelector('.tp-icon'), time=b.querySelector('.tp-time');
+  function mmss(x){ x=Math.max(0,Math.floor(x||0)); return Math.floor(x/60)+':'+('0'+x%60).slice(-2); }
+  function paint(){
+    var on=!a.paused; b.setAttribute('aria-pressed',on?'true':'false');
+    icon.textContent=on?'❚❚':'♪'; label.textContent=on?'Pause the theme':'Play the theme';
+    time.textContent=(on||a.currentTime>0)?' '+mmss(a.currentTime)+(a.duration?' / '+mmss(a.duration):''):'';
+  }
+  b.addEventListener('click',function(){ if(a.paused){ var p=a.play(); if(p&&p.catch) p.catch(function(){}); } else a.pause(); });
+  ['play','pause','timeupdate','ended','loadedmetadata'].forEach(function(ev){ a.addEventListener(ev,paint); });
 })();

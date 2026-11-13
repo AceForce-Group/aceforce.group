@@ -32,7 +32,8 @@ Then open http://127.0.0.1:8794/. Add `?gate=1` to see the optional start screen
 - Contact is a form that posts to the same Web3Forms inbox as the live site, tagged "Arcade".
   There are no mailto links on the page.
 - The page is set to noindex. On aceforce.group it lives at /arcade/, reached from the 80s toggle
-  in the homepage header. "Exit to 2026" in the HUD goes back and clears the remembered choice.
+  in the homepage header and footer. "Back to the future" in the HUD goes back to the regular site.
+- Find all five aces and the arcade dials up the 90s version of the site at /90s/ on aceforce.group.
 
 ## Where things are
 
@@ -40,7 +41,7 @@ Then open http://127.0.0.1:8794/. Add `?gate=1` to see the optional start screen
 index.html   the page; all copy is in the HTML
 css/site.css layout, pixel borders, stepped motion
 js/ui.js     HUD, score, cards, versus table, team roster (team bios are in this file), cheat code,
-             mission form, Exit to 2026
+             mission form, Back to the future
 js/world.js  the scroll-driven canvas world (planets, ship, the Ace)
 js/game.js   the 30-second bonus game, Spreadsheet Storm
 js/gfx.js    palette, sprites, pixel font

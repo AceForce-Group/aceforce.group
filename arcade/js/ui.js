@@ -335,9 +335,40 @@
       burstAt(a, ['L', 'w', 'Y']); pop(a, '+1000', true); a.classList.add('got'); a.setAttribute('aria-hidden', 'true'); a.tabIndex = -1;
       got++; if (acesEl) acesEl.textContent = got; addScore(1000); sfx('coin');
       if (got < aces.length) toast('Ace ' + got + ' of ' + aces.length, '+1000. Keep looking.');
-      else { setTimeout(function () { sfx('secret'); }, 300); toast('All five aces!', '+5000. New in the HUD: the PALETTE button.', true); if (btnPal) btnPal.hidden = false; addScore(5000); }
+      else { setTimeout(function () { sfx('secret'); }, 300); toast('All five aces!', '+5000. Dialing up 1997...', true); addScore(5000); setTimeout(warp90s, 2400); }
     });
   });
+  /* All five aces: dial up and warp to the 90s version of the site */
+  var NINETIES = /^\/arcade\//.test(location.pathname) ? '/90s/' : 'https://aceforce.group/90s/';
+  function modem() { // a short, quiet dial-up handshake
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext; if (!AC || (ACE.sfx && !ACE.sfx.isOn())) return;
+      var c = new AC(), g = c.createGain(), t = c.currentTime + 0.05; g.gain.value = 0.05; g.connect(c.destination);
+      [941, 1336, 852, 1209, 770, 1477, 697, 1633].forEach(function (f, i) { // touch tones
+        var o = c.createOscillator(); o.frequency.value = f; o.connect(g); o.start(t + (i >> 1) * 0.16); o.stop(t + (i >> 1) * 0.16 + 0.11);
+      });
+      t += 0.8;
+      for (var k = 0; k < 14; k++) { // handshake warble
+        var o2 = c.createOscillator(); o2.type = 'square'; o2.frequency.value = k % 2 ? 2100 : 1200 + (k * 37) % 400;
+        o2.connect(g); o2.start(t + k * 0.07); o2.stop(t + k * 0.07 + 0.065);
+      }
+      var len = c.sampleRate * 0.9, b = c.createBuffer(1, len, c.sampleRate), d = b.getChannelData(0);
+      for (var n = 0; n < len; n++) d[n] = (Math.random() * 2 - 1) * 0.6;
+      var src = c.createBufferSource(), bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800;
+      src.buffer = b; src.connect(bp); bp.connect(g); src.start(t + 1.0);
+    } catch (e) { /* no audio */ }
+  }
+  function warp90s() {
+    if (ACE.sfx && ACE.sfx.isOn()) ACE.sfx.enable(false);
+    var ov = document.createElement('div'), pre = document.createElement('pre');
+    ov.className = 'dialup'; ov.appendChild(pre); document.body.appendChild(ov);
+    var lines = ['ATDT 1-800-ACE-FORCE', 'DIALING...', 'CONNECT 28800', 'LOADING ACEFORCE.ANGELFIRE.COM...'], i = 0;
+    modem();
+    (function next() {
+      if (i < lines.length) { pre.innerHTML = lines.slice(0, ++i).join('\n') + '<span class="cur">_</span>'; setTimeout(next, reduced ? 120 : 600); return; }
+      pixelOut(function () { location.href = NINETIES; });
+    })();
+  }
   if (btnPal) btnPal.addEventListener('click', function () {
     var on = body.classList.toggle('dmg'); btnPal.setAttribute('aria-pressed', on ? 'true' : 'false'); sfx('select');
     toast(on ? 'Handheld mode' : 'Arcade mode', on ? 'Four shades of green. As it was in 1989.' : 'Full hi-bit color.');
