@@ -87,9 +87,6 @@
   .tiny { font-size: 12px; color: #aaa; }
   .trail { position: fixed; pointer-events: none; z-index: 99; font-size: 14px; color: var(--ylw); animation: fade .8s linear forwards; }
   @keyframes fade { to { opacity: 0; transform: translateY(16px) scale(.4); } }
-  .titlerow { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: nowrap; }
-  .baby { width: 96px; height: auto; image-rendering: pixelated; flex: none; }
-  .flip { transform: scaleX(-1); }
   img { image-rendering: pixelated; }
   .pup { position: fixed; left: 0; bottom: 58px; z-index: 60; cursor: pointer; will-change: transform; }
   .heart { position: fixed; z-index: 61; pointer-events: none; color: #ff4d8d; font-size: 20px; animation: up 1s ease-out forwards; }
@@ -112,8 +109,6 @@
     .pup { bottom: 100px; }
     .box { bottom: 102px; }
     body { padding-bottom: 140px; }
-    .baby { width: 56px; }
-    h1.titlerow { font-size: 28px; }
   }
   @media (prefers-reduced-motion: reduce) { .blink, .new, .spin, .rainbow, .tp { animation: none !important; } }
 </style>
@@ -127,7 +122,7 @@
   <center>
     <p class="tiny">You have reached a secret level. <a href="/arcade/">Back to 1985</a> &middot; <a href="/">Back to the future</a></p>
     <img class="logo3d spin" src="/assets/aceforce-logo-lime-alpha.png" alt="AceForce">
-    <h1 class="titlerow"><img class="baby" src="img/dancing-baby.gif" width="128" height="168" alt="Dancing baby"><span class="rainbow">AceForce Online</span><img class="baby flip" src="img/dancing-baby.gif" width="128" height="168" alt=""></h1>
+    <h1><span class="rainbow">AceForce Online</span></h1>
     <p class="comic lime" style="font-size:20px">~*~ Tomorrow's supply chains, built today ~*~</p>
     <p>You are visitor number <span class="counter" id="counter" aria-label="visitor counter"></span></p>
     <div class="construction"><span><span class="blink">&#9888;</span> THIS SITE IS ALWAYS UNDER CONSTRUCTION <span class="blink">&#9888;</span></span></div>
@@ -270,6 +265,7 @@
           <li><a href="/founder/" target="_blank" rel="noopener">The founder file</a></li>
           <li><a href="/arcade/">The arcade (1985)</a></li>
           <li><a href="/">The real site (2026)</a></li>
+          <li id="pupBackLi" hidden><a href="#" id="pupBack">Bring Forklift the pup back</a></li>
         </ul>
       </section>
 
@@ -283,7 +279,7 @@
 </div>
 
 <div class="pupwin" id="pupwin" role="region" aria-label="Forklift the warehouse pup">
-  <div class="bar"><span>Forklift.exe</span><button type="button" id="pupMin" aria-label="Hide Forklift">_</button></div>
+  <div class="bar"><span>Forklift.exe</span><span><button type="button" id="pupMin" aria-label="Minimize the Forklift window">_</button> <button type="button" id="pupOff" aria-label="Send Forklift home">&times;</button></span></div>
   <div class="in"><span id="pupSay">Forklift is on patrol.</span>
     <span class="btns"><button type="button" data-pup="pet">Pet</button><button type="button" data-pup="treat">Treat</button><button type="button" data-pup="fetch">Fetch</button></span></div>
 </div>
@@ -366,9 +362,19 @@
       if (x > max) { x = max; dir = -1; } if (x < 0) { x = 0; dir = 1; }
       if (Math.random() < 0.002) sit(2200, 'Forklift is counting inventory.');
     }
-    face(); requestAnimationFrame(stepPup);
+    face(); if (pupOn) requestAnimationFrame(stepPup); else running = false;
   }
-  if (reduced) { pup.src = 'img/pup-sit.gif'; mode = 'sit'; until = Infinity; face(); } else requestAnimationFrame(stepPup);
+  // Turning the pup off: the x sends him home, remembered in this browser; Cool Links brings him back
+  var pupOn = true, running = false, backLi = document.getElementById('pupBackLi');
+  try { pupOn = localStorage.getItem('af-90s-pup') !== 'off'; } catch (e) {}
+  function setPup(on) {
+    pupOn = on; pup.hidden = !on; win.hidden = !on; backLi.hidden = on; if (!on) box.hidden = true;
+    try { localStorage.setItem('af-90s-pup', on ? 'on' : 'off'); } catch (e) {}
+    if (on && !running) { running = true; if (reduced) { pup.src = 'img/pup-sit.gif'; mode = 'sit'; until = Infinity; face(); } else requestAnimationFrame(stepPup); }
+  }
+  document.getElementById('pupOff').addEventListener('click', function (e) { e.stopPropagation(); setPup(false); });
+  document.getElementById('pupBack').addEventListener('click', function (e) { e.preventDefault(); setPup(true); });
+  setPup(pupOn);
 
   // Random system, webring style
   var sys = Array.prototype.map.call(document.querySelectorAll('#systems a'), function (x) { return x.getAttribute('href'); });
