@@ -441,3 +441,6 @@ footer .foot-extras{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:cent
 @keyframes tpPulse{50%{opacity:.35}}
 footer a.mode-toggle{display:inline-flex;align-items:center;gap:8px;color:inherit;font-size:11px;letter-spacing:.1em;text-decoration:none}
 footer a.mode-toggle:hover,footer a.mode-toggle:focus-visible{color:var(--lime)}
+
+footer a.cycle-link{color:inherit;opacity:.7;font-size:11px;letter-spacing:.1em;text-decoration:none}
+footer a.cycle-link:hover{opacity:1;color:var(--lime)}
