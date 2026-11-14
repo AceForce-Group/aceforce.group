@@ -342,7 +342,14 @@ Ad astra per operationes.</pre></template>
   setTimeout(booted, reduced ? 100 : 2400);
   // the startup chime needs a click or key first in most browsers
   var chimed = false;
-  function firstGesture() { if (chimed) return; chimed = true; chime(); }
+  function firstGesture() { if (chimed) return; chimed = true; chime(); setTimeout(startTheme, 2600); }
+  // The 2003 theme plays after the startup chime, like a startup song; LimeForce controls it
+  function startTheme() {
+    if (muted || !aud.paused) return;
+    lfCur = TRACKS[0]; aud.src = TRACKS[0].src; aud.loop = true; aud.volume = 0.6;
+    var pr = aud.play(); if (pr && pr.catch) pr.catch(function () {});
+    var np = document.getElementById('lfNow'); if (np) np.textContent = 'Now playing: ' + TRACKS[0].f;
+  }
   ['pointerdown', 'keydown'].forEach(function (n) { window.addEventListener(n, firstGesture, { once: true, capture: true }); });
 
   function balloon() {
@@ -447,6 +454,7 @@ Ad astra per operationes.</pre></template>
   // ---------- LimeForce ----------
   var aud = document.getElementById('aud'), lfCur = null;
   var TRACKS = [
+    { f: 'AceForce - 2003 Theme.mp3', src: 'audio/aceforce-2003-theme.mp3', size: '5.6 MB', br: 192, u: 'aceforce_official', done: true },
     { f: 'AceForce - Arcade Theme (Remix).mp3', src: '/assets/audio/aceforce-arcade-theme-remix.mp3', size: '5.4 MB', br: 192, u: 'ops_guru_99' },
     { f: 'AceForce - 97 Theme.mp3', src: '/angelfire/aceforce-90s-theme.mp3', size: '4.1 MB', br: 160, u: 'angelfire_fan' },
     { f: 'AceForce - Theme (8-bit Original).mp3', src: 'audio/aceforce-8bit-theme.mp3', size: '1.2 MB', br: 320, u: 'chiptune_kid' },
@@ -457,7 +465,7 @@ Ad astra per operationes.</pre></template>
     var rows = el.querySelector('#lfRows'), now = el.querySelector('#lfNow'), tm = el.querySelector('#lfTime');
     TRACKS.forEach(function (t) {
       var tr = document.createElement('tr'); tr.className = 'row';
-      tr.innerHTML = '<td></td><td>' + t.size + '</td><td>' + (t.br ? t.br + ' kbps' : '') + '</td><td>' + t.u + '</td><td data-s>' + (t.src ? 'Double-click to get' : 'Ready') + '</td>';
+      tr.innerHTML = '<td></td><td>' + t.size + '</td><td>' + (t.br ? t.br + ' kbps' : '') + '</td><td>' + t.u + '</td><td data-s>' + (t.done ? 'Complete' : t.src ? 'Double-click to get' : 'Ready') + '</td>';
       tr.firstChild.textContent = t.f;
       tr.addEventListener('click', function () { Array.prototype.forEach.call(rows.querySelectorAll('tr'), function (r) { r.classList.remove('sel'); }); tr.classList.add('sel'); if (matchMedia('(pointer: coarse)').matches) get(t, tr); });
       tr.addEventListener('dblclick', function () { get(t, tr); });
@@ -470,7 +478,8 @@ Ad astra per operationes.</pre></template>
       st.innerHTML = '<span class="prog"><i></i></span> <small>56.6k</small>'; var bar = st.querySelector('i'), p = 0;
       (function step() { p += 6 + Math.random() * 14; bar.style.width = Math.min(100, p) + '%'; if (p < 100) setTimeout(step, reduced ? 20 : 130); else { t.done = true; st.textContent = 'Complete'; ding(); play(t); } })();
     }
-    function play(t) { lfCur = t; aud.src = t.src; aud.loop = false; if (!muted) { var pr = aud.play(); if (pr && pr.catch) pr.catch(function () {}); } now.textContent = 'Now playing: ' + t.f; }
+    if (lfCur) now.textContent = 'Now playing: ' + lfCur.f;
+    function play(t) { lfCur = t; aud.src = t.src; aud.loop = t === TRACKS[0]; if (!muted) { var pr = aud.play(); if (pr && pr.catch) pr.catch(function () {}); } now.textContent = 'Now playing: ' + t.f; }
     el.querySelector('#lfPlay').onclick = function () { if (!lfCur) { var first = rows.querySelector('tr'); first.dispatchEvent(new MouseEvent('dblclick')); return; } if (aud.paused) aud.play(); else aud.pause(); };
     el.querySelector('#lfStop').onclick = function () { aud.pause(); aud.currentTime = 0; };
     el.querySelector('[data-lfsearch]').onclick = function () { tone(700, 0, .1, 'square', .03); el.querySelector('#lfUsers').textContent = (1990 + Math.floor(Math.random() * 40)).toLocaleString(); };
