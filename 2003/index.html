@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<title>AceOS 2003</title>
+<link rel="icon" href="/assets/favicon.png">
+<style>
+  :root { --blue: #0a246a; --title1: #0058ee; --title2: #3a93ff; --task1: #245edb; --task2: #1941a5; --start1: #3c9a3c; --start2: #2c7a2c; --face: #ece9d8; --line: #aca899; --lime: #c1fd5d; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; font: 12px/1.35 Tahoma, Verdana, "Segoe UI", sans-serif; color: #000; user-select: none; -webkit-user-select: none; }
+  body { background: linear-gradient(#2f6fd6 0%, #5ea2ee 45%, #a8d4f7 62%, #79b84a 63%, #4f9a2d 80%, #3b7d22 100%); }
+  .hill { position: fixed; left: -20%; right: -20%; bottom: 30px; height: 46%; background: radial-gradient(ellipse at 40% 0%, #8fd15a 0%, #5aa833 45%, #3a7f1e 75%); border-radius: 50% 50% 0 0 / 70% 70% 0 0; }
+  .cloud { position: fixed; width: 220px; height: 60px; background: rgba(255,255,255,.75); border-radius: 60px; filter: blur(6px); }
+  /* boot */
+  .boot { position: fixed; inset: 0; z-index: 9000; background: #000; color: #fff; display: grid; place-items: center; text-align: center; }
+  .boot .logo { font: bold 34px/1 "Trebuchet MS", Tahoma, sans-serif; letter-spacing: -1px; }
+  .boot .logo span { color: var(--lime); }
+  .boot .logo small { display: block; font-size: 14px; font-weight: normal; color: #9fb4d8; margin-top: 6px; letter-spacing: .3em; }
+  .boot .bar { width: 160px; height: 14px; border: 1px solid #555; border-radius: 3px; margin: 34px auto 0; padding: 2px; overflow: hidden; position: relative; }
+  .boot .bar i { position: absolute; top: 2px; width: 30px; height: 8px; background: repeating-linear-gradient(90deg, #2f6fd6 0 8px, transparent 8px 11px); animation: slide 1.4s linear infinite; }
+  @keyframes slide { from { left: -34px; } to { left: 160px; } }
+  .boot p { color: #777; font-size: 11px; margin-top: 30px; }
+  .welcome { position: fixed; inset: 0; z-index: 8999; background: linear-gradient(#5a7edc, #3a5fc4); display: grid; place-items: center; color: #fff; font: italic bold 40px "Trebuchet MS", Tahoma, sans-serif; text-shadow: 2px 2px 3px rgba(0,0,0,.35); transition: opacity .5s; }
+  /* desktop icons */
+  .icons { position: fixed; top: 10px; left: 10px; bottom: 44px; display: grid; grid-auto-flow: column; grid-template-rows: repeat(auto-fill, 86px); gap: 4px 8px; align-content: start; }
+  .icon { width: 78px; text-align: center; color: #fff; text-shadow: 1px 1px 2px #000; cursor: pointer; padding: 4px 2px; border: 1px dotted transparent; font-size: 11px; background: none; font-family: inherit; }
+  .icon:focus, .icon.sel { outline: none; border-color: #fff; background: rgba(49,106,197,.55); }
+  .icon .g { display: grid; place-items: center; width: 40px; height: 40px; margin: 0 auto 4px; border-radius: 6px; font: bold 18px Tahoma, sans-serif; color: #fff; box-shadow: inset 0 -3px 0 rgba(0,0,0,.2), 0 2px 3px rgba(0,0,0,.35); }
+  /* windows */
+  .win { position: fixed; min-width: 260px; background: var(--face); border: 1px solid #0831d9; border-radius: 8px 8px 0 0; box-shadow: 2px 3px 14px rgba(0,0,0,.45); display: flex; flex-direction: column; z-index: 10; }
+  .win.inactive .tb { background: linear-gradient(#7a96df, #a6b9ea); }
+  .tb { height: 28px; flex: none; display: flex; align-items: center; gap: 6px; padding: 0 4px 0 8px; border-radius: 7px 7px 0 0; color: #fff; font: bold 13px "Trebuchet MS", Tahoma, sans-serif; text-shadow: 1px 1px 1px #0a246a;
+    background: linear-gradient(var(--title2), var(--title1) 18%, #0050e0 60%, #0045c8); cursor: move; touch-action: none; }
+  .tb .t { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .tb button { width: 21px; height: 21px; border: 1px solid #fff; border-radius: 3px; background: linear-gradient(#5c93f8, #2363e0); color: #fff; font: bold 11px Tahoma, sans-serif; cursor: pointer; padding: 0; line-height: 1; }
+  .tb button.x { background: linear-gradient(#e9876b, #c9431e); }
+  .menu { flex: none; display: flex; gap: 12px; padding: 3px 8px; border-bottom: 1px solid #fff; box-shadow: 0 1px 0 var(--line); font-size: 11px; }
+  .body { flex: 1; overflow: auto; background: #fff; margin: 0 3px 3px; border: 1px solid #7f9db9; user-select: text; -webkit-user-select: text; }
+  .body.face { background: var(--face); border: 0; }
+  .status { flex: none; padding: 2px 8px; font-size: 11px; border-top: 1px solid var(--line); color: #333; }
+  .pad { padding: 10px 12px; }
+  .btn { font: 11px Tahoma, sans-serif; padding: 3px 12px; border: 1px solid #003c74; border-radius: 3px; background: linear-gradient(#fff, #ece9d8); cursor: pointer; }
+  .btn:hover { box-shadow: inset 0 0 0 2px #f8b636; }
+  h4 { margin: 0 0 6px; font: bold 13px Tahoma, sans-serif; color: #1e3f8f; }
+  /* explorer panes */
+  .explorer { display: grid; grid-template-columns: 170px 1fr; height: 100%; }
+  .side { background: linear-gradient(#7ba2e7, #6375d6); padding: 10px; }
+  .side .box { background: #fff; border-radius: 4px 4px 0 0; margin-bottom: 10px; font-size: 11px; }
+  .side .box b { display: block; color: #fff; background: linear-gradient(90deg, #fff 0%, #c6d3f7 100%); color: #215dc6; padding: 4px 8px; border-radius: 4px 4px 0 0; }
+  .side .box div { padding: 6px 8px; background: #d6dff7; }
+  .side a { color: #215dc6; display: block; margin: 2px 0; text-decoration: none; }
+  .files { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; padding: 12px; align-content: start; }
+  .file { text-align: center; font-size: 11px; color: #000; text-decoration: none; }
+  .file .g { width: 40px; height: 40px; margin: 0 auto 4px; display: grid; place-items: center; border-radius: 4px; color: #fff; font: bold 14px Tahoma, sans-serif; box-shadow: 0 2px 3px rgba(0,0,0,.3); }
+  .file:hover span { background: #316ac5; color: #fff; }
+  /* browser */
+  .addr { flex: none; display: flex; gap: 6px; align-items: center; padding: 3px 6px; border-bottom: 1px solid var(--line); font-size: 11px; }
+  .addr input { flex: 1; font: 11px Tahoma, sans-serif; border: 1px solid #7f9db9; padding: 2px 4px; }
+  iframe { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+  /* LimeForce */
+  .lf { display: flex; flex-direction: column; height: 100%; background: #f4f8ec; }
+  .lf .head { background: linear-gradient(#9ed468, #6fae37); color: #fff; padding: 8px 10px; display: flex; align-items: center; gap: 10px; font: bold 16px "Trebuchet MS", sans-serif; text-shadow: 1px 1px 1px #2d5a10; }
+  .lf .head small { font: 11px Tahoma, sans-serif; opacity: .9; margin-left: auto; text-shadow: none; }
+  .lf .search { display: flex; gap: 6px; padding: 6px 10px; border-bottom: 1px solid #c4d9a6; }
+  .lf .search input { flex: 1; border: 1px solid #8fb35f; padding: 3px 5px; font: 12px Tahoma, sans-serif; }
+  .lf table { width: 100%; border-collapse: collapse; font-size: 11px; background: #fff; }
+  .lf th { text-align: left; background: linear-gradient(#fff, #e3ead7); border-bottom: 1px solid #b7c99a; padding: 3px 6px; font-weight: normal; white-space: nowrap; }
+  .lf td { padding: 3px 6px; border-bottom: 1px solid #eef3e6; white-space: nowrap; }
+  .lf tr.row { cursor: default; }
+  .lf tr.row:hover td { background: #e6f2d3; }
+  .lf tr.row.sel td { background: #316ac5; color: #fff; }
+  .lf .prog { width: 90px; height: 10px; border: 1px solid #7a9a52; background: #fff; display: inline-block; vertical-align: middle; }
+  .lf .prog i { display: block; height: 100%; width: 0; background: linear-gradient(#a6e06a, #5f9e2a); }
+  .lf .scroll { flex: 1; overflow: auto; }
+  .lf .player { display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: linear-gradient(#3b3b3b, #1a1a1a); color: #c1fd5d; font: 11px "Lucida Console", Monaco, monospace; }
+  .lf .player button { background: linear-gradient(#666, #333); color: #fff; border: 1px solid #000; border-radius: 3px; cursor: pointer; font-size: 11px; padding: 2px 8px; }
+  .lf .player .np { flex: 1; overflow: hidden; white-space: nowrap; }
+  /* IM */
+  .buddies { padding: 6px 8px; font-size: 12px; }
+  .buddies b { display: block; margin: 6px 0 2px; font-size: 11px; color: #333; }
+  .bud { padding: 2px 4px 2px 16px; cursor: pointer; position: relative; }
+  .bud::before { content: ""; position: absolute; left: 3px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: #3ac43a; }
+  .bud.away::before { background: #f5c400; }
+  .bud:hover { background: #316ac5; color: #fff; }
+  .chat { display: flex; flex-direction: column; height: 100%; }
+  .chat .log { flex: 1; overflow: auto; padding: 8px; font: 13px Arial, sans-serif; background: #fff; }
+  .chat .log p { margin: 0 0 6px; }
+  .chat .me { color: #f00; font-weight: bold; } .chat .bot { color: #00f; font-weight: bold; }
+  .chat form { display: flex; gap: 4px; padding: 4px; border-top: 1px solid var(--line); background: var(--face); }
+  .chat input { flex: 1; font: 13px Arial, sans-serif; border: 1px solid #7f9db9; padding: 4px; }
+  /* sweeper */
+  .ms { padding: 8px; display: inline-block; background: #c0c0c0; }
+  .ms .top { display: flex; justify-content: space-between; align-items: center; border: 2px inset #fff; padding: 4px; margin-bottom: 6px; }
+  .ms .lcd { background: #000; color: #f00; font: bold 20px "Courier New", monospace; padding: 0 4px; min-width: 46px; text-align: right; }
+  .ms .face { width: 30px; height: 30px; font-size: 18px; border: 2px outset #fff; background: #c0c0c0; cursor: pointer; padding: 0; }
+  .ms .grid { display: grid; grid-template-columns: repeat(9, 24px); border: 3px inset #fff; }
+  .ms .c { width: 24px; height: 24px; border: 2px outset #fff; background: #c0c0c0; font: bold 13px Tahoma, sans-serif; display: grid; place-items: center; cursor: pointer; padding: 0; }
+  .ms .c.o { border: 1px solid #808080; background: #d4d4d4; cursor: default; }
+  .ms .msg { font-size: 11px; margin-top: 6px; min-height: 15px; text-align: center; }
+  /* notepad / form */
+  .note { font: 13px "Lucida Console", Monaco, monospace; white-space: pre-wrap; padding: 8px; margin: 0; }
+  .mail label { display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 11px; }
+  .mail input, .mail textarea { font: 12px Tahoma, sans-serif; border: 1px solid #7f9db9; padding: 3px 5px; width: 100%; }
+  .mail textarea { min-height: 120px; }
+  .hp { position: absolute; left: -9999px; }
+  /* taskbar */
+  .taskbar { position: fixed; left: 0; right: 0; bottom: 0; height: 32px; z-index: 5000; display: flex; align-items: center; background: linear-gradient(#3168d5, var(--task1) 10%, #2153c6 60%, var(--task2)); border-top: 1px solid #0c32a8; }
+  .start { height: 32px; padding: 0 18px 0 10px; border: 0; border-radius: 0 12px 12px 0; color: #fff; font: italic bold 17px "Trebuchet MS", Tahoma, sans-serif; text-shadow: 1px 1px 2px #1a4a1a; cursor: pointer;
+    background: linear-gradient(#58b658, var(--start1) 40%, var(--start2)); box-shadow: inset -2px 0 3px rgba(0,0,0,.25); display: flex; align-items: center; gap: 6px; }
+  .start .flag { width: 18px; height: 18px; border-radius: 3px; background: conic-gradient(var(--lime) 0 25%, #ffcf3d 0 50%, #3a93ff 0 75%, #ff5a3c 0); transform: skewX(-8deg); }
+  .tasks { flex: 1; display: flex; gap: 3px; padding: 0 6px; overflow: hidden; }
+  .task { max-width: 160px; flex: 1 1 160px; height: 24px; border-radius: 3px; border: 1px solid #1941a5; background: linear-gradient(#3c81f3, #2463e0); color: #fff; font-size: 11px; text-align: left; padding: 0 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: pointer; }
+  .task.on { background: linear-gradient(#1e52b7, #1945a5); box-shadow: inset 1px 1px 2px rgba(0,0,0,.5); }
+  .tray { height: 32px; display: flex; align-items: center; gap: 8px; padding: 0 10px; background: linear-gradient(#0f8bea, #0b77d8 50%, #0a63c4); border-left: 1px solid #1042af; color: #fff; font-size: 11px; }
+  .tray button { background: none; border: 0; color: #fff; cursor: pointer; font-size: 13px; padding: 0; }
+  /* start menu */
+  .smenu { position: fixed; left: 0; bottom: 32px; width: 380px; max-width: 100vw; z-index: 6000; background: #fff; border: 1px solid #0831d9; border-radius: 8px 8px 0 0; box-shadow: 3px 0 10px rgba(0,0,0,.4); overflow: hidden; }
+  .smenu .who { display: flex; align-items: center; gap: 10px; padding: 8px 10px; color: #fff; font: bold 14px "Trebuchet MS", sans-serif; background: linear-gradient(#1868ce, #0e60cb 50%, #0b4ab4); text-shadow: 1px 1px 2px #0a246a; }
+  .smenu .who i { width: 40px; height: 40px; border: 2px solid #fff; border-radius: 4px; background: #111 url('/assets/aceforce-logo-lime-alpha.png') center/90% no-repeat; }
+  .smenu .cols { display: grid; grid-template-columns: 1fr 1fr; }
+  .smenu .cols > div { padding: 6px 0; }
+  .smenu .cols > div + div { background: #d3e5fa; border-left: 1px solid #95bdee; }
+  .smenu a, .smenu button.it { display: block; width: 100%; text-align: left; padding: 6px 12px; font: 12px Tahoma, sans-serif; color: #000; text-decoration: none; background: none; border: 0; cursor: pointer; }
+  .smenu a:hover, .smenu button.it:hover { background: #316ac5; color: #fff; }
+  .smenu .foot { display: flex; justify-content: flex-end; gap: 6px; padding: 6px 10px; background: linear-gradient(#1868ce, #0b4ab4); }
+  .smenu .foot button { background: none; border: 0; color: #fff; font: 12px Tahoma, sans-serif; cursor: pointer; }
+  /* balloon */
+  .balloon { position: fixed; right: 8px; bottom: 40px; z-index: 5500; width: 260px; background: #ffffe1; border: 1px solid #000; border-radius: 8px; padding: 8px 10px; font-size: 11px; box-shadow: 2px 2px 6px rgba(0,0,0,.35); }
+  .balloon b { display: block; margin-bottom: 3px; }
+  .balloon button { position: absolute; right: 4px; top: 3px; border: 0; background: none; cursor: pointer; }
+  .shutdown { position: fixed; inset: 0; z-index: 9500; background: #000; color: #f60; display: grid; place-items: center; text-align: center; font: bold 22px "Trebuchet MS", sans-serif; }
+  .shutdown a { color: #f60; font-size: 14px; }
+  @media (max-width: 700px) {
+    .win { left: 0 !important; top: 0 !important; width: 100vw !important; height: calc(100vh - 32px) !important; border-radius: 0; }
+    .explorer { grid-template-columns: 1fr; }
+    .side { display: none; }
+    .tray .clk { display: none; }
+    .task { max-width: 90px; }
+  }
+</style>
+</head>
+<body>
+<div class="cloud" style="top:12%;left:8%"></div><div class="cloud" style="top:22%;left:58%;width:300px"></div><div class="cloud" style="top:6%;left:78%;width:160px"></div>
+<div class="hill" aria-hidden="true"></div>
+
+<div class="boot" id="boot"><div><div class="logo">Ace<span>OS</span> 2003<small>OPERATIONS EDITION</small></div><div class="bar"><i></i></div><p>Copyright &copy; AceForce Group. Tomorrow's supply chains, built today.</p></div></div>
+
+<div class="icons" id="icons">
+  <button class="icon" data-open="about"><span class="g" style="background:#2a62d2">A</span>My AceForce</button>
+  <button class="icon" data-open="browser"><span class="g" style="background:#1d7fd8">e</span>Supply Explorer</button>
+  <button class="icon" data-open="lime"><span class="g" style="background:#6fae37">&#9835;</span>LimeForce</button>
+  <button class="icon" data-open="im"><span class="g" style="background:#f5c400;color:#222">IM</span>AceIM</button>
+  <button class="icon" data-open="sweep"><span class="g" style="background:#888">&#128163;</span>Stockout Sweeper</button>
+  <button class="icon" data-open="systems"><span class="g" style="background:#f0c24a;color:#5a3c00">&#128193;</span>Systems</button>
+  <button class="icon" data-open="readme"><span class="g" style="background:#fff;color:#333">txt</span>Read Me.txt</button>
+  <button class="icon" data-open="mail"><span class="g" style="background:#2a8a3c">&#9993;</span>Contact Us</button>
+  <button class="icon" data-open="bin"><span class="g" style="background:#7aa6d8">&#128465;</span>Recycle Bin</button>
+</div>
+
+<div id="wins"></div>
+
+<div class="taskbar">
+  <button class="start" id="startBtn" type="button"><span class="flag"></span>start</button>
+  <div class="tasks" id="tasks"></div>
+  <div class="tray"><button type="button" id="mute" title="Volume">&#128266;</button><span class="clk" id="clock"></span></div>
+</div>
+
+<div class="smenu" id="smenu" hidden>
+  <div class="who"><i></i>AceForce</div>
+  <div class="cols">
+    <div>
+      <button class="it" data-open="browser"><b>Supply Explorer</b></button>
+      <button class="it" data-open="lime"><b>LimeForce</b></button>
+      <button class="it" data-open="im">AceIM</button>
+      <button class="it" data-open="sweep">Stockout Sweeper</button>
+      <button class="it" data-open="mail">Contact Us</button>
+    </div>
+    <div>
+      <button class="it" data-open="about"><b>My AceForce</b></button>
+      <button class="it" data-open="systems">Systems</button>
+      <button class="it" data-open="readme">Read Me.txt</button>
+      <a href="/angelfire/">Back to 1997</a>
+      <a href="/arcade/">Back to 1985</a>
+    </div>
+  </div>
+  <div class="foot"><button type="button" id="logoff">&#128273; Log Off</button><button type="button" id="turnoff">&#9211; Turn Off Computer</button></div>
+</div>
+
+<audio id="aud" preload="none"></audio>
+
+<template id="t-about">
+  <div class="explorer">
+    <div class="side">
+      <div class="box"><b>System Tasks</b><div><a href="#" data-open="systems">View connected systems</a><a href="#" data-open="browser">Open the Connector</a><a href="#" data-open="mail">Contact AceForce</a></div></div>
+      <div class="box"><b>Other Places</b><div><a href="/">aceforce.group (2026)</a><a href="/angelfire/">Angelfire (1997)</a><a href="/arcade/">Arcade (1985)</a></div></div>
+    </div>
+    <div class="pad">
+      <h4>AceForce: Tomorrow's supply chains, built today.</h4>
+      <p>AceForce embeds into the operating layer of a business. We bring senior operators who can redesign the way the company runs, execution leads who actually run it, and engineers who can build the infrastructure behind it.</p>
+      <p>We are not lifelong consultants. We come from the brand side, and we build for growth that lasts after we leave.</p>
+      <table style="font-size:11px;border-collapse:collapse;width:100%">
+        <tr><td style="padding:4px 6px;background:#eef3fc;width:110px"><b>&spades; Operations</b></td><td style="padding:4px 6px">Supply chain architecture, demand and supply planning, S&amp;OP, 3PL management and migrations</td></tr>
+        <tr><td style="padding:4px 6px;background:#eef3fc"><b>&diams; Technology</b></td><td style="padding:4px 6px">API, MCP and EDI. NetSuite, Cin7 Core, Shopify and 12 warehouse systems</td></tr>
+        <tr><td style="padding:4px 6px;background:#eef3fc"><b>&clubs; Supply Chain</b></td><td style="padding:4px 6px">Procurement, logistics, inventory. CPG, food and beverage, apparel and toys</td></tr>
+        <tr><td style="padding:4px 6px;background:#eef3fc"><b>&hearts; Strategy</b></td><td style="padding:4px 6px">Fractional executives with experience from Chanel, Coty, Revlon, Elemis, Funko and Baccarat</td></tr>
+      </table>
+      <p style="font-size:11px;color:#555">Crew: Vlad Shenderovich, MS (Founder) &middot; Susan Lee &middot; Josh Levine &middot; Ilya Smolensky &middot; Stephanie Taxel</p>
+    </div>
+  </div>
+</template>
+
+<template id="t-browser">
+  <div style="display:flex;flex-direction:column;height:100%">
+    <div class="menu"><span>File</span><span>Edit</span><span>View</span><span>Favorites</span><span>Tools</span><span>Help</span></div>
+    <div class="addr"><button class="btn" data-go="/connector/">&#8592; Back</button><span>Address</span><input type="text" value="http://www.aceforce.group/connector/" aria-label="Address"><button class="btn" data-goaddr>Go</button></div>
+    <div class="addr" style="gap:4px"><span>Favorites:</span><button class="btn" data-go="/connector/">AceForce Connector</button><button class="btn" data-go="/founder/">Founder</button><button class="btn" data-go="/">aceforce.group (2026)</button></div>
+    <div class="body" style="margin:0"><iframe title="Supply Explorer" src="/connector/"></iframe></div>
+    <div class="status">&#127760; Done &middot; Internet zone</div>
+  </div>
+</template>
+
+<template id="t-lime">
+  <div class="lf">
+    <div class="head">&#9835; LimeForce <small>Connected to the AceForce network &middot; <span id="lfUsers">1,997</span> users sharing</small></div>
+    <div class="search"><input type="text" value="aceforce" aria-label="Search"><button class="btn" type="button" data-lfsearch>Search</button></div>
+    <div class="scroll"><table><thead><tr><th>Filename</th><th>Size</th><th>Bitrate</th><th>User</th><th>Status</th></tr></thead><tbody id="lfRows"></tbody></table></div>
+    <div class="player"><button type="button" id="lfPlay">&#9654;</button><button type="button" id="lfStop">&#9632;</button><span class="np" id="lfNow">Double-click a song to download and play it.</span><span id="lfTime"></span></div>
+  </div>
+</template>
+
+<template id="t-im">
+  <div class="buddies">
+    <div style="display:flex;align-items:center;gap:8px;padding:4px 0 8px;border-bottom:1px solid #ccc"><span style="font:bold 22px Tahoma;color:#f5c400;text-shadow:1px 1px 0 #333">IM</span><div><b style="margin:0">AceIM</b><span style="font-size:11px;color:#555">Signed on as Guest</span></div></div>
+    <b>Buddies (6/6)</b>
+    <div class="bud" data-chat="AceForceBot">AceForceBot</div>
+    <div class="bud">Vlad Shenderovich</div><div class="bud">Susan Lee</div><div class="bud">Josh Levine</div><div class="bud">Ilya Smolensky</div><div class="bud">Stephanie Taxel</div>
+    <b>Systems (14/19)</b>
+    <div id="imSystems"></div>
+    <p style="font-size:11px;color:#555;margin-top:10px">Double-click AceForceBot to chat.</p>
+  </div>
+</template>
+
+<template id="t-chat">
+  <div class="chat">
+    <div class="log" data-log></div>
+    <form data-send><input type="text" aria-label="Message" placeholder="Type a message"><button class="btn" type="submit">Send</button></form>
+  </div>
+</template>
+
+<template id="t-sweep">
+  <div class="body face" style="display:grid;place-items:center;margin:0">
+    <div class="ms"><div class="top"><span class="lcd" data-left>010</span><button class="face" type="button" data-face aria-label="New game">&#128578;</button><span class="lcd" data-time>000</span></div><div class="grid" data-grid></div><div class="msg" data-msg>Every bomb is a stockout. Right-click or long-press to flag.</div></div>
+  </div>
+</template>
+
+<template id="t-systems">
+  <div class="explorer">
+    <div class="side"><div class="box"><b>File and Folder Tasks</b><div><a href="#" data-open="browser">Open the Connector</a><a href="#" data-open="mail">Ask about a system</a></div></div><div class="box"><b>Details</b><div>19 systems connected. API, MCP and EDI.</div></div></div>
+    <div class="files" id="sysFiles"></div>
+  </div>
+</template>
+
+<template id="t-readme"><pre class="note">AceForce Read Me.txt
+====================
+
+AceForce embeds into the operating layer of a business.
+
+NEW: The AceForce Connector is open source.
+  It links your store, ERP and warehouse, and you own every line of it.
+  40+ connectors built. 12 warehouse systems mapped.
+  One repository per connector, in your name. $0 license fees.
+
+ALSO NEW (Shopify apps, live):
+  Warehouse Warden ...... scheduled fulfillment and delivery reports
+                          by state and channel
+  AceForce Shipping App . carrier rules, hazmat routing, state by
+                          state restrictions, no duplicate shipping
+                          charges
+
+Specialties: CPG, food and beverage, apparel and toys.
+
+161 Water Street, Suite 2026, New York, NY 10038
+info@aceforce.group
+
+Ad astra per operationes.</pre></template>
+
+<template id="t-mail">
+  <div style="display:flex;flex-direction:column;height:100%">
+    <div class="menu"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Tools</span></div>
+    <form class="pad mail" data-mail novalidate style="flex:1;overflow:auto">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>To: <input type="text" value="AceForce" readonly></label>
+      <label>From: <input type="text" data-f="name" placeholder="Your name" autocomplete="name"></label>
+      <label>Email: <input type="email" data-f="email" placeholder="you@brand.com" autocomplete="email"></label>
+      <label>Brand: <input type="text" data-f="brand"></label>
+      <textarea data-f="msg" aria-label="Message" placeholder="What are you working on?"></textarea>
+      <p style="margin:8px 0 0"><button class="btn" type="submit">&#9993; Send</button> <span data-st style="font-size:11px;margin-left:8px"></span></p>
+    </form>
+  </div>
+</template>
+
+<template id="t-bin">
+  <div style="display:flex;flex-direction:column;height:100%">
+    <div class="menu"><button class="btn" type="button" data-empty>Empty Recycle Bin</button></div>
+    <div class="files" data-binfiles>
+      <div class="file"><div class="g" style="background:#1f7a3a">xls</div><span>inventory_FINAL_v7_REAL.xls</span></div>
+      <div class="file"><div class="g" style="background:#1f7a3a">xls</div><span>forecast_copy_of_copy.xls</span></div>
+      <div class="file"><div class="g" style="background:#1f7a3a">xls</div><span>3PL_invoice_recon_DO_NOT_TOUCH.xls</span></div>
+      <div class="file"><div class="g" style="background:#1f7a3a">xls</div><span>PO_tracker_(3).xls</span></div>
+      <div class="file"><div class="g" style="background:#2a62d2">doc</div><span>manual_SOP_nobody_reads.doc</span></div>
+      <div class="file"><div class="g" style="background:#1f7a3a">xls</div><span>SKU_counts_dont_match.xls</span></div>
+    </div>
+  </div>
+</template>
+
+<script>
+(function () {
+  var SYS = {"carts": [["/systems/cin7-core/", "Cin7 Core", "Partner"], ["/systems/netsuite/", "NetSuite", "Certified system admin"], ["/systems/wms/", "WMS", "12 integrated"], ["/systems/quickbooks/", "QuickBooks", "Custom connector"], ["/systems/shopify/", "Shopify", "GraphQL standard"], ["/systems/mirakl/", "Mirakl", "Implementation experts"], ["/systems/amazon/", "Amazon", "API"], ["/systems/tiktok-shop/", "TikTok Shop", "Channel"], ["/systems/faire/", "Faire", "Wholesale"], ["/systems/unleashed/", "Unleashed", "Inventory"], ["/systems/microsoft/", "Business Central", "Microsoft"], ["/systems/airtable-sheets/", "Airtable", "Google Sheets"], ["/systems/shipstation/", "ShipStation", "Shipping"], ["/systems/custom-api/", "Custom API", "Scripts"]], "plain": [["SPS Commerce", "EDI"], ["Bill.com", "Payables"], ["Stripe Connect", "Billing"], ["Celigo", "iPaaS"], ["ApparelMagic", "ERP"]]};
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var muted = false; try { muted = localStorage.getItem('aceforce-sound') === 'off'; } catch (e) {}
+  var AC = null;
+  function ctx() { if (muted) return null; try { if (!AC) { var C = window.AudioContext || window.webkitAudioContext; AC = C ? new C() : null; } if (AC && AC.state === 'suspended') AC.resume(); } catch (e) {} return AC; }
+  function tone(f, t, d, type, vol) { var c = ctx(); if (!c) return; var o = c.createOscillator(), g = c.createGain(); o.type = type || 'sine'; o.frequency.value = f;
+    g.gain.setValueAtTime(0, c.currentTime + t); g.gain.linearRampToValueAtTime(vol || .08, c.currentTime + t + .02); g.gain.exponentialRampToValueAtTime(.0001, c.currentTime + t + d);
+    o.connect(g); g.connect(c.destination); o.start(c.currentTime + t); o.stop(c.currentTime + t + d + .05); }
+  function chime() { [[523, 0], [659, .12], [784, .24], [1047, .36], [784, .6], [1047, .72]].forEach(function (n) { tone(n[0], n[1], 1.2, 'sine', .07); tone(n[0] / 2, n[1], 1.2, 'triangle', .04); }); }
+  function ding() { tone(988, 0, .3, 'sine', .08); tone(1319, .08, .4, 'sine', .07); }
+  function door() { tone(660, 0, .12, 'square', .04); tone(880, .1, .2, 'square', .04); }
+  function crumple() { var c = ctx(); if (!c) return; var len = c.sampleRate * .5, b = c.createBuffer(1, len, c.sampleRate), x = b.getChannelData(0);
+    for (var i = 0; i < len; i++) x[i] = (Math.random() * 2 - 1) * (Math.random() < .2 ? 1 : .2) * (1 - i / len);
+    var s = c.createBufferSource(), g = c.createGain(); g.gain.value = .25; s.buffer = b; s.connect(g); g.connect(c.destination); s.start(); }
+
+  // ---------- boot ----------
+  var boot = document.getElementById('boot');
+  function booted() {
+    boot.remove();
+    var w = document.createElement('div'); w.className = 'welcome'; w.textContent = 'welcome'; document.body.appendChild(w);
+    setTimeout(function () { w.style.opacity = '0'; setTimeout(function () { w.remove(); }, 500); balloon(); }, reduced ? 200 : 1100);
+  }
+  setTimeout(booted, reduced ? 100 : 2400);
+  // the startup chime needs a click or key first in most browsers
+  var chimed = false;
+  function firstGesture() { if (chimed) return; chimed = true; chime(); }
+  ['pointerdown', 'keydown'].forEach(function (n) { window.addEventListener(n, firstGesture, { once: true, capture: true }); });
+
+  function balloon() {
+    var b = document.createElement('div'); b.className = 'balloon';
+    b.innerHTML = '<button type="button" aria-label="Close">&times;</button><b>Found New Hardware</b>Your supply chain. AceOS has installed the AceForce Connector. Your connectors, your code, forever.';
+    document.body.appendChild(b); b.querySelector('button').onclick = function () { b.remove(); }; setTimeout(function () { b.remove(); }, 9000); ding();
+  }
+
+  // ---------- clock ----------
+  var clk = document.getElementById('clock');
+  function tick() { var d = new Date(); clk.textContent = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); }
+  tick(); setInterval(tick, 10000);
+  var muteBtn = document.getElementById('mute');
+  function paintMute() { muteBtn.innerHTML = muted ? '&#128263;' : '&#128266;'; }
+  paintMute();
+  muteBtn.onclick = function () { muted = !muted; try { localStorage.setItem('aceforce-sound', muted ? 'off' : 'on'); } catch (e) {} if (muted) aud.pause(); paintMute(); };
+
+  // ---------- window manager ----------
+  var wins = document.getElementById('wins'), tasks = document.getElementById('tasks'), z = 20, open = {}, cascade = 0;
+  var APPS = {
+    about: { t: 'My AceForce', w: 640, h: 440 },
+    browser: { t: 'AceForce Connector - Supply Explorer', w: 820, h: 560 },
+    lime: { t: 'LimeForce', w: 640, h: 380, init: initLime },
+    im: { t: 'AceIM Buddy List', w: 230, h: 470, init: initIM, x: 'right' },
+    sweep: { t: 'Stockout Sweeper', w: 270, h: 360, init: initSweep },
+    systems: { t: 'Systems', w: 640, h: 440, init: initSystems },
+    readme: { t: 'Read Me.txt - Notepad', w: 520, h: 420 },
+    mail: { t: 'New Message', w: 480, h: 420, init: initMail },
+    bin: { t: 'Recycle Bin', w: 520, h: 340, init: initBin },
+    chat: { t: 'AceForceBot - Instant Message', w: 380, h: 340, init: initChat }
+  };
+  function focus(id) {
+    Object.keys(open).forEach(function (k) { open[k].el.classList.add('inactive'); open[k].task.classList.remove('on'); });
+    var o = open[id]; if (!o) return; o.el.hidden = false; o.el.classList.remove('inactive'); o.el.style.zIndex = ++z; o.task.classList.add('on');
+  }
+  function openApp(id) {
+    document.getElementById('smenu').hidden = true;
+    if (open[id]) { focus(id); return; }
+    var a = APPS[id]; if (!a) return;
+    var el = document.createElement('div'); el.className = 'win';
+    var vw = innerWidth, vh = innerHeight - 32, w = Math.min(a.w, vw - 20), h = Math.min(a.h, vh - 20);
+    var x = a.x === 'right' ? vw - w - 16 : Math.max(10, Math.min(vw - w - 10, 110 + cascade * 26)), y = Math.max(8, Math.min(vh - h - 8, 30 + cascade * 26));
+    cascade = (cascade + 1) % 8;
+    el.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px';
+    el.innerHTML = '<div class="tb"><span class="t"></span><button type="button" aria-label="Minimize">_</button><button type="button" aria-label="Maximize">&#9633;</button><button type="button" class="x" aria-label="Close">&times;</button></div><div class="body"></div>';
+    el.querySelector('.t').textContent = a.t;
+    var body = el.querySelector('.body'), tpl = document.getElementById('t-' + id);
+    if (tpl) body.appendChild(tpl.content.cloneNode(true));
+    if (id === 'readme' || id === 'about' || id === 'systems' || id === 'bin' || id === 'browser' || id === 'mail' || id === 'chat' || id === 'lime') body.style.overflow = id === 'readme' || id === 'about' ? 'auto' : 'hidden';
+    wins.appendChild(el);
+    var task = document.createElement('button'); task.className = 'task'; task.type = 'button'; task.textContent = a.t; tasks.appendChild(task);
+    open[id] = { el: el, task: task };
+    var b = el.querySelectorAll('.tb button');
+    b[0].onclick = function (e) { e.stopPropagation(); el.hidden = true; task.classList.remove('on'); };
+    b[1].onclick = function (e) { e.stopPropagation(); if (el.dataset.max) { el.style.cssText = el.dataset.max; delete el.dataset.max; } else { el.dataset.max = el.style.cssText; el.style.left = 0; el.style.top = 0; el.style.width = '100vw'; el.style.height = 'calc(100vh - 32px)'; } };
+    b[2].onclick = function (e) { e.stopPropagation(); close(id); };
+    task.onclick = function () { if (!el.hidden && task.classList.contains('on')) { el.hidden = true; task.classList.remove('on'); } else focus(id); };
+    el.addEventListener('pointerdown', function () { focus(id); });
+    drag(el, el.querySelector('.tb'));
+    wire(el);
+    if (a.init) a.init(el);
+    focus(id); door();
+  }
+  function close(id) { var o = open[id]; if (!o) return; if (id === 'lime') { aud.pause(); } o.el.remove(); o.task.remove(); delete open[id]; }
+  function drag(el, handle) {
+    handle.addEventListener('pointerdown', function (e) {
+      if (e.target.tagName === 'BUTTON' || innerWidth <= 700 || el.dataset.max) return;
+      var sx = e.clientX, sy = e.clientY, ox = el.offsetLeft, oy = el.offsetTop; handle.setPointerCapture(e.pointerId);
+      var ifr = el.querySelector('iframe'); if (ifr) ifr.style.pointerEvents = 'none';
+      function mv(ev) { el.style.left = Math.max(-el.offsetWidth + 60, Math.min(innerWidth - 60, ox + ev.clientX - sx)) + 'px'; el.style.top = Math.max(0, Math.min(innerHeight - 60, oy + ev.clientY - sy)) + 'px'; }
+      function up() { handle.removeEventListener('pointermove', mv); handle.removeEventListener('pointerup', up); if (ifr) ifr.style.pointerEvents = ''; }
+      handle.addEventListener('pointermove', mv); handle.addEventListener('pointerup', up);
+    });
+  }
+  function wire(root) {
+    Array.prototype.forEach.call(root.querySelectorAll('[data-open]'), function (b) {
+      var go = function (e) { e.preventDefault(); openApp(b.getAttribute('data-open')); };
+      if (b.classList.contains('icon')) { b.addEventListener('dblclick', go); b.addEventListener('click', function (e) { Array.prototype.forEach.call(document.querySelectorAll('.icon.sel'), function (x) { x.classList.remove('sel'); }); b.classList.add('sel'); if (matchMedia('(pointer: coarse)').matches) go(e); }); b.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(e); }); }
+      else b.addEventListener('click', go);
+    });
+    var ifr = root.querySelector('iframe');
+    if (ifr) {
+      var inp = root.querySelector('.addr input');
+      Array.prototype.forEach.call(root.querySelectorAll('[data-go]'), function (b) { b.onclick = function () { ifr.src = b.getAttribute('data-go'); inp.value = 'http://www.aceforce.group' + b.getAttribute('data-go'); }; });
+      root.querySelector('[data-goaddr]').onclick = function () { var v = inp.value.replace(/^https?:\/\/(www\.)?aceforce\.group/, '') || '/'; if (v.charAt(0) !== '/') v = '/'; ifr.src = v; };
+      ifr.addEventListener('load', function () { try { inp.value = 'http://www.aceforce.group' + ifr.contentWindow.location.pathname; } catch (e) {} });
+    }
+  }
+  wire(document.getElementById('icons')); wire(document.getElementById('smenu'));
+  var smenu = document.getElementById('smenu');
+  document.getElementById('startBtn').onclick = function (e) { e.stopPropagation(); smenu.hidden = !smenu.hidden; if (!smenu.hidden) door(); };
+  document.addEventListener('pointerdown', function (e) { if (!smenu.hidden && !e.target.closest('.smenu, #startBtn')) smenu.hidden = true; });
+  function shutdown(text) {
+    smenu.hidden = true; aud.pause();
+    tone(784, 0, .6, 'sine', .06); tone(523, .25, .8, 'sine', .06); tone(392, .5, 1.1, 'sine', .06);
+    var s = document.createElement('div'); s.className = 'shutdown';
+    s.innerHTML = '<div>' + text + '<br><br><a href="/">Back to the future &raquo;</a></div>'; document.body.appendChild(s);
+  }
+  document.getElementById('turnoff').onclick = function () { shutdown('It is now safe to return to 2026.'); };
+  document.getElementById('logoff').onclick = function () { shutdown('Logging off AceOS...'); };
+
+  // ---------- LimeForce ----------
+  var aud = document.getElementById('aud'), lfCur = null;
+  var TRACKS = [
+    { f: 'AceForce - Arcade Theme (Remix).mp3', src: '/assets/audio/aceforce-arcade-theme-remix.mp3', size: '5.4 MB', br: 192, u: 'ops_guru_99' },
+    { f: 'AceForce - 97 Theme.mp3', src: '/angelfire/aceforce-90s-theme.mp3', size: '4.1 MB', br: 160, u: 'angelfire_fan' },
+    { f: 'AceForce - Theme (8-bit Original).mp3', src: 'audio/aceforce-8bit-theme.mp3', size: '1.2 MB', br: 320, u: 'chiptune_kid' },
+    { f: 'inventory_FINAL_v7_REAL.xls', src: null, size: '88 KB', br: '', u: 'spreadsheet_hero' },
+    { f: 'How To Reconcile 3 Systems (Live Bootleg).mp3', src: null, size: '6.6 MB', br: 128, u: 'lost_founder' }
+  ];
+  function initLime(el) {
+    var rows = el.querySelector('#lfRows'), now = el.querySelector('#lfNow'), tm = el.querySelector('#lfTime');
+    TRACKS.forEach(function (t) {
+      var tr = document.createElement('tr'); tr.className = 'row';
+      tr.innerHTML = '<td></td><td>' + t.size + '</td><td>' + (t.br ? t.br + ' kbps' : '') + '</td><td>' + t.u + '</td><td data-s>' + (t.src ? 'Double-click to get' : 'Ready') + '</td>';
+      tr.firstChild.textContent = t.f;
+      tr.addEventListener('click', function () { Array.prototype.forEach.call(rows.querySelectorAll('tr'), function (r) { r.classList.remove('sel'); }); tr.classList.add('sel'); if (matchMedia('(pointer: coarse)').matches) get(t, tr); });
+      tr.addEventListener('dblclick', function () { get(t, tr); });
+      rows.appendChild(tr);
+    });
+    function get(t, tr) {
+      var st = tr.querySelector('[data-s]');
+      if (!t.src) { st.textContent = 'User went offline'; tone(220, 0, .25, 'square', .04); return; }
+      if (t.done) { play(t); return; }
+      st.innerHTML = '<span class="prog"><i></i></span> <small>56.6k</small>'; var bar = st.querySelector('i'), p = 0;
+      (function step() { p += 6 + Math.random() * 14; bar.style.width = Math.min(100, p) + '%'; if (p < 100) setTimeout(step, reduced ? 20 : 130); else { t.done = true; st.textContent = 'Complete'; ding(); play(t); } })();
+    }
+    function play(t) { lfCur = t; aud.src = t.src; aud.loop = false; if (!muted) { var pr = aud.play(); if (pr && pr.catch) pr.catch(function () {}); } now.textContent = 'Now playing: ' + t.f; }
+    el.querySelector('#lfPlay').onclick = function () { if (!lfCur) { var first = rows.querySelector('tr'); first.dispatchEvent(new MouseEvent('dblclick')); return; } if (aud.paused) aud.play(); else aud.pause(); };
+    el.querySelector('#lfStop').onclick = function () { aud.pause(); aud.currentTime = 0; };
+    el.querySelector('[data-lfsearch]').onclick = function () { tone(700, 0, .1, 'square', .03); el.querySelector('#lfUsers').textContent = (1990 + Math.floor(Math.random() * 40)).toLocaleString(); };
+    aud.ontimeupdate = function () { if (!aud.duration) return; var m = function (x) { x = Math.floor(x); return Math.floor(x / 60) + ':' + ('0' + x % 60).slice(-2); }; tm.textContent = m(aud.currentTime) + ' / ' + m(aud.duration); };
+  }
+
+  // ---------- AceIM ----------
+  function initIM(el) {
+    var box = el.querySelector('#imSystems');
+    SYS.carts.forEach(function (s) { var d = document.createElement('div'); d.className = 'bud away'; d.textContent = s[1]; d.title = s[2]; box.appendChild(d); });
+    Array.prototype.forEach.call(el.querySelectorAll('.bud'), function (b) {
+      var go = function () { if (b.dataset.chat) openApp('chat'); else { openApp('chat'); setTimeout(function () { botSay('That buddy is busy in a cycle count. AceForceBot can help instead. Ask me about the Connector, systems, or how to reach us.'); }, 300); } };
+      b.addEventListener('dblclick', go); if (matchMedia('(pointer: coarse)').matches) b.addEventListener('click', go);
+    });
+  }
+  var chatLog = null;
+  function botSay(t) { if (!chatLog) return; var p = document.createElement('p'); p.innerHTML = '<span class="bot">AceForceBot:</span> '; p.appendChild(document.createTextNode(t)); chatLog.appendChild(p); chatLog.scrollTop = chatLog.scrollHeight; tone(1046, 0, .15, 'sine', .06); }
+  function initChat(el) {
+    chatLog = el.querySelector('[data-log]');
+    setTimeout(function () { botSay('hey! welcome to AceOS 2003. ask me about the connector, netsuite, cin7, warehouses, pricing, or type "contact".'); }, 400);
+    el.querySelector('[data-send]').addEventListener('submit', function (e) {
+      e.preventDefault(); var inp = e.target.querySelector('input'), q = inp.value.trim(); if (!q) return; inp.value = '';
+      var p = document.createElement('p'); p.innerHTML = '<span class="me">You:</span> '; p.appendChild(document.createTextNode(q)); chatLog.appendChild(p);
+      var l = q.toLowerCase(), a;
+      if (/connector|open source|own/.test(l)) a = 'The AceForce Connector links your store, ERP and warehouse, and you own every line of it. 40+ connectors built, $0 license fees. Opening it in Supply Explorer for you.';
+      else if (/netsuite/.test(l)) a = 'We have a certified NetSuite system admin. Integrations, saved searches, workflows, cleanup.';
+      else if (/cin7/.test(l)) a = 'We are a Cin7 Core partner. Implementations, migrations and cleanups.';
+      else if (/wms|warehouse|3pl/.test(l)) a = '12 warehouse systems integrated so far, plus 3PL RFPs, migrations and contract reviews. Warehouse Warden reports on how they perform.';
+      else if (/edi|sps/.test(l)) a = 'We speak EDI. SPS Commerce, retailer onboarding, the works.';
+      else if (/price|cost|how much|rate/.test(l)) a = 'Depends on the scope. Send us a note through Contact Us and we will reply by email.';
+      else if (/contact|email|talk|hire|help/.test(l)) a = 'Opening a new message for you. Or write to info@aceforce.group.';
+      else if (/a\/s\/l|asl/.test(l)) a = 'est. 2026 / AI bot / 161 Water Street, NYC';
+      else if (/brb|bye|gtg/.test(l)) a = 'ttyl! *door closes*';
+      else if (/hi|hey|hello|sup/.test(l)) a = 'sup! ask me anything about ops, systems or the connector.';
+      else a = 'lol good question. the humans at AceForce can answer that one. type "contact" and I will open a message.';
+      setTimeout(function () { botSay(a); if (/connector|open source|own/.test(l)) openApp('browser'); if (/contact|email|talk|hire|help|price|cost/.test(l)) openApp('mail'); }, 500 + Math.random() * 700);
+    });
+  }
+
+  // ---------- Stockout Sweeper ----------
+  function initSweep(el) {
+    var gridEl = el.querySelector('[data-grid]'), face = el.querySelector('[data-face]'), left = el.querySelector('[data-left]'), tmEl = el.querySelector('[data-time]'), msg = el.querySelector('[data-msg]');
+    var N = 9, M = 10, cells, over, opened, flags, timer, secs;
+    var COL = ['', '#0000ff', '#008000', '#ff0000', '#000080', '#800000', '#008080', '#000', '#808080'];
+    function pad(n) { return ('00' + Math.max(0, n)).slice(-3); }
+    function reset() {
+      gridEl.innerHTML = ''; cells = []; over = false; opened = 0; flags = 0; secs = 0; clearInterval(timer); timer = null; tmEl.textContent = '000'; left.textContent = pad(M); face.innerHTML = '&#128578;';
+      msg.textContent = 'Every bomb is a stockout. Right-click or long-press to flag.';
+      for (var i = 0; i < N * N; i++) { var b = document.createElement('button'); b.type = 'button'; b.className = 'c'; b.dataset.i = i; gridEl.appendChild(b); cells.push({ b: b, m: false, o: false, f: false, n: 0 }); }
+      var placed = 0; while (placed < M) { var k = Math.floor(Math.random() * N * N); if (!cells[k].m) { cells[k].m = true; placed++; } }
+      cells.forEach(function (c, i) { c.n = nb(i).filter(function (j) { return cells[j].m; }).length; });
+    }
+    function nb(i) { var r = Math.floor(i / N), c = i % N, out = []; for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++) { if (!dr && !dc) continue; var rr = r + dr, cc = c + dc; if (rr >= 0 && rr < N && cc >= 0 && cc < N) out.push(rr * N + cc); } return out; }
+    function reveal(i) {
+      var c = cells[i]; if (c.o || c.f || over) return;
+      if (!timer) timer = setInterval(function () { tmEl.textContent = pad(++secs); }, 1000);
+      if (c.m) {
+        over = true; clearInterval(timer); face.innerHTML = '&#128565;'; tone(110, 0, .5, 'sawtooth', .07);
+        cells.forEach(function (x) { if (x.m) { x.b.classList.add('o'); x.b.textContent = '\u{1F4E6}'; } }); c.b.style.background = '#f33';
+        msg.textContent = 'Stockout! Expedite fees incurred. Click the face to try again.'; return;
+      }
+      c.o = true; opened++; c.b.classList.add('o'); if (c.n) { c.b.textContent = c.n; c.b.style.color = COL[c.n]; } else nb(i).forEach(reveal);
+      if (opened === N * N - M) { over = true; clearInterval(timer); face.innerHTML = '&#128526;'; ding(); msg.textContent = 'All SKUs in stock. Fill rate: 100%.'; }
+    }
+    function flag(i) { var c = cells[i]; if (c.o || over) return; c.f = !c.f; flags += c.f ? 1 : -1; c.b.textContent = c.f ? '\u{1F6A9}' : ''; left.textContent = pad(M - flags); }
+    var press = null;
+    gridEl.addEventListener('click', function (e) { var b = e.target.closest('.c'); if (!b) return; if (press === 'long') { press = null; return; } reveal(+b.dataset.i); });
+    gridEl.addEventListener('contextmenu', function (e) { e.preventDefault(); var b = e.target.closest('.c'); if (b) flag(+b.dataset.i); });
+    gridEl.addEventListener('pointerdown', function (e) { var b = e.target.closest('.c'); if (!b || e.pointerType === 'mouse') return; press = setTimeout(function () { flag(+b.dataset.i); press = 'long'; }, 450); });
+    gridEl.addEventListener('pointerup', function () { if (press && press !== 'long') { clearTimeout(press); press = null; } });
+    face.onclick = reset; reset();
+  }
+
+  // ---------- Systems folder ----------
+  function initSystems(el) {
+    var box = el.querySelector('#sysFiles'), cols = ['#2b6bc4', '#e8742a', '#3a9a5b', '#8a4fc2', '#c23b5a', '#1f8f9a', '#b8860b', '#555'];
+    SYS.carts.forEach(function (s, i) { var a = document.createElement('a'); a.className = 'file'; a.href = s[0]; a.target = '_blank'; a.rel = 'noopener';
+      a.innerHTML = '<div class="g" style="background:' + cols[i % 8] + '"></div><span></span>'; a.querySelector('.g').textContent = s[1].replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase(); a.querySelector('span').textContent = s[1]; box.appendChild(a); });
+    SYS.plain.forEach(function (s) { var d = document.createElement('div'); d.className = 'file'; d.innerHTML = '<div class="g" style="background:#999"></div><span></span>'; d.querySelector('.g').textContent = s[0].slice(0, 2).toUpperCase(); d.querySelector('span').textContent = s[0] + ' (' + s[1] + ')'; box.appendChild(d); });
+  }
+
+  // ---------- Recycle Bin ----------
+  function initBin(el) { el.querySelector('[data-empty]').onclick = function () { var f = el.querySelector('[data-binfiles]'); if (!f.children.length) return; crumple(); f.innerHTML = '<p style="font-size:11px;color:#555">The spreadsheets are gone. Your systems talk to each other now.</p>'; }; }
+
+  // ---------- Contact ----------
+  function initMail(el) {
+    var f = el.querySelector('[data-mail]'), st = el.querySelector('[data-st]');
+    function v(k) { return f.querySelector('[data-f="' + k + '"]').value.trim(); }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault(); if (f.querySelector('[name=botcheck]').checked) return;
+      if (!v('name') || !/^\S+@\S+\.\S+$/.test(v('email')) || !v('msg')) { st.textContent = 'Please add your name, a valid email and a message.'; tone(220, 0, .2, 'square', .04); return; }
+      st.textContent = 'Sending...';
+      fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ access_key: '1d1154fd-1717-4f0b-ac02-65efcb247832', from_name: 'aceforce.group AceOS 2003', topic: 'AceOS 2003',
+          subject: 'AceForce inquiry (AceOS 2003)' + (v('brand') ? ' from ' + v('brand') : ''), name: v('name'), email: v('email'), brand: v('brand'), message: v('msg') }) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { if (d.success) { st.textContent = 'Message sent. We will reply by email.'; ding(); f.reset(); } else st.textContent = 'That did not go through. Please email info@aceforce.group.'; })
+        .catch(function () { st.textContent = 'That did not go through. Please email info@aceforce.group.'; });
+    });
+  }
+})();
+</script>
+</body>
+</html>

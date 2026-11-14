@@ -98,6 +98,10 @@
   .pupwin button { font: bold 12px Arial, sans-serif; border: 2px outset #fff; background: var(--gray); cursor: pointer; padding: 1px 7px; }
   .pupwin button:active { border-style: inset; }
   .pupwin.min .in { display: none; }
+  .y2k { background: #000 !important; color: var(--lime) !important; border-color: var(--lime) !important; font-family: "Courier New", monospace !important; }
+  .y2kov { position: fixed; inset: 0; z-index: 300; background: #000; color: var(--lime); display: grid; place-items: center; text-align: center; font: bold 28px "Courier New", monospace; }
+  .y2kov.glitch { animation: gl .12s steps(2) infinite; }
+  @keyframes gl { 50% { transform: translate(4px,-3px) skewX(6deg); filter: hue-rotate(90deg) invert(1); } }
   @media (max-width: 680px) {
     .layout { grid-template-columns: 1fr; }
     .nav { position: static; }
@@ -273,6 +277,7 @@
       <center>
         <p><a class="btn95" href="/">Back to the future</a></p>
         <p class="tiny">&copy; 1997 to 2026 AceForce Group &middot; Otacon Group LLC DBA AceForce &middot; This page is not affiliated with any actual 1997.</p>
+        <p><button class="btn95 y2k" id="y2k" type="button" title="Is this site ready for the year 2000?">&#10004; Y2K COMPLIANT</button></p>
       </center>
     </main>
   </div>
@@ -375,6 +380,23 @@
   document.getElementById('pupOff').addEventListener('click', function (e) { e.stopPropagation(); setPup(false); });
   document.getElementById('pupBack').addEventListener('click', function (e) { e.preventDefault(); setPup(true); });
   setPup(pupOn);
+
+  // Y2K: count down to midnight, glitch, then boot the 2000s
+  document.getElementById('y2k').addEventListener('click', function () {
+    try { a.pause(); } catch (e) {}
+    var ov = document.createElement('div'), sec = 57, C = window.AudioContext || window.webkitAudioContext, cx = null;
+    try { cx = C ? new C() : null; } catch (e) {}
+    function blip(f, d) { if (!cx) return; var o = cx.createOscillator(), g = cx.createGain(); o.type = 'square'; o.frequency.value = f; g.gain.setValueAtTime(.05, cx.currentTime); g.gain.exponentialRampToValueAtTime(.0001, cx.currentTime + d); o.connect(g); g.connect(cx.destination); o.start(); o.stop(cx.currentTime + d); }
+    ov.className = 'y2kov'; document.body.appendChild(ov);
+    (function step() {
+      ov.innerHTML = '12/31/1999<br>23:59:' + sec + '<br><small style="font-size:14px">IS YOUR SUPPLY CHAIN Y2K READY?</small>';
+      if (sec < 59) { blip(880, .12); sec++; setTimeout(step, reduced ? 80 : 800); return; }
+      setTimeout(function () {
+        ov.innerHTML = '01/01/1900<br>00:00:00<br><small style="font-size:14px">ERROR: CENTURY NOT FOUND</small>'; ov.classList.add('glitch'); blip(120, .9); blip(97, .9);
+        setTimeout(function () { location.href = '/2003/'; }, reduced ? 200 : 1500);
+      }, reduced ? 80 : 800);
+    })();
+  });
 
   // Random system, webring style
   var sys = Array.prototype.map.call(document.querySelectorAll('#systems a'), function (x) { return x.getAttribute('href'); });
