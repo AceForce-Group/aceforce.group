@@ -73,9 +73,9 @@ p.lead{color:#cfd6dc;max-width:760px;font-size:16px}
 .part.open ul{display:block}
 .part .more{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--lime);letter-spacing:.1em;text-transform:uppercase;margin-top:10px;display:block}
 .part.open .more{display:none}
-.total{display:flex;justify-content:space-between;align-items:center;background:var(--lime);color:#0b1a08;padding:20px 22px}
-.total .d{font-size:18px}
-.total .n{font-family:'Changeling Neo','Michroma',sans-serif;font-size:34px}
+.total{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 24px;background:var(--navy);border:1px solid var(--line);border-top:3px solid var(--lime);padding:16px 22px}
+.total .t{font-family:'Changeling Neo','Michroma',sans-serif;font-size:20px;text-transform:uppercase}
+.total .t b{color:var(--lime);font-weight:inherit}
 .small{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute);margin-top:12px}
 @media(max-width:640px){.part{grid-template-columns:40px 1fr}.part .fee{grid-column:2;text-align:left}}
 .tl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
@@ -279,9 +279,9 @@ footer img{height:20px}
           <span class="more">What's included</span></div>
         <div class="fee">$2,500</div>
       </div>
-      <div class="total"><span class="d">Total</span><span class="n">$22,500</span></div>
+      <div class="total"><span class="t">Total <b>$22,500</b></span><span class="t">3 payments of <b>$7,500</b></span></div>
     </div>
-    <p class="small">Invoiced in three equal installments: at signing, at soft go-live, at cutover. Software subscriptions (Cin7, QuickBooks, ShipStation, Google Cloud) are billed to you directly by each vendor.</p>
+    <p class="small">Payments are due at signing, at soft go-live in February and at cutover on March 1. Software subscriptions (Cin7, QuickBooks, ShipStation, Google Cloud) are billed to you directly by each vendor.</p>
   </div>
 </section>
 
@@ -300,14 +300,14 @@ footer img{height:20px}
 
 <section id="addons" data-section="add-ons">
   <div class="wrap">
-    <div class="eyebrow">Optional, quoted separately</div>
-    <h2 class="d">Want any of these in scope?</h2>
-    <p class="lead">These came up on the call but aren't in the $22,500. Flag any you want and we'll send a fixed quote.</p>
+    <div class="eyebrow">Not in the $22,500</div>
+    <h2 class="d">Optional items</h2>
+    <p class="lead">You mentioned these on Nov 24. We can quote any of them separately.</p>
     <div class="addons">
-      <div class="addon"><h3>Target through SPS</h3><p>Connect your SPS Commerce flow to Cin7 so Target orders, shipments and invoices stop being keyed by hand.</p><button type="button" class="btn ghost sm" data-addon="Target through SPS">I want a quote</button></div>
-      <div class="addon"><h3>TikTok Shop</h3><p>Bring TikTok Shop orders and stock into Cin7 alongside Shopify and Amazon.</p><button type="button" class="btn ghost sm" data-addon="TikTok Shop">I want a quote</button></div>
-      <div class="addon"><h3>Separate stock per channel</h3><p>Hold back or cap stock for Amazon and each store from the shared pool, so one channel can't oversell another.</p><button type="button" class="btn ghost sm" data-addon="Stock per channel">I want a quote</button></div>
-      <div class="addon"><h3>Warehouse pick control</h3><p>Use Cin7's warehouse layer with ShipStation so the North Carolina team picks the right lot and the oldest expiry first.</p><button type="button" class="btn ghost sm" data-addon="Warehouse pick control">I want a quote</button></div>
+      <div class="addon"><h3>Target through SPS</h3><p>Target orders, shipping notices and invoices pass between SPS Commerce and Cin7.</p><button type="button" class="btn ghost sm" data-addon="Target through SPS">I want a quote</button></div>
+      <div class="addon"><h3>TikTok Shop</h3><p>TikTok Shop orders and stock sync with Cin7.</p><button type="button" class="btn ghost sm" data-addon="TikTok Shop">I want a quote</button></div>
+      <div class="addon"><h3>Separate stock per channel</h3><p>Set aside or cap stock for Amazon and each Shopify store from the shared pool.</p><button type="button" class="btn ghost sm" data-addon="Stock per channel">I want a quote</button></div>
+      <div class="addon"><h3>Warehouse pick control</h3><p>The North Carolina warehouse picks through Cin7 and ShipStation, by lot, oldest expiry first.</p><button type="button" class="btn ghost sm" data-addon="Warehouse pick control">I want a quote</button></div>
     </div>
   </div>
 </section>
