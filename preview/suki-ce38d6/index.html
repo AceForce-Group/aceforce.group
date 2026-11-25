@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Suki Home Party's · AceForce Proposal</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Off NetSuite by March · AceForce for Suki Home Party's">
+<meta property="og:description" content="Cin7 Core, QuickBooks Online and 20 years of history kept.">
+<meta property="og:image" content="https://aceforce.group/assets/og-image.jpg">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=Space+Mono:wght@400;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap">
+<style>
+@font-face{font-family:'Changeling Neo';src:url('/assets/fonts/ChangelingNeo-Bold.woff2') format('woff2');font-weight:400 700;font-display:swap}
+:root{--lime:#C1FD5D;--navy:#091F34;--line:#1f3a55;--ink:#f3f4f1;--mute:#9fb0bf}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#000;color:var(--ink);font-family:"Space Mono",Consolas,monospace;font-size:15px;line-height:1.6}
+a{color:var(--lime)}
+.d{font-family:'Changeling Neo','Michroma','Arial Black',sans-serif;text-transform:uppercase;line-height:1.12}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:72px 0;border-top:1px solid #111a24}
+h2{font-size:clamp(22px,3.2vw,34px);margin:10px 0 18px}
+p.lead{color:#cfd6dc;max-width:760px;font-size:16px}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.nav{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.86);backdrop-filter:blur(8px);border-bottom:1px solid #111a24}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.nav img{height:22px;display:block}
+.nav .links{display:flex;gap:22px;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.nav .links a{color:var(--mute);text-decoration:none}
+.nav .links a:hover{color:var(--lime)}
+.btn{display:inline-block;background:var(--lime);color:#0b1a08;border:0;padding:13px 20px;font:700 13px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;text-align:center}
+.btn.ghost{background:transparent;color:var(--lime);border:1px solid var(--lime)}
+.btn.sm{padding:9px 14px;font-size:11px}
+.btn:disabled{opacity:.6;cursor:default}
+@media(max-width:760px){.nav .links{display:none}}
+.hero{position:relative;min-height:min(86vh,820px);display:flex;align-items:flex-end;padding:120px 0 72px;overflow:hidden;border-top:0}
+.hero video,.hero .still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.6) brightness(.55)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,.65) 55%,#000 100%)}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero h1{font-size:clamp(30px,5.6vw,64px);margin:14px 0 18px;max-width:900px}
+.hero p{max-width:640px;color:#d7dde2;font-size:16px}
+.meta{display:flex;flex-wrap:wrap;gap:28px;margin:28px 0 30px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute)}
+.meta b{display:block;color:var(--lime);letter-spacing:.14em;font-size:11px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.stat{background:var(--navy);border:1px solid var(--line);padding:22px}
+.stat .n{font-family:'Changeling Neo','Michroma',sans-serif;font-size:30px;color:#fff;text-transform:uppercase}
+.stat.hi{border-top:3px solid var(--lime)}
+.stat.hi .n{color:var(--lime)}
+.stat .l{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute);margin-top:6px}
+@media(max-width:760px){.compare{grid-template-columns:1fr}}
+.heard{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.heard div{border-left:2px solid var(--lime);padding:4px 0 4px 14px;color:#cfd6dc;font-size:14px}
+@media(max-width:860px){.heard{grid-template-columns:1fr}}
+.map{margin-top:28px;background:#04080c;border:1px solid var(--line);padding:18px}
+.map svg{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:20px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute);margin-top:12px}
+.legend i{display:inline-block;width:22px;border-top:2px solid var(--lime);vertical-align:middle;margin-right:8px}
+.legend i.dash{border-top:2px dashed #5d7a94}
+.parts{display:grid;gap:14px;margin-top:28px}
+.part{display:grid;grid-template-columns:54px 1fr 120px;gap:18px;background:var(--navy);border:1px solid var(--line);padding:22px;cursor:pointer;transition:border-color .2s}
+.part:hover{border-color:#3d6385}
+.part .k{font-family:'Changeling Neo','Michroma',sans-serif;font-size:28px;color:var(--lime)}
+.part h3{margin:0 0 6px;font-family:'Changeling Neo','Michroma',sans-serif;font-size:17px;text-transform:uppercase}
+.part p{margin:0;color:#cfd6dc;font-size:14px}
+.part .fee{text-align:right;font-family:'Changeling Neo','Michroma',sans-serif;font-size:22px}
+.part ul{margin:12px 0 0;padding-left:18px;color:#b9c4ce;font-size:13px;display:none}
+.part.open ul{display:block}
+.part .more{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--lime);letter-spacing:.1em;text-transform:uppercase;margin-top:10px;display:block}
+.part.open .more{display:none}
+.total{display:flex;justify-content:space-between;align-items:center;background:var(--lime);color:#0b1a08;padding:20px 22px}
+.total .d{font-size:18px}
+.total .n{font-family:'Changeling Neo','Michroma',sans-serif;font-size:34px}
+.small{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute);margin-top:12px}
+@media(max-width:640px){.part{grid-template-columns:40px 1fr}.part .fee{grid-column:2;text-align:left}}
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
+.tl div{background:#0a121b;border-top:3px solid var(--line);padding:18px;font-size:14px;color:#cfd6dc}
+.tl div.go{border-top-color:var(--lime);background:var(--navy)}
+.tl b{display:block;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:6px}
+@media(max-width:760px){.tl{grid-template-columns:1fr 1fr}}
+.addons{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px}
+.addon{border:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.addon h3{margin:0;font-size:15px;font-family:'Changeling Neo','Michroma',sans-serif;text-transform:uppercase}
+.addon p{margin:0;color:#b9c4ce;font-size:13px;flex:1}
+.addon button.on{background:var(--lime);color:#0b1a08}
+@media(max-width:760px){.addons{grid-template-columns:1fr}}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:22px}
+.cols h3{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin:0 0 10px}
+.cols ul{margin:0;padding-left:18px;color:#cfd6dc;font-size:14px}
+.cols li{margin-bottom:6px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.team{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.person{display:flex;gap:18px;background:var(--navy);border:1px solid var(--line);padding:18px}
+.person img{width:96px;height:96px;object-fit:cover;filter:grayscale(.3)}
+.person h3{margin:0;font-family:'Changeling Neo','Michroma',sans-serif;font-size:16px;text-transform:uppercase}
+.person .role{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin:4px 0 8px}
+.person p{margin:0;font-size:13px;color:#cfd6dc}
+@media(max-width:760px){.team{grid-template-columns:1fr}}
+.approve{background:var(--navy);border:1px solid var(--line);border-top:3px solid var(--lime);padding:30px;margin-top:26px;display:grid;grid-template-columns:1fr 1.1fr;gap:34px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding-left:40px;margin-bottom:14px;color:#cfd6dc;font-size:14px}
+.steps li:before{content:counter(s);position:absolute;left:0;top:-2px;width:26px;height:26px;border:1px solid var(--lime);color:var(--lime);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:12px}
+form{display:grid;gap:12px}
+label{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute);display:grid;gap:6px}
+input,textarea{background:#05090d;border:1px solid var(--line);color:var(--ink);padding:11px 12px;font:14px "IBM Plex Mono",monospace;width:100%}
+textarea{min-height:84px;resize:vertical}
+.picked{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--lime);min-height:1em}
+.done{display:none;border:1px solid var(--lime);padding:18px;color:#fff}
+.done.show{display:block}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1}
+@media(max-width:760px){.approve{grid-template-columns:1fr}}
+footer{padding:40px 0 60px;border-top:1px solid #111a24;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
+footer img{height:20px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="#top" data-track="nav: logo"><img src="/assets/aceforce-logo-lime-alpha.png" alt="AceForce"></a>
+    <div class="links">
+      <a href="#plan" data-track="nav: plan">The plan</a>
+      <a href="#investment" data-track="nav: investment">Investment</a>
+      <a href="#timeline" data-track="nav: timeline">Timeline</a>
+      <a href="#approve" data-track="nav: next steps">Next steps</a>
+    </div>
+    <a class="btn sm" href="#approve" data-track="nav: approve button">Approve</a>
+  </div>
+</nav>
+
+<header class="hero" id="top" data-section="hero">
+  <img class="still" src="/assets/orbit-still.jpg" alt="">
+  <video autoplay muted loop playsinline poster="/assets/orbit-still.jpg"><source src="/assets/orbit-loop.mp4" type="video/mp4"></video>
+  <div class="wrap">
+    <div class="eyebrow">Prepared for Suki Home Party's · Bedroom Kandi and KandiKoated</div>
+    <h1 class="d">Off NetSuite by March. Twenty years of history kept.</h1>
+    <p>Cin7 Core runs inventory for both stores, QuickBooks Online starts clean from the 2026 close, and every NetSuite transaction moves to a database you own and can question in plain English.</p>
+    <div class="meta">
+      <div><b>PREPARED FOR</b>Andrea Carignan, Director of Systems</div>
+      <div><b>DATE</b>Nov 25, 2026</div>
+      <div><b>VALID THROUGH</b>Dec 15, 2026</div>
+    </div>
+    <div class="ctas">
+      <a class="btn" href="#investment" data-track="hero: see investment">See the investment</a>
+      <a class="btn ghost" href="suki-home-partys-proposal-one-pager.pdf" download data-track="hero: download one-pager">Download the one-pager</a>
+    </div>
+  </div>
+</header>
+
+<section id="summary" data-section="summary">
+  <div class="wrap">
+    <div class="eyebrow">The short version</div>
+    <h2 class="d">The full move for about what the conversion alone was quoted</h2>
+    <p class="lead">Your NetSuite consultant quoted $20,000 to $25,000 to convert to QuickBooks, before any inventory system. Our data move, archive plus QuickBooks, is $10,500. The whole project, including Cin7 and a month running both systems side by side, is $22,500.</p>
+    <div class="compare">
+      <div class="stat"><div class="n">$20K to $25K</div><div class="l">Conversion quote you received, data move only</div></div>
+      <div class="stat hi"><div class="n">$10,500</div><div class="l">AceForce data move: archive plus QuickBooks</div></div>
+      <div class="stat"><div class="n">$22,500</div><div class="l">AceForce full project, Cin7 and cutover included</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="heard" data-section="what we heard">
+  <div class="wrap">
+    <div class="eyebrow">What we heard on Nov 24</div>
+    <h2 class="d">Where you are today</h2>
+    <div class="heard">
+      <div>15 to 20 years on NetSuite OneWorld. The contract was extended to the end of March, and February and March are your biggest months.</div>
+      <div>About 3 million transactions. At least 7 years have to stay available for audits, including the subsidiary you just sold.</div>
+      <div>About 800 active items and 3,000 item records to carry over. Cosmetics are assemblies built from packaging and fill bought from different vendors.</div>
+      <div>Two Shopify stores sharing some stock, plus Amazon, TikTok Shop and Target through SPS.</div>
+      <div>ShipHawk is being replaced by ShipStation. Fulfillment runs through a third-party warehouse in North Carolina, billed per order and per pallet.</div>
+      <div>Expiration dates live in a custom field on purchase orders today, and Amazon requires them.</div>
+    </div>
+  </div>
+</section>
+
+<section id="plan" data-section="the plan">
+  <div class="wrap">
+    <div class="eyebrow">The plan</div>
+    <h2 class="d">Two homes for your data</h2>
+    <p class="lead">Loading 20 years of line-level detail into QuickBooks isn't realistic: it can only take it as hundreds of thousands of summary journal entries, and the item detail is lost. So history and day-to-day operations each get the right home.</p>
+    <div class="map" data-section="system map">
+      <svg viewBox="0 0 1000 430" role="img" aria-label="System map: NetSuite history moves to a BigQuery archive connected to Claude; Shopify, Amazon and ShipStation connect to Cin7 Core, which syncs to QuickBooks Online">
+        <defs><style>
+          .bx{fill:#091F34;stroke:#1f3a55;stroke-width:1.5}.hub{fill:#091F34;stroke:#C1FD5D;stroke-width:2}
+          .t{fill:#f3f4f1;font:700 15px 'IBM Plex Mono',monospace}.s{fill:#9fb0bf;font:12px 'IBM Plex Mono',monospace}
+          .ln{stroke:#C1FD5D;stroke-width:2;fill:none}.dl{stroke:#5d7a94;stroke-width:2;fill:none;stroke-dasharray:6 6}
+          .dot{fill:#C1FD5D}.ol{fill:#9fb0bf;font:11px 'IBM Plex Mono',monospace;letter-spacing:2px}
+        </style></defs>
+        <text x="20" y="28" class="ol">HISTORY</text>
+        <text x="20" y="212" class="ol">EVERY DAY FROM MARCH</text>
+        <rect x="20" y="44" width="200" height="72" class="bx" opacity=".6"/><text x="38" y="76" class="t">NetSuite</text><text x="38" y="98" class="s">retired by Mar 31</text>
+        <rect x="340" y="44" width="250" height="72" class="hub"/><text x="358" y="76" class="t">BigQuery archive</text><text x="358" y="98" class="s">7+ years, line level</text>
+        <rect x="720" y="44" width="260" height="72" class="bx"/><text x="738" y="76" class="t">Claude via MCP</text><text x="738" y="98" class="s">reports in plain English</text>
+        <path d="M220 80 H340" class="dl"/><circle cx="340" cy="80" r="4" class="dot"/>
+        <path d="M590 80 H720" class="ln"/><circle cx="590" cy="80" r="4" class="dot"/><circle cx="720" cy="80" r="4" class="dot"/>
+        <path d="M465 116 V170 H715 V270" class="dl"/>
+        <text x="560" y="160" class="s">opening balances</text>
+        <rect x="20" y="228" width="200" height="56" class="bx"/><text x="38" y="262" class="t">Shopify x2</text>
+        <rect x="20" y="298" width="200" height="56" class="bx"/><text x="38" y="332" class="t">Amazon</text>
+        <rect x="20" y="368" width="200" height="56" class="bx"/><text x="38" y="402" class="t">ShipStation</text>
+        <rect x="300" y="270" width="230" height="84" class="hub"/><text x="318" y="304" class="t">Cin7 Core</text><text x="318" y="326" class="s">stock, assemblies, expiry</text>
+        <rect x="590" y="270" width="250" height="84" class="hub"/><text x="608" y="304" class="t">QuickBooks Online</text><text x="608" y="326" class="s">from the Dec 31 close</text>
+        <rect x="300" y="380" width="230" height="44" class="bx"/><text x="318" y="407" class="s">North Carolina warehouse</text>
+        <path d="M220 256 H260 V298 H300" class="ln"/><path d="M220 326 H300" class="ln"/><path d="M220 396 H260 V342 H300" class="ln"/>
+        <circle cx="300" cy="298" r="4" class="dot"/><circle cx="300" cy="326" r="4" class="dot"/><circle cx="300" cy="342" r="4" class="dot"/>
+        <path d="M220 410 H300" class="dl"/>
+        <path d="M530 312 H590" class="ln"/><circle cx="530" cy="312" r="4" class="dot"/><circle cx="590" cy="312" r="4" class="dot"/>
+      </svg>
+      <div class="legend"><span><i></i>Live connection</span><span><i class="dash"></i>One-time move or handoff</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="investment" data-section="investment">
+  <div class="wrap">
+    <div class="eyebrow">Investment</div>
+    <h2 class="d">Four parts, fixed fees</h2>
+    <p class="lead">Each part has a fixed fee, so your leadership and accountant can see the full cost before signing. Tap a part to see what's in it.</p>
+    <div class="parts">
+      <div class="part" data-track="part 1: archive" tabindex="0">
+        <div class="k">01</div>
+        <div><h3>Historical archive in BigQuery</h3>
+          <p>Every NetSuite transaction for at least 7 years, at line level, in a database on your own Google Workspace that Claude can query.</p>
+          <ul>
+            <li>Pulled through the NetSuite API: items, dates, customers, vendors, lot and expiry fields, for both subsidiaries, including the one you sold.</li>
+            <li>Includes the full 2026 year once your books close.</li>
+            <li>Read only and access controlled, so closed periods can't be edited.</li>
+            <li>Connected to Claude through an MCP server, which you already use with NetSuite and Gmail, so any historical report is a question away.</li>
+            <li>The extraction scripts and MCP server sit in a repository you and AceForce both access, and the code is yours once the final installment is paid.</li>
+          </ul>
+          <span class="more">What's included</span></div>
+        <div class="fee">$7,000</div>
+      </div>
+      <div class="part" data-track="part 2: quickbooks" tabindex="0">
+        <div class="k">02</div>
+        <div><h3>QuickBooks Online setup</h3>
+          <p>A clean start from the Dec 31, 2026 close, set up as the backbone Cin7 builds on.</p>
+          <ul>
+            <li>Chart of accounts built with your accountant, including one working session to answer their questions.</li>
+            <li>Opening balance journal entries from the 2026 close.</li>
+            <li>Settings Cin7 depends on, ready before the Cin7 build starts.</li>
+          </ul>
+          <span class="more">What's included</span></div>
+        <div class="fee">$3,500</div>
+      </div>
+      <div class="part" data-track="part 3: cin7" tabindex="0">
+        <div class="k">03</div>
+        <div><h3>Cin7 Core implementation</h3>
+          <p>Inventory, assemblies and channels for Bedroom Kandi and KandiKoated in one system.</p>
+          <ul>
+            <li>About 3,000 item records moved from NetSuite and cleaned up on the way.</li>
+            <li>Assemblies and bills of materials for components bought from different vendors.</li>
+            <li>Batch and expiry tracking to replace the custom PO field.</li>
+            <li>Both Shopify stores on shared stock, Amazon (FBA and FBM) and ShipStation, all through Cin7's own connectors.</li>
+            <li>QuickBooks sync and training for your team.</li>
+          </ul>
+          <span class="more">What's included</span></div>
+        <div class="fee">$9,500</div>
+      </div>
+      <div class="part" data-track="part 4: parallel run" tabindex="0">
+        <div class="k">04</div>
+        <div><h3>Parallel run and cutover</h3>
+          <p>February runs on both stacks so nothing is learned the hard way in your peak month.</p>
+          <ul>
+            <li>NetSuite and the new stack run side by side for one month.</li>
+            <li>Weekly reconciliation of orders, stock and postings between the two.</li>
+            <li>Hard cutover on March 1, with NetSuite retired before the contract ends.</li>
+          </ul>
+          <span class="more">What's included</span></div>
+        <div class="fee">$2,500</div>
+      </div>
+      <div class="total"><span class="d">Total</span><span class="n">$22,500</span></div>
+    </div>
+    <p class="small">Invoiced in three equal installments: at signing, at soft go-live, at cutover. Software subscriptions (Cin7, QuickBooks, ShipStation, Google Cloud) are billed to you directly by each vendor.</p>
+  </div>
+</section>
+
+<section id="timeline" data-section="timeline">
+  <div class="wrap">
+    <div class="eyebrow">Timeline</div>
+    <h2 class="d">Built through the holidays, live before your contract ends</h2>
+    <div class="tl">
+      <div><b>December</b>Sign. QuickBooks chart of accounts, Cin7 design, archive build and first data pull.</div>
+      <div><b>January</b>2026 close loads to the archive. Opening balances booked with your accountant. Cin7 build and item move.</div>
+      <div class="go"><b>February</b>Soft go-live. The new stack runs next to NetSuite while we reconcile weekly.</div>
+      <div class="go"><b>March 1</b>Hard cutover. NetSuite retired before the contract ends Mar 31.</div>
+    </div>
+  </div>
+</section>
+
+<section id="addons" data-section="add-ons">
+  <div class="wrap">
+    <div class="eyebrow">Optional, quoted separately</div>
+    <h2 class="d">Want any of these in scope?</h2>
+    <p class="lead">These came up on the call but aren't in the $22,500. Flag any you want and we'll send a fixed quote.</p>
+    <div class="addons">
+      <div class="addon"><h3>Target through SPS</h3><p>Connect your SPS Commerce flow to Cin7 so Target orders, shipments and invoices stop being keyed by hand.</p><button type="button" class="btn ghost sm" data-addon="Target through SPS">I want a quote</button></div>
+      <div class="addon"><h3>TikTok Shop</h3><p>Bring TikTok Shop orders and stock into Cin7 alongside Shopify and Amazon.</p><button type="button" class="btn ghost sm" data-addon="TikTok Shop">I want a quote</button></div>
+      <div class="addon"><h3>Separate stock per channel</h3><p>Hold back or cap stock for Amazon and each store from the shared pool, so one channel can't oversell another.</p><button type="button" class="btn ghost sm" data-addon="Stock per channel">I want a quote</button></div>
+      <div class="addon"><h3>Warehouse pick control</h3><p>Use Cin7's warehouse layer with ShipStation so the North Carolina team picks the right lot and the oldest expiry first.</p><button type="button" class="btn ghost sm" data-addon="Warehouse pick control">I want a quote</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="terms" data-section="terms">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2 class="d">Terms in brief</h2>
+    <div class="cols">
+      <div><h3>Included</h3><ul>
+        <li>One working session with your accountant before opening balances are booked.</li>
+        <li>Weekly status by email through cutover.</li>
+        <li>Training for your team on Cin7 and the archive.</li>
+        <li>Ownership of the archive code once the final installment is paid.</li>
+      </ul></div>
+      <div><h3>Not included</h3><ul>
+        <li>Software subscriptions, billed by each vendor.</li>
+        <li>The optional items above until quoted and approved.</li>
+        <li>Physical work at the North Carolina warehouse.</li>
+        <li>Changes your NetSuite consultant makes before cutover.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="team" data-section="team">
+  <div class="wrap">
+    <div class="eyebrow">Who you work with</div>
+    <h2 class="d">Operators first</h2>
+    <p class="lead">AceForce Group is a technical operations firm working across CPG, beauty and sexual wellness. We build for the people running the business every day, not for the IT setup.</p>
+    <div class="team">
+      <div class="person"><img src="/assets/team-vlad.jpg" alt="Vlad Shenderovich"><div><h3>Vlad Shenderovich</h3><div class="role">Founder</div><p>Came up through operations at Chanel. Owns the plan, the timeline and your sign-off.</p></div></div>
+      <div class="person"><img src="/assets/team-ilya.jpg" alt="Ilya Smolensky"><div><h3>Ilya Smolensky</h3><div class="role">Head of Technology</div><p>Runs AceForce's NetSuite and Cin7 teams and is an accountant by training. Leads the archive, the QuickBooks setup and the Cin7 build.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="approve" data-section="next steps">
+  <div class="wrap">
+    <div class="eyebrow">Next steps</div>
+    <h2 class="d">Ready when you are</h2>
+    <div class="approve">
+      <ol class="steps">
+        <li>Share this page with your leadership and accountant.</li>
+        <li>Approve here, and flag any optional items you want quoted.</li>
+        <li>We send the services agreement for signature.</li>
+        <li>First installment invoiced, and work starts in December.</li>
+      </ol>
+      <div>
+        <form id="replyForm" autocomplete="on">
+          <label>Your name<input name="name" required maxlength="80"></label>
+          <label>Anything we should know (optional)<textarea name="note" maxlength="1500"></textarea></label>
+          <div class="picked" id="picked"></div>
+          <div class="row">
+            <button class="btn" type="submit" data-kind="approved">Approve, send the agreement</button>
+            <button class="btn ghost" type="submit" data-kind="question">Send a question</button>
+          </div>
+        </form>
+        <div class="done" id="done"></div>
+        <div class="ctas" style="margin-top:14px"><a class="btn ghost sm" href="suki-home-partys-proposal-one-pager.pdf" download data-track="cta: download one-pager">Download the one-pager</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="/assets/aceforce-logo-lime-alpha.png" alt="AceForce">
+    <div>Otacon Group, LLC (AceForce) · 161 Water Street, Suite 2026, New York, NY 10038</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Event log: posts to an Apps Script endpoint that appends rows to a Google Sheet.
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbwdrxHtD5kGa3Ej50D5C_XjGqLtc3ARjozBNCHNOhyYtYjOARo_0fEGzizPW6U2EO05/exec";
+  var PAGE = "suki-ce38d6";
+  var q = new URLSearchParams(location.search);
+  var who = (q.get("r") || "direct").slice(0, 40);
+  var sid = Math.random().toString(36).slice(2, 10);
+  var vid = sid;
+  try { vid = localStorage.getItem("af_vid") || sid; localStorage.setItem("af_vid", vid); } catch (e) {}
+  var t0 = Date.now(), seen = {}, maxDepth = 0;
+
+  function send(event, label, extra) {
+    if (ENDPOINT.indexOf("http") !== 0) return;
+    var body = JSON.stringify({
+      page: PAGE, who: who, visitor: vid, session: sid, event: event, label: label || "",
+      secs: Math.round((Date.now() - t0) / 1000), depth: maxDepth,
+      ref: document.referrer || "", ua: navigator.userAgent.slice(0, 160),
+      screen: screen.width + "x" + screen.height, extra: extra || ""
+    });
+    try {
+      if (event === "leave" && navigator.sendBeacon) {
+        navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "text/plain" }));
+      } else {
+        fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" }, body: body });
+      }
+    } catch (e) {}
+  }
+
+  send("open", location.hash || "");
+
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-track]");
+    if (el) send("click", el.getAttribute("data-track"));
+  });
+
+  document.querySelectorAll(".part").forEach(function (p) {
+    function toggle() { p.classList.toggle("open"); }
+    p.addEventListener("click", toggle);
+    p.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); send("click", p.getAttribute("data-track")); } });
+  });
+
+  function picks() { return [].map.call(document.querySelectorAll("[data-addon].on"), function (x) { return x.getAttribute("data-addon"); }); }
+  document.querySelectorAll("[data-addon]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var on = b.classList.toggle("on");
+      b.textContent = on ? "Flagged for a quote" : "I want a quote";
+      send(on ? "addon wanted" : "addon removed", b.getAttribute("data-addon"));
+      var p = picks();
+      document.getElementById("picked").textContent = p.length ? "Quote also requested: " + p.join(", ") : "";
+    });
+  });
+
+  var form = document.getElementById("replyForm"), kind = "approved";
+  form.querySelectorAll("button[data-kind]").forEach(function (b) { b.addEventListener("click", function () { kind = b.getAttribute("data-kind"); }); });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = form.elements, name = f.name.value.trim(), note = f.note.value.trim();
+    if (kind === "question" && !note) { f.note.focus(); f.note.placeholder = "Type your question here"; return; }
+    send(kind, name, JSON.stringify({ note: note, addons: picks() }));
+    form.style.display = "none";
+    var d = document.getElementById("done");
+    d.textContent = kind === "approved"
+      ? "Thank you, " + name + ". We'll send the services agreement shortly" + (picks().length ? ", with quotes for " + picks().join(", ") + "." : ".")
+      : "Thanks, " + name + ". Your question is with Vlad and Ilya, and you'll hear back by email.";
+    d.classList.add("show");
+  });
+
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        var k = en.target.getAttribute("data-section");
+        if (en.isIntersecting && !seen[k]) { seen[k] = 1; send("view", k); }
+      });
+    }, { threshold: 0.35 });
+    document.querySelectorAll("[data-section]").forEach(function (s) { io.observe(s); });
+  }
+
+  window.addEventListener("scroll", function () {
+    var h = document.documentElement;
+    var d = Math.round(100 * (h.scrollTop + innerHeight) / h.scrollHeight);
+    if (d > maxDepth) maxDepth = Math.min(100, d);
+  }, { passive: true });
+
+  [30, 90, 180, 300].forEach(function (s) { setTimeout(function () { if (!document.hidden) send("still reading", s + "s"); }, s * 1000); });
+  var left = false;
+  document.addEventListener("visibilitychange", function () { if (document.hidden && !left) { left = true; send("leave"); } else if (!document.hidden) { left = false; } });
+})();
+</script>
+</body>
+</html>
